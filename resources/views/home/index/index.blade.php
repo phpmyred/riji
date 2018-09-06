@@ -167,11 +167,11 @@
         <div class="loginCon">
             <div class="longd">
               <i class="iconfont icon-yonghu"></i>
-              <input type="text" name="name" value="{{Cookie::get('home_info')['name']}}">
+              <input type="text" name="name" value="{{Cookie::get('username')}}">
             </div>
             <div class="longd">
               <i class="iconfont icon-icon_password"></i>
-              <input type="password" name="pass" value="{{Cookie::get('home_info')['pass']}}">
+              <input type="password" name="pass" value="{{Cookie::get('pass')}}">
             </div>
             <div class="longd cbx" style="width: 256px;">
               <label>
@@ -419,7 +419,6 @@
         } else {
           rem = 0;
         }
-        // alert(rem);
           $.ajax({
           url: '/login_check',
           type:'post',

@@ -55,10 +55,8 @@ class LoginController extends Controller
             ]);
             // 判断该用户是否记住密码
             if ( $_POST['rem'] == 1 ) {
-                Cookie::queue('home_info', [
-                    'name' => $row->name,
-                    'pass' => $_POST['pass']
-                ], 10080);
+                Cookie::queue('username',$row->name, 1008);
+                Cookie::queue('pass',  $_POST['pass'], 1008);
             } else {
                Cookie::queue(Cookie::forget('home_info'));
             }

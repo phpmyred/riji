@@ -83,7 +83,8 @@
             </li>
             <li class="menu-list {{$menu_layout or ''}}" ><a href=""><i class="fa fa-tasks"></i> <span>排版管理</span></a>
                 <ul class="sub-menu-list">
-                    <li class="{{$menu_layout_index or ''}}"><a href="/bk_layout">首页排版</a></li>
+                    <li class="{{$menu_layout_index or ''}}"><a href="/bk_layout">内容排版</a></li>
+                    <li class="{{$menu_layout_image or ''}}"><a href="/bk_image">图片排版</a></li>
                 </ul>
             </li>
             <li class="menu-list {{$menu_lunbo or ''}}">
