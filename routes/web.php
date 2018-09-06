@@ -40,7 +40,7 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::get('/comment','CommentContorller@index');//回复AJAX
 
     //个人中心模块
-    Route::group(['namespace' => 'Person'], function () {
+    Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
         Route::get('ps_index', 'IndexController@index');//我的个人中心
         Route::get('ps_index/qiandao','IndexController@qiandao'); //个人中心是否签到
         Route::get('ps_riji', 'RijiController@index'); //日记投稿

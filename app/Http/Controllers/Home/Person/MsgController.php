@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
 use Hash;
+use App\Http\Requests\Msg\Msg;
 
 class MsgController extends Controller
 {
@@ -23,7 +24,7 @@ class MsgController extends Controller
     }
 
     //处理修改
-    public function doedit(Request $req) {
+    public function doedit(Msg $req) {
         $all = $req->session()->all();
         $id = $all['home_user']['id'];
     	$data = $req->only('nickname','sex','birthday');

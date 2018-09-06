@@ -1,7 +1,7 @@
 @include('home.PersonPublic.header')
-<!-- <link rel="stylesheet" type="text/css" href="/static/admin/css/bootstrap.min.css"> -->
+
+<!-- <link rel="stylesheet" type="text/css" href="/static/home/person/css/user_002.css"> -->
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/user.css">
-<link rel="stylesheet" type="text/css" href="/static/home/person/css/user_002.css">
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/riji.css">
 <!-- 文章 -->
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/article.css">
@@ -17,16 +17,15 @@
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/guanzhu.css">
 <!-- 发送信件 -->
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/send.css">
-<!-- <link rel="stylesheet" type="text/css" href="/static/admin/css/bootstrap.min.css"> -->
-
+<link rel="stylesheet" type="text/css" href="/static/home/person/css/iconfont.css">
 
 
 <script type="text/javascript" src="/static/home/person/js/jquery-1.js"></script>
 <script type="text/javascript" src="/static/home/person/js/box.js"></script>
-<script type="text/javascript" language="javascript" src="/static/home/person/js/j.js"></script>
+<!-- <script type="text/javascript" language="javascript" src="/static/home/person/js/j.js"></script> -->
 <script type="text/javascript" language="javascript" src="/static/home/person/js/table_function.js"></script>
 <script type="text/javascript" src="/static/home/person/js/dedeajax2.js"></script>
-<script type="text/javascript" src="/static/home/person/js/ajaxpage.js"></script>
+<!-- <script type="text/javascript" src="/static/home/person/js/ajaxpage.js"></script> -->
 <script language="javascript" src="/static/home/person/js/main.js"></script>
 <script language="javascript" src="/static/home/person/js/article_htm.js"></script>
 <script language="javascript" src="/static/home/person/js/msgbox.js"></script>
@@ -39,8 +38,10 @@
 <script language="javascript" src="/static/home/person/js/riji.js"></script>
 <!-- 我的文章 -->
 <script language="javascript" src="/static/home/person/js/wenzhang.js"></script>
-<script src="/static/admin/js/bootstrap.min.js"></script>
+<!-- <script src="/static/admin/js/bootstrap.min.js"></script> -->
 <script src="/static/admin/js/modernizr.min.js"></script>
+  <script src="/static/home/index/js/jquery.leanModal.min.js" type="text/javascript"></script>
+
 
 
 </head>
@@ -54,13 +55,6 @@
 <div id="rj_header" class="header">
   <div class="w1000 clearfix">
     <div class="fl logo"><a target="_blank" href="https://www.riji.cn/"></a></div>	
-    <!--<ul class="header_nav">
-      <li><a href="#">首页</a></li>
-      <li><a href="#">日记</a></li>
-      <li><a href="#">周记</a></li>
-      <li><a href="#">作文</a></li>    
-      <li><a href="#">留言</a></li>
-	</ul>-->
   </div>           
 </div>
 
@@ -109,4 +103,5 @@
 </body>
 <!-- 图片预览 -->
 <script src="/static/admin/js/ads.js"></script>
+
 </html>

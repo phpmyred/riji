@@ -1,5 +1,19 @@
 @extends('home.PersonPublic.index')
 @section('title','我的个人中心')
+  <style type="text/css">
+
+    #lean_overlay { position: fixed; z-index: 100; top: 0px; left: 0px; height: 100%; width: 100%; background: #000; display: none; }
+    #OpenWindow { background: none repeat scroll 0 0 #FFFFFF; border-radius: 5px 5px 5px 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.7); display: none; padding-bottom: 2px; width: 404px; z-index: 11000; left: 50%; margin-left: -202px; opacity: 1; position: fixed; top: 200px; }
+    #OpenWindow-header {  border-bottom: 1px solid #CCCCCC; border-top-left-radius: 5px; border-top-right-radius: 5px; padding: 18px 18px 14px; }
+    .modal_close { background: url("/static/home/index/images/modal_close.png") repeat scroll 0 0 transparent; display: block; height: 14px; position: absolute; right: 12px; top: 12px; width: 14px; z-index: 2; border-radius: 14px; }
+    body { font-size: 13px; }
+
+    #fcontent p{margin:10px 20px;text-indent: 2em}
+    #OpenWindow .btn-fld { overflow: hidden; padding: 12px 36px 12px 180px; width: 254px;}
+    button { background: none repeat scroll 0 0 #3F9D4A; border: medium none; border-radius: 4px 4px 4px 4px; color: #FFFFFF; font-family: Verdana; font-size: 13px; font-weight: bold; overflow: visible; padding: 7px 10px; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4); width: auto; cursor: pointer; }
+    h2{ font-weight: 500; }
+
+  </style>
 <div style="clear:both"></div>
 
  @section('container')
@@ -13,6 +27,20 @@
           <div class="name-user clearfix">
             <div class="notice-i fl"></div>
             <div class="say-hello fl"><span>{{$data->nickname}} ( ID：{{$data->name}} )</span></div>
+            <div class="" target="" href="" style="width:120px;float:left;margin-left:10px">
+              @if($score <= 1000)
+                <i class="iconfont icon-dengji1" style="font-size: 16px; color: rgb(190, 190, 190)"></i>
+              @elseif($score <= 2000 && $score > 1000)
+                <i class="iconfont icon-dengji4" style="font-size: 16px; color: rgb(148, 220, 178)"></i>
+              @elseif($score <= 3000 && $score > 2000)
+                <i class="iconfont icon-dengji2" style="font-size: 16px; color: rgb(145, 208, 228)"></i>
+              @elseif($score <= 4000 && $score > 3000)
+                <i class="iconfont icon-dengji3" style="font-size: 16px; color: rgb(254, 178, 124)"></i>
+              @else
+                <i class="iconfont icon-dengji" style="font-size: 16px; color: rgb(255, 107, 8)"></i>
+              @endif
+              <a id="aOpen" href="#OpenWindow" rel="leanModal" title="点击了解详情"><i class="iconfont icon-iconfontquestion" style="color: #08B286"></i></a>
+            </div>
           </div>
           <div class="kinds_state clearfix">
             <div class="every  fl">
@@ -46,9 +74,7 @@
               @endif
             </a>
             @endforeach
-            <a class="join_btn" target="_blank" href="">
-             <img src="/static/home/person/images/group.png" title="点击加入小作者QQ群" border="0">
-            </a>
+
           </div>
         </div>
         <div class="fl reply-box"> </div>
@@ -75,43 +101,31 @@
               </ul>
             </div>
             <div class="pl_conTxt">
-              <div class="">                 
+              <div class="">
+
                 <ul id="dt_list" class="dt_list">
                   <li><span>36分钟前</span><a class="link" href="https://www.riji.cn/user/13561/" target="_blank">对对对对对对</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/55229.html" target="_blank">老酸奶</a></li>
                 </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>38分钟前</span><a class="link" href="https://www.riji.cn/user/12468/" target="_blank">纯音乐</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/55242.html" target="_blank">小MM</a></li>
-                </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>3小时前</span><a class="link" href="https://www.riji.cn/user/13434/" target="_blank">莫言</a> 回复了文章 <a class="key_word" href="https://www.riji.cn/html/54821.html" target="_blank">新功能</a></li>
-                </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>3小时前</span><a class="link" href="https://www.riji.cn/user/13536/" target="_blank">立之名</a> 回复了文章 <a class="key_word" href="https://www.riji.cn/html/54637.html" target="_blank">回忆</a></li>
-                </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>3小时前</span><a class="link" href="https://www.riji.cn/user/13315/" target="_blank">党金博</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/55186.html" target="_blank">刺激战场真刺激</a></li>
-                </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>2018-08-23 23:12:31</span><a class="link" href="https://www.riji.cn/user/13559/" target="_blank">抓不住的杰瑞</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/53201.html" target="_blank">煎荷包蛋</a></li>
-                </ul>
-                <ul id="dt_list" class="dt_list">
-                  <li><span>2018-08-23 22:30:08</span><a class="link" href="https://www.riji.cn/user/13487/" target="_blank">夏沫洛梨</a> 回复了文章 <a class="key_word" href="https://www.riji.cn/html/55229.html" target="_blank">老酸奶</a></li>
-                </ul>
-                                <ul id="dt_list" class="dt_list">
-                  <li><span>2018-08-23 22:25:24</span><a class="link" href="https://www.riji.cn/user/13487/" target="_blank">夏沫洛梨</a> 回复了文章 <a class="key_word" href="https://www.riji.cn/html/55229.html" target="_blank">老酸奶</a></li>
-                </ul>
-                                <ul id="dt_list" class="dt_list">
-                  <li><span>2018-08-23 20:59:29</span><a class="link" href="https://www.riji.cn/user/13383/" target="_blank">小子大帅比</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/54743.html" target="_blank">没事做（吗？）</a></li>
-                </ul>
-                                <ul id="dt_list" class="dt_list">
-                  <li><span>2018-08-23 20:43:39</span><a class="link" href="https://www.riji.cn/user/13393/" target="_blank">喵酱</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/55186.html" target="_blank">刺激战场真刺激</a></li>
-                </ul>
-                                
+                        
               </div>
             </div>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div id="OpenWindow">
+    <div id="signup-ct">
+      <div id="OpenWindow-header">
+        <h2>积分等级介绍</h2>
+        <a href="javascript:void(0)" class="modal_close closess"></a>
+      </div>
+        <div id="fcontent">
+          <p>积分0-1000会员等级为1级，积分1001-2000会员等级为2级，积分2001-3000会员等级为3级，积分3001-4000会员等级为4级，积分4000以上会员等级为5级，会员等级升级后，积分不清零</p>
+        </div>
+        <div class="btn-fld">
+            <button type="button" class="closess">确定</button>
+        </div>
     </div>
   </div>
 <script>
@@ -126,6 +140,11 @@
         alert('今日已签到过,请不要重复签到');
       }
     },'json');
+  });
+
+  $(document).ready(function () {
+      //$('#aOpen').leanModal({ top: 100, closeButton: ".modal_close" });
+      $('a[rel*=leanModal]').leanModal({ top: 100, closeButton: ".closess" });
   });
 </script>
 @endsection

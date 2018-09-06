@@ -31,15 +31,23 @@ class SpaceController extends Controller
     		->count();
 		//获取我关注人数
     	$msg[0]->from_uid = count($msg); 
+        //查询是否已关注
+        $gz = DB::table('guanzhu')->where('to_uid','=',$id)->first();
+      
     	
         //获取该用户发表过的日记
-    	$content = DB::table('content')->select('title','content','num','laud','updated_at')->where('uid','=',$id)->paginate(6);
+    	$content = DB::table('content')
+            ->select('title','content','num','laud','updated_at','id')
+            ->where('uid','=',$id)
+            ->where('status','=','0')
+            ->paginate(6);
     	// dd($content);
     	return view('home.Person.space',[
-			'name'=>$name,
-			'msg'=>$msg[0],
-			'fs'=>$fs,
-			'content'=>$content
+            'name'    => $name,
+            'msg'     => $msg[0],
+            'fs'      => $fs,
+            'content' => $content,
+            'gz'      => $gz
 		]);
     }
 

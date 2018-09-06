@@ -13,16 +13,11 @@
     <a href="/"><img src="/static/home/person/images/logo.png" alt="" /></a>
    </div> 
    <div class="navi">
-    <!-- <a href="https://www.riji.cn/">网站首页</a> -->
-  <!--   <a href="https://www.riji.cn/">日记</a>
-    <a href="https://www.riji.cn/zhouji/">周记</a>
-    <a href="https://www.riji.cn/zuowen/">作文</a> -->
-    <!-- <a href="#">留言</a> -->
    </div> 
    <div class="t_manage"> 
     <a href="/ps_index" alt="{{$name}}">{{$name}}</a> 
     <a href="/logout">[退出]</a> 
-    <a href="/ps_index">会员中心</a> 
+    <a href="/ps_index">个人中心</a> 
    </div> 
   </div> 
   <div class="item"> 
@@ -38,8 +33,12 @@
       </div> 
       <div class="per_xgBtn"> 
        @if($msg->uid != session('home_user')['id'] && $msg->uid > 10000)
-       <a class="per_btn gz_btn" href="/ps_space/gz/{{$msg->uid}}">关注</a> 
-       <button class="per_btn sx_btn"><a href="/ps_letter/send/{{$msg->uid}}" target="_blank">私信</a></button> 
+         @if(empty($gz))
+         <a class="per_btn gz_btn" href="/ps_space/gz/{{$msg->uid}}">关注</a> 
+         @else
+         <a class="per_btn gz_btn" href="javascript:void(0)">已关注</a>
+         @endif
+         <button class="per_btn sx_btn"><a href="/ps_letter/send/{{$msg->uid}}" target="_blank">私信</a></button> 
        @endif
        关注：{{$msg->from_uid}} 人&nbsp;&nbsp;&nbsp;&nbsp;粉丝：{{$fs}} 人 
       </div> 
@@ -57,7 +56,7 @@
      @foreach($content as $v)
      <li> 
       <div class="title"> 
-       <span class="zw_tit"> <a href="" target="_blank" title="{{$v->title}}">{{$v->title}}</a> </span> 
+       <span class="zw_tit"> <a href="/list/{{$v->id}}/show" target="_blank" title="{{$v->title}}">{{$v->title}}</a> </span> 
       </div> 
       <div class="clear"></div> 
       <div class="summary"> 
