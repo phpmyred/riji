@@ -294,7 +294,6 @@
 <script>
     $diggGood   = $("#diggGood");//赞按钮
     $diggBad    = $("#diggBad");//踩按钮
-    diggPost('good',{{$contents->id}})
 
     $diggGood.click(function(){
         diggPost('good',{{$contents->id}});
