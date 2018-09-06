@@ -40,21 +40,21 @@
                                 <div class="form-group ">
                                     <label class="col-lg-2 control-label">权限名：</label>
                                     <div class="col-lg-8">
-                                        <input type="text" placeholder="" id="f-name" class="form-control" name="name">   
+                                        <input type="text" placeholder="中文名称" autocomplete="off" id="f-name" class="form-control" name="name">
                                     </div>
                                 </div>
                             
                                  <div class="form-group">
                                     <label class="col-lg-2 control-label">控制器：</label>
                                     <div class="col-lg-8">
-                                        <input type="text" placeholder="" id="email2" class="form-control" name="mname">
+                                        <input type="text" placeholder="不用写Controller" autocomplete="off" id="email2" class="form-control" name="mname">
                                         
                                     </div>
                                 </div>
                                  <div class="form-group">
                                     <label class="col-lg-2 control-label">方法：</label>
                                     <div class="col-lg-8">
-                                        <input type="text" placeholder="" id="email2" class="form-control" name="aname">     
+                                        <input type="text" placeholder="方法名称" autocomplete="off" id="email2" class="form-control" name="aname">
                                     </div>
                                 </div>
                                 {{csrf_field()}}

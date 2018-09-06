@@ -60,6 +60,7 @@
       </ul>
      </span>
       @endforeach
+     <a href="/">电影院</a>
     </div>
    </div>
   </div>
@@ -178,7 +179,7 @@
                 <input type="checkbox" name="rem" value="1">
                 <span>记住密码</span>
               </label>
-              <span><a id='pass1' >忘记密码？</a></span>
+              <span><a href="/forget" id='pass1' >忘记密码？</a></span>
             </div>
             <a id="ddlulu" href="javascript:void(0)">登  录</a>
         </div>
@@ -311,10 +312,20 @@
     </div>
     <div class="lBox-tb">
      <ul class="picTxt-ul">
-      <li><a href="https://www.riji.cn/scb/" target="_blank"><img src="/static/home/index/picture/sptu1.jpg" width="220" height="150" /><i>手抄报</i></a></li>
-      <li><a><img src="/static/home/index/picture/sptu2.jpg" width="220" height="150" /><i>黑板报</i></a></li>
-      <li><a href="https://www.riji.cn/jbh/" target="_blank"><img src="/static/home/index/picture/sptu3.jpg" width="220" height="150" /><i>简笔画</i></a></li>
-      <li><a><img src="/static/home/index/picture/sptu4.jpg" width="220" height="150" /><i>手工小制作</i></a></li>
+      <li>
+       <a href="#" target="_blank">
+        <img src="/static/home/index/picture/sptu1.jpg" width="220" height="150" /><i>手抄报</i>
+       </a>
+      </li>
+      <li>
+       <a><img src="/static/home/index/picture/sptu2.jpg" width="220" height="150" /><i>黑板报</i></a>
+      </li>
+      <li>
+       <a href="https://www.riji.cn/jbh/" target="_blank"><img src="/static/home/index/picture/sptu3.jpg" width="220" height="150" /><i>简笔画</i></a>
+      </li>
+      <li>
+       <a><img src="/static/home/index/picture/sptu4.jpg" width="220" height="150" /><i>手工小制作</i></a>
+      </li>
      </ul>
     </div>
    </div>

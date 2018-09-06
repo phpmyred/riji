@@ -159,8 +159,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
+        //Debugbar插件
         Barryvdh\Debugbar\ServiceProvider::class,
+        //LaravelExcel插件
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+
 
     ],
 
@@ -211,6 +214,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+
     ],
 
     //内容图片存放目录

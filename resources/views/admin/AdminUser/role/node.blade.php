@@ -28,48 +28,90 @@
           @endforeach
     </div>
   @endif
-    <div class="wrapper ">
-   <div class="row">
-                <div class="col-lg-12">
-                    <section class="panel">
-                        <header class="panel-heading">
-                            Role permission assignment
-                        </header>
-                        <div class="panel-body">
-                            <form  class="form-horizontal adminex-form" method="post" action="/bk_role/donode">
-                                <input type="hidden" name="rid" value="{{$role->id}}">
-                                <div class="form-group ">
-                                    <label class="col-lg-2 control-label">角色：</label>
-                                    <div class="col-lg-8">
-                                        <input class="form-control" id="disabledInput" type="text" placeholder="{{$role->name}}" disabled="" >
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-lg-2 control-label">权限分配：</label>
-                                    <div class="col-lg-8">
-                                      @foreach($node as $v)
-                                        <div class="checkbox col-lg-3">
-                                          <label>
-                                            <input type="checkbox" value="{{$v->id}}" name="role[]" @if ( in_array($v->id,$data)) checked='true' @endif >
-                                            {{$v->name}}
-                                          </label>
-                                        </div>
-                                      @endforeach
-                                    </div>
-                                </div>
-                                {{csrf_field()}}
-                                <div class="form-group">
-                                    <div class="col-lg-offset-2 col-lg-8">
-                                        <input  class="btn btn-primary" type="submit" value="提交">
-                                    </div>
-                                </div>
-                            </form>
+<div class="wrapper ">
+    <div class="row">
+        <div class="col-lg-12">
+            <section class="panel">
+                <header class="panel-heading">
+                    添加角色权限
+                </header>
+                <div class="panel-body">
+                    <form  class="form-horizontal adminex-form" method="post" action="/bk_role/donode">
+                        <input type="hidden" name="rid" value="{{$role->id}}">
+                        <div class="form-group ">
+                            <label class="col-lg-2 control-label">角色：</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="disabledInput" type="text" placeholder="{{$role->name}}" disabled="" >
+                            </div>
                         </div>
-                    </section>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">选择：</label>
+                            <div class="col-lg-8">
+                                <button class="btn btn-success btn-sm" id="chooseAll" type="button">全选</button>
+                                <button class="btn btn-default btn-sm" id="chooseNone" type="button">全不选</button>
+                                <button class="btn btn-info btn-sm" id="chooseReverse" type="button">反选</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-2 control-label">权限分配：</label>
+                            <div class="col-lg-8" id="box_ipt">
+                              @foreach($node as $v)
+                                  <label class="checkbox col-lg-3">
+                                    <input type="checkbox" value="{{$v->id}}" name="role[]" @if ( in_array($v->id,$data)) checked='true' @endif >
+                                    {{$v->name}}
+                                  </label>
+                              @endforeach
+                            </div>
+                        </div>
+                        {{csrf_field()}}
+                        <div class="form-group">
+                            <div class="col-lg-offset-2 col-lg-8">
+                                <input  class="btn btn-primary" type="submit" value="提交">
+                            </div>
+                        </div>
+                    </form>
                 </div>
-            </div>
+            </section>
+        </div>
     </div>
-  </div>
-<!--右侧显示内容区域 结束-->
+</div>
+<script>
+    $(function(){
+        //阻止form表单中所有input的回车时间
+        $("#fm_role").find("input").each(function(){
+            $(this).keydown(function(ev){
+                if ( ev.keyCode === 13 ) {
+                    return false;
+                }
+            });
+        });
 
+        let $chooseAll      = $("#chooseAll");//权限全选按钮
+        let $chooseReverse  = $("#chooseReverse");//权限反选按钮
+        let $chooseNone     = $("#chooseNone");//权限全不选按钮
+        let $ipt_box        = $("#box_ipt");//所有的选项列表的父类
+        let $ipts           = $ipt_box.find("label>input[type='checkbox']");//所有的复选框
+
+        //全选操作
+        $chooseAll.on('click',function(){
+            $ipts.attr('checked',true);
+        });
+        //全部选操作
+        $chooseNone.on('click',function(){
+            $ipts.attr('checked',false);
+        });
+        //反选按钮
+        $chooseReverse.on('click',function(){
+            $ipts.each(function(){
+                if ( $(this).attr('checked') ) {
+                    $(this).attr('checked',false);
+                } else {
+                    $(this).attr('checked',true);
+                }
+            });
+        });
+
+    });
+</script>
+<!--右侧显示内容区域 结束-->
 @endsection
