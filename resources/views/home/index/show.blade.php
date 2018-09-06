@@ -135,13 +135,13 @@
 
                     <div class="comment-list">
                         @foreach($comment as $v)
-                        <dl class="fix"  >
+                        <dl class="fix" >
                             <dt>
                                 <a href="" target="_blank">
                                     <img src="{{$v->uface}}" width="46" height="46">
                                 </a>
                             </dt>
-                            <dd id="comm1828">
+                            <dd id="comm">
                                 <a href="" target="_blank">
                                     <span style="color:#3ACA81">{{$v->nickname}}</span>
                                 </a>：{{$v->content}}
@@ -168,18 +168,18 @@
                                         </dd>
                                     </dl>
                                 </div>
-                                <div class="comment-post">
+                                <!-- 这里是评论框 -->
+                                <div class="comment-post" style="display: none;" id="text{{$v->uid}}">
                                     <div class="emoticons">
                                         <div class="publisher">
                                             <div class="comment-msg">
                                                 <textarea name="msg" id="msg4367" class="comment-msg-txt"></textarea>
-                                                    <p></p>
-                                                    <p>
-                                                        <a class="trigger" href="javascript:;">☺</a>
+                                                <p></p>
+                                                <p>
+                                                    <a class="trigger" href="javascript:;">☺</a>
                                                         <button type="button" class="button" onclick="AjaxReComment()">回复</button>
                                                         <button type="button" class="button2 mr20" onclick="DelComment()">取消</button>
-                                                    </p>
-                                            </div>
+                                                </p>
                                         </div>
                                     </div>
                                 </div>
@@ -248,13 +248,14 @@
     <div style="clear:both;"></div>
     <div class="bqsm">Copyright &copy; 2018</div>
 </div>
+<!-- 这个是评论的东西 -->
 <dl class="fix" id='cmt' style="display: none;">
     <dt>
         <a href="" target="_blank">
             <img src="{{session('home_user')['uface']}}" width="46" height="46">
         </a>
     </dt>
-    <dd id="comm1828">
+    <dd >
         <a href="" target="_blank">
             <span style="color:#3ACA81">{{session('home_user')['nickname']}}:</span>
         </a> <p id="cnt"></p>
@@ -263,7 +264,9 @@
         </div>
     </dd>
 </dl>
-<!-- 评论回复的JS -->
+
+</div>
+<!-- 评论的JS -->
 <script type="text/javascript">
     $('#comment').click(function(){
         com = $('#msg').val();
@@ -286,6 +289,13 @@
             },'json');
         }
     });
+
+    // 回复点击事件
+    function Ajaxrecommend(id){
+        d = $(this).parents('dd').find('#comm').children('.comment-post').html();
+        // console.log()
+        alert(d);
+    }
 
 </script>
 <!-- JS脚本结束 -->

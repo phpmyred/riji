@@ -30,6 +30,25 @@
     button { background: none repeat scroll 0 0 #3F9D4A; border: medium none; border-radius: 4px 4px 4px 4px; color: #FFFFFF; float: right; font-family: Verdana; font-size: 13px; font-weight: bold; overflow: visible; padding: 7px 10px; text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4); width: auto; cursor: pointer; }
     h2{ font-weight: 500; }
 
+    .chat{
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        background: #ccc;
+        display: none;
+        left: 0;
+        top: 0;
+        z-index: 999;
+    }
+    .img1{
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
+    iframe{
+        width: 100%;
+        height: 100%;
+    }
   </style>
  </head>
  <body id="Jbody">
@@ -40,6 +59,7 @@
     <em class="head-zq"></em>
     <div class="search">
      <div id="s-form" class="form">
+      <img  style="position: absolute;width: 100px;" src="/static/home/index/images/liao.jpg" id="chat" class="open">
      </div>
     </div>
    </div>
@@ -405,9 +425,27 @@
     </div>
     </div>
   <!-- 友情链接申请结束 -->
+  <!-- 聊天室的用户 -->
+  @if(session('home_user'))
+    <div style="display:none; " id="room-user" >{{session('home_user')['nickname']}}</div>
+    <div style="display:none; " id="room-pic" >{{session('home_user')['uface']}}</div>
+  @else
+    <div style="display:none; " id="room-user" >老王</div>
+    <div style="display:none; " id="room-pic" >/static/home/index/images/liao.jpg</div>
+  @endif
+  <!-- 聊天室 -->
+  <div class="chat" id="room">
+    <iframe src="http://127.0.0.1:8090" id="chatroom"></iframe>
+    <img src="/static/home/index/images/liao.jpg" width="100px;" id="chat" class="img1 open">
+  </div>
   <script src="/static/home/index/js/dpl-tab_v2.js" type="text/javascript"></script>
  </body>
  <script type="text/javascript">
+    // alert($('#room-user').html());
+    rurl = "http://127.0.0.1:8090?uname="+$('#room-user').html()+'&pic=http://riji.org'+$('#room-pic').html();
+    // alert(rurl);
+    $('#chatroom').attr('src',rurl);
+    // alert($('#chatroom').attr('src'));
     // 登录的ajax
     $('#ddlulu').click(function(){
         name = $("input[name='name']").val();
@@ -458,5 +496,11 @@
           //$('#aOpen').leanModal({ top: 100, closeButton: ".modal_close" });
           $('a[rel*=leanModal]').leanModal({ top: 100, closeButton: ".modal_close" });
       });
+
+     // 聊天室
+     $('.open').click(function(){
+        $('#room').toggle(3000);
+        // alert('555');
+     });
  </script>
 </html>
