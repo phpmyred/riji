@@ -19,7 +19,7 @@ class NodeController extends Controller
         //获取搜索关键词
         $k = $request->input('keywords');
         //获取列表数据
-        $data = DB::table('node')->where('name','like','%'.$k.'%')->paginate(5);
+        $data = DB::table('node')->orderBy('id','desc')->where('name','like','%'.$k.'%')->paginate(20);
 
         return view('admin.AdminUser.node.index',[
             'menu_admin'    => 'active',
@@ -48,6 +48,7 @@ class NodeController extends Controller
     public function add(NodeInsert $request)
     {
         $data = $request->except(['_token']);
+        $data['mname']  = $data['mname'].'Controller';
 
         $row = DB::table('node')->insert($data);
         // 判断是否加入成功

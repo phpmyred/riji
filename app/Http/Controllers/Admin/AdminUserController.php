@@ -235,7 +235,7 @@ class AdminUserController extends Controller
             ->where('log.status',0)
             ->orderBy('log.id','desc')
             ->select('log.*','u.name')
-            ->paginate(10);
+            ->paginate(20);
         // 将数据返回视图
         return view('admin.AdminUser.user.log',[
             'menu_admin'        => 'active',
@@ -259,4 +259,11 @@ class AdminUserController extends Controller
             return back()->with('error','删除失败');
         }
     }
+
+    //将登陆日记以excel格式导出
+    public function exportLog(Request $req) {
+
+
+    }
+
 }

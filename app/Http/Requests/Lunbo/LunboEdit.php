@@ -24,14 +24,12 @@ class LunboEdit extends FormRequest
     public function rules()
     {
         return [
-            'pic' => 'required',
             'url' => 'required|url'
         ];
     }
 
     public function messages() {
         return [
-            'pic.required' => '图片不能为空',
             'url.required' => 'url不能为空',
             'url.url' => 'url链接格式不对'
         ];

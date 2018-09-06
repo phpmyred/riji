@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="csrf-token" id="csrftoken" content="{{ csrf_token() }}">
-    <title>会员注册_日记网</title>
-    <meta name="keywords" content="会员注册" />
-    <meta name="description" content="日记网会员注册" />
+    <title>忘记密码_日记网</title>
+    <meta name="keywords" content="忘记密码" />
+    <meta name="description" content="忘记密码" />
     <link href="/static/home/register/static/css/reg_1.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/home/register/bs/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/home/register/static/css/mycss1.css">
@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-lg-2 control-label">邮箱</label>
                         <div class="col-lg-7">
-                            <input type="text" autocomplete="off" placeholder="请输入邮箱帐号..." id="f_email" class="form-control" name="email">
+                            <input type="text" autocomplete="off" placeholder="请输入邮箱..." id="f_email" class="form-control" name="email">
                         </div>
                         <span  class="col-lo-3 hide">邮箱错误</span>
                     </div>

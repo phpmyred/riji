@@ -18,26 +18,29 @@
         <!--breadcrumbs end -->
         </div>
    </div>
-    <div class="wrapper">
+<div class="wrapper">
    <div class="row">
+
     <div class="col-sm-12">
      <section class="panel">
-     <!-- 搜索  -->
-     <div class="panel-body col-sm-6">
-        <h4>登录日志</h4>
-     </div>
-      <div class="panel-body col-sm-6 text-right">
-       <form class="form-inline" role="form" method="get" action="/bk_adminuser/log">
-        <div class="form-group">
-         <label class="sr-only" for="exampleInputEmail2">用户名搜索</label>
-         <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter name" name="keywords" />
+         <!-- 搜索  -->
+        <div class="panel-body col-sm-3">
+            <h4>登录日志</h4>
         </div>
-
-        <button type="submit" class="btn btn-primary">搜索</button>
-       </form>
-      </div>
+        <div class="panel-body col-sm-3">
+            <button type="button" class="btn btn-info" id="exportExcel">导出到Excel</button>
+        </div>
+        <div class="panel-body col-sm-6 text-right">
+            <form class="form-inline" role="form" method="get" action="/bk_adminuser/log">
+                <div class="form-group">
+                     <label class="sr-only" for="exampleInputEmail2">用户名搜索</label>
+                     <input type="text" class="form-control" id="exampleInputEmail2" placeholder="Enter name" name="keywords" />
+                </div>
+                <button type="submit" class="btn btn-primary">搜索</button>
+            </form>
+        </div>
       <div class="panel-body" style="display: block;">
-       <table class="table  table-hover ">
+        <table class="table  table-hover ">
         <thead>
          <tr>
           <th> ID</th>
@@ -63,7 +66,7 @@
          @endforeach
         </tbody>
        </table>
-       <!-- 分页 -->
+        <!-- 分页 -->
          <div class="row">
            <div class="col-lg-6" >
                 <div class="dataTables_info" id="editable-sample_info">
@@ -74,13 +77,16 @@
                  {{$data->appends($request)->render()}}
            </div>
         </div>
-
       </div>
      </section>
     </div>
    </div>
   </div>
+<script>
+$("#exportExcel").click(function(){
+    alert( 123 );
+});
+</script>
 <!--右侧显示内容区域 结束-->
-
 @endsection
 

@@ -22,8 +22,8 @@
                   <i class="fa fa-gavel"></i>
                 </div>
                 <div class="state-value">
-                  <div class="value">230</div>
-                  <div class="title">New Order</div>
+                  <div class="value">{{$users_count}}</div>
+                  <div class="title">注册会员数量</div>
                 </div>
               </div>
             </div>
@@ -33,8 +33,8 @@
                   <i class="fa fa-tags"></i>
                 </div>
                 <div class="state-value">
-                  <div class="value">3490</div>
-                  <div class="title">Copy Sold</div>
+                  <div class="value">{{$cates_count}}</div>
+                  <div class="title">分类数量</div>
                 </div>
               </div>
             </div>
@@ -46,8 +46,8 @@
                   <i class="fa fa-money"></i>
                 </div>
                 <div class="state-value">
-                  <div class="value">22014</div>
-                  <div class="title"> Total Revenue</div>
+                  <div class="value">{{$links_count}}</div>
+                  <div class="title"> 友情链接数量</div>
                 </div>
               </div>
             </div>
@@ -57,8 +57,8 @@
                   <i class="fa fa-eye"></i>
                 </div>
                 <div class="state-value">
-                  <div class="value">390</div>
-                  <div class="title"> Unique Visitors</div>
+                  <div class="value">{{$content_count}}</div>
+                  <div class="title"> 日记数量</div>
                 </div>
               </div>
             </div>

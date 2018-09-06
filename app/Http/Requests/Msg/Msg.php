@@ -25,7 +25,8 @@ class Msg extends FormRequest
     {
         return [
             'nickname' => 'required|max:20',
-            'birthday' => 'required'
+            'birthday' => 'required',
+            'qq'       => 'required'
         ];
     }
 
@@ -33,7 +34,8 @@ class Msg extends FormRequest
         return [
             'nickname.required' => '昵称不能为空',
             'nickname.max'      => '昵称不能超过20个字符',
-            'birthday.required' => '出生日期不能为空'
+            'birthday.required' => '出生日期不能为空',
+            'qq.required' => 'qq不能为空'
         ];
     }
 }
