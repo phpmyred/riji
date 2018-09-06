@@ -320,22 +320,10 @@
     {{--diggPost('good',{{$contents->id}})--}}
 
     $diggGood.click(function(){
-        @if( empty( session('home_user')['id'] ) )
-            if ( confirm('请先登录!') ) {
-                window.location.href = '/';
-            }
-        @else
-            diggPost('good',{{$contents->id}});
-        @endif
+        diggPost('good',{{$contents->id}});
     });
     $diggBad.click(function(){
-        @if( empty( session('home_user')['id'] ) )
-        if ( confirm('请先登录!') ) {
-            window.location.href = '/';
-        }
-        @else
         diggPost('bad',{{$contents->id}});
-        @endif
     });
 
     function diggPost($type,$id) {
@@ -349,16 +337,18 @@
                 uid: $("meta[name='id']").attr('content')
             },
             success:function(res) {
-                if ( res.type == 'good' ) { //点赞后点赞数通过DOM加上
+                if ( res.type == 'good' && res.code == '000' ) { //点赞后点赞数通过DOM加上
                     $(".c_good").find('i').each(function(){
                         $n1 = parseInt( $(this).text() );
                         $(this).text( $n1+1 );
                     });
-                } else if( res.type == 'bad' ) {
+                } else if( res.type == 'bad' && res.code == '111' ) {
                     $(".c_bad").find('i').each(function(){
                         $n1 = parseInt( $(this).text() );
                         $(this).text( $n1+1 );
                     });
+                } else if( res.code == '222') {
+                    window.location.href='/';
                 }
                 alert( res.msg );
             },error:function(err) {

@@ -108,6 +108,14 @@ class ListController extends Controller
     }
 
     public function digg(Request $req) {
+        if ( empty( session('home_user') ) ) {
+            return response()->json([
+                'code'      => '222',
+                'msg'       => '请登录后再点击',
+                'time'      => time()
+            ]);
+        }
+
         if ( $req->ajax() ) {
             $type   = $req->input('digg');
             $uid    = $req->input('uid');
