@@ -16,7 +16,10 @@ class QiandaoController extends Controller
     		->join('users as u','qdd.uid','=','u.id')
     		->select('qdd.id','u.name','qdd.score','qdd.created_at')
     		->where('u.id','=',$id)
-    		->paginate(2);
-    	return view('home.person.qiandao',['data'=>$data]);
+    		->paginate(6);
+            
+        $count = DB::table('qiandao_detail')->where('uid','=',$id)->count();
+
+    	return view('home.person.qiandao',['data'=>$data,'count'=>$count]);
     }
 }

@@ -9,13 +9,17 @@ use DB;
 class ArticleController extends Controller
 {
 	//我的文章列表
-    public function index() {
+    public function index(Request $req) {
+        $all = $req->session()->all();
+        $id = $all['home_user']['id'];
     	$data = DB::table('content')
     		->select('id','title','status','updated_at')
-    		->where('uname','=','匿名')
+    		->where('uid','=',$id)
     		->where('status','!=','3')
-    		->paginate(5);
-    	return view('home.Person.article',['data'=>$data]);
+    		->paginate(8);
+        $count = DB::table('content')->where('uid','=',$id)->count();
+
+    	return view('home.Person.article',['data'=>$data,'count'=>$count]);
     }
 
     //删除日记

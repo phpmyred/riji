@@ -1,7 +1,7 @@
 <div class="ab_left">
   	<dl>
       <dt>会员中心</dt>
-      <dd><a class="hover" href="/ps_index">我的个人中心</a></dd>
+      <dd><a href="/ps_index">我的个人中心</a></dd>
       <dd><a href="/ps_riji">日记投稿</a></dd>
       <!--<dd><a href="/user/zuowen_add">作文投稿</a></dd>
       <dd><a href="/user/tougaoguize.html">投稿规则</a></dd>-->

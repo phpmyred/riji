@@ -37,9 +37,10 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::get('/list/{id}','ListController@index');//列表页面
     Route::get('/list/{id}/show','ListController@show');//详情页面
     Route::post('/digg','ListController@digg');// 传送参数digg为good时 为顶 | digg为bad时为 踩
+    Route::get('/comment','CommentContorller@index');//回复AJAX
 
     //个人中心模块
-    Route::group(['namespace' => 'Person'], function () {
+    Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
         Route::get('ps_index', 'IndexController@index');//我的个人中心
         Route::get('ps_index/qiandao','IndexController@qiandao'); //个人中心是否签到
         Route::get('ps_riji', 'RijiController@index'); //日记投稿

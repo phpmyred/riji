@@ -4,6 +4,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="id" content="{{session('home_user')['id']}}">
     <meta http-equiv="Cache-Control" content="no-transform " />
+
     <title>{{$contents->title}}_日记网</title>
     <meta name="keywords" content="我的手肿了" />
     <meta name="description" content="我的手肿了:今天，我和爸爸妈妈在来福士吃完晚饭——“麻将”以后，逛起了商场。 突然，我的手臂上似乎被蚊子叮了一口，肿了一小块，痒痒的。我立刻拿起无比滴在痒的位置涂抹。过了一会儿" />
@@ -119,145 +120,80 @@
                         <li>下一篇：@if($nextPage) <a href='/list/{{$nextPage->id}}/show' title="{{$nextPage->title}}">{{changeStr($nextPage->title,20,'...')}}</a> @else 没有了 @endif </li>
                     </ul>
                     <div style="clear:both"></div>
-                    <script type="text/javascript" src="/static/home/show/js/jquery.emoticons_3.js"></script>
-                    {{--<script>--}}
-                        {{--$.emoticons({--}}
-                            {{--'activeCls':'trigger-active'--}}
-                        {{--},function(api){--}}
-                            {{--var $content = $('textarea[name="msg"]');--}}
-                            {{--var $result  = $('#result');--}}
-                            {{--$('#format').click(function(){--}}
-                                {{--$result.html(api.format($content.val()));--}}
-                            {{--});--}}
-                        {{--});--}}
-                    {{--</script>--}}
+                    <div class="emoticons">
+                        <div style="width:682px; margin-top:15px;">
+                            <div class="publisher">
+                                <textarea name="msg" id="msg" class="comment-msg-txt"></textarea>
+                                <div style="width:704px">
+                                    <a class="trigger" href="javascript:;">☺</a>
+                                    <span id="a" style="margin-left:20px">已输入：1/200 字符</span>
+                                    <button type="button" class="button" id="comment">评论</button>
+                                </div>
+                            </div>
+                       </div>
+                    </div>
 
-                    {{--<div class="emoticons">--}}
-                        {{--<div style="width:682px; margin-top:15px;">--}}
-                            {{--<div class="publisher">--}}
-                                {{--<textarea name="msg" placeholder="" id="msg" class="comment-msg-txt"></textarea>--}}
-                                {{--<div style="width:704px">--}}
-                                    {{--<span id="a" style="margin-left:20px">最可输入200字 </span>--}}
-                                    {{--<button type="button" class="button" onClick='AjaxComment()'>评论</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                        {{--</div>--}}
-                    {{--</div>--}}
-                    {{--<div class="comment-list"> </div>--}}
-                    {{--<div class="comment-more"> <a href="javascript:void(0);" onClick='ListComment()'>加载更多</a> </div>--}}
-                    {{--<script type="text/javascript">--}}
-                        {{--var aid = "55230";--}}
-                        {{--var page = 1;--}}
-                        {{--ListComment(1);--}}
-                        {{--function ListComment() {--}}
-                            {{--$(".comment-more a").html("加载ing..");--}}
-                            {{--$.ajax({--}}
-                                {{--type : 'post',--}}
-                                {{--url : "/plus/comment.php?action=list",--}}
-                                {{--data : { aid: aid,page:page},--}}
-                                {{--dataType : 'JSON',--}}
-                                {{--success: function(jsonData ) {--}}
-                                    {{--if (jsonData.totalcount<4) {--}}
-                                        {{--$(".comment-more").hide();--}}
-                                    {{--}--}}
-                                    {{--if (jsonData.status == 1) {--}}
-                                        {{--$(".comment-list").append(jsonData.info);--}}
-                                        {{--$(".comment-more a").html("加载更多");--}}
-                                        {{--page++;--}}
-                                    {{--}--}}
-                                    {{--else {--}}
-                                        {{--$(".comment-more a").html(jsonData.info);--}}
-                                        {{--return false;--}}
-                                    {{--}--}}
+                    <div class="comment-list">
+                        @foreach($comment as $v)
+                        <dl class="fix"  >
+                            <dt>
+                                <a href="" target="_blank">
+                                    <img src="{{$v->uface}}" width="46" height="46">
+                                </a>
+                            </dt>
+                            <dd id="comm1828">
+                                <a href="" target="_blank">
+                                    <span style="color:#3ACA81">{{$v->nickname}}</span>
+                                </a>：{{$v->content}}
+                                <div class="comment-info"> {{date('m-d H:i',$v->created_at)}}
+                                    <a href="javascript:void(0);" onclick="Ajaxrecommend({{$v->uid}})">回复</a>
+                                </div>
+                                <div class="comment-recommend">
+                                    <dl class="fix wu" id="wu">
+                                        <dt>
+                                            <a href="" target="_blank">
+                                                <img src="/images/face/boy8.jpg" width="46" height="46">
+                                            </a>
+                                        </dt>
+                                        <dd>
+                                            <a href="" target="_blank">
+                                                <span style="color:#3ACA81"></span>
+                                            </a>：
+                                            <img src="/image/yiwen.gif">
+                                            <img src="/image/yiwen.gif">什么鬼怎么打出来的6666666666666
+                                            <div class="comment-info"> 05-12 10:57
+                                                <a href="javascript:void(0);" onclick="Ajaxrecommend(1828)">回复
+                                                </a>
+                                            </div>
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="comment-post">
+                                    <div class="emoticons">
+                                        <div class="publisher">
+                                            <div class="comment-msg">
+                                                <textarea name="msg" id="msg4367" class="comment-msg-txt"></textarea>
+                                                    <p></p>
+                                                    <p>
+                                                        <a class="trigger" href="javascript:;">☺</a>
+                                                        <button type="button" class="button" onclick="AjaxReComment()">回复</button>
+                                                        <button type="button" class="button2 mr20" onclick="DelComment()">取消</button>
+                                                    </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </dd>
+                        </dl>
+                        @endforeach
+                    </div>
 
-
-                                {{--}--}}
-                            {{--});--}}
-                        {{--};--}}
-                        {{--function AjaxComment() {--}}
-                            {{--var content = $("#msg");--}}
-                            {{--if (content.val().length < 5) {--}}
-                                {{--alert('评论内容必须大于5个字');--}}
-                                {{--return false;--}}
-                            {{--}--}}
-                            {{--$.ajax({--}}
-                                {{--type : 'post',--}}
-                                {{--url : "/plus/comment.php?action=save",--}}
-                                {{--data : { aid: aid,content:content.val()},--}}
-                                {{--dataType : 'JSON',--}}
-                                {{--success: function(jsonData ) {--}}
-                                    {{--if (jsonData.status == 1) {--}}
-                                        {{--$(content).val(''); //发布后置空评论内容--}}
-                                        {{--$(".comment-list").prepend(jsonData.info); //加载到列表顶部--}}
-                                    {{--}--}}
-                                    {{--else {--}}
-                                        {{--alert(jsonData.info);--}}
-                                        {{--return false;--}}
-
-                                    {{--}--}}
-                                {{--}--}}
-                            {{--});--}}
-                        {{--};--}}
-
-                        {{--function Ajaxrecommend(id) {--}}
-                            {{--$(".comment-list").find(".comment-post").remove();--}}
-                            {{--$("#comm"+id).append("<div class='comment-post'><div class='emoticons'><div class='publisher'><div class='comment-msg'><textarea name='msg' id='msg"+id+"' class='comment-msg-txt'></textarea></p><p><a class='trigger' href='javascript:;'>☺</a><button type='button' class='button' onClick='AjaxReComment("+id+")'>回复</button><button type='button' class='button2 mr20' onClick='DelComment("+id+")'>取消</button></div></div></div></div>");--}}
-                        {{--};--}}
-                        {{--function DelComment(id) {--}}
-                            {{--$(".comment-list").find(".comment-post").remove();--}}
-
-                        {{--};--}}
-                        {{--function AjaxReComment(id) {--}}
-                            {{--var content = $("#msg"+id);--}}
-                            {{--if (content.val().length < 5) {--}}
-                                {{--alert('评论内容必须大于5个字');--}}
-                                {{--return false;--}}
-                            {{--}--}}
-                            {{--$.ajax({--}}
-                                {{--type : 'post',--}}
-                                {{--url : "/plus/comment.php?action=save",--}}
-                                {{--data : { aid: aid,fid:id,content:content.val()},--}}
-                                {{--dataType : 'JSON',--}}
-                                {{--success: function(jsonData ) {--}}
-                                    {{--if (jsonData.status == 1) {--}}
-                                        {{--$(content).val(''); //发布后置空评论内容--}}
-                                        {{--$("#comm"+id+" .comment-recommend").prepend(jsonData.info); //加载到列表顶部--}}
-                                    {{--} else {--}}
-                                        {{--alert(jsonData.info);--}}
-                                        {{--return false;--}}
-
-                                    {{--}--}}
-                                {{--}--}}
-                            {{--});--}}
-                        {{--};--}}
-                    {{--</script>--}}
-                    {{--<script language="javascript">--}}
-                        {{--<!----}}
-                        {{--var ppl=70; //每条长--}}
-                        {{--var maxl=200; //总长--}}
-                        {{--document.onkeydown=function(){--}}
-                            {{--var s=document.getElementById("msg").value.length +1;--}}
-                            {{--if(s>maxl)document.getElementById("msg").value=document.getElementById("msg").value.substr(0,maxl-1);--}}
-                            {{--else document.getElementById("a").innerHTML="已输入："+s+"/"+maxl+" 字符"--}}
-                        {{--};--}}
-                        {{--function cha(){--}}
-                            {{--var txt=document.getElementById("msg").value,tl=txt.length;--}}
-                            {{--var txtArray=[],k=(tl/ppl<=1)?1:Math.ceil(tl/ppl);--}}
-                            {{--for (var i=0;i<k;i++){--}}
-                                {{--txtArray[i]=txt.substr(i*ppl,ppl);--}}
-                                {{--alert(txtArray[i]) ;--}}
-                            {{--}--}}
-                            {{--document.getElementById("msg").value="";--}}
-                            {{--document.getElementById("a").innerHTML="已输入字符: "--}}
-                        {{--}--}}
-                        {{--//-->--}}
-                    {{--</script>--}}
                 </div>
             </div>
         </div>
-        <div class="knows shadow border mb30" style=" padding-top:3px;padding-left:12px;">
-            {{--<script type="text/javascript" src="/static/home/show/js/niaokhqxjlprx_3.js"></script>--}}
-        </div>
+        <!-- <div class="knows shadow border mb30" style=" padding-top:3px;padding-left:12px;">
+            <script type="text/javascript" src="/static/home/show/js/niaokhqxjlprx_3.js"></script>
+        </div> -->
         <div class="knows shadow border mb30">
             <div class="ar_tit"> <span class="mark">相关日记</span> </div>
             <div class="lBox-tb lBox-List2-tb">
@@ -271,10 +207,10 @@
     </div>
     <div class="r-box">
         <div id="JscrollBox">
-            <div class="mb30" style="width: 303px; height: 250px; background:white;">
+            <!-- <div class="mb30" style="width: 303px; height: 250px; background:white;">
                 广告位置
                 <script type="text/javascript">a300();</script>
-            </div>
+            </div> -->
             <div class="relation shadow border tjzt mb30">
                 <div class="list3_th"><span class="mark">阅读排行</span></div>
                 <ul class="red_ph">
@@ -312,12 +248,53 @@
     <div style="clear:both;"></div>
     <div class="bqsm">Copyright &copy; 2018</div>
 </div>
+<dl class="fix" id='cmt' style="display: none;">
+    <dt>
+        <a href="" target="_blank">
+            <img src="{{session('home_user')['uface']}}" width="46" height="46">
+        </a>
+    </dt>
+    <dd id="comm1828">
+        <a href="" target="_blank">
+            <span style="color:#3ACA81">{{session('home_user')['nickname']}}:</span>
+        </a> <p id="cnt"></p>
+        <div class="comment-info" > <span id="time"></span>
+            <a href="javascript:void(0);" onclick="Ajaxrecommend({{session('home_user')['id']}})">回复</a>
+        </div>
+    </dd>
+</dl>
+<!-- 评论回复的JS -->
+<script type="text/javascript">
+    $('#comment').click(function(){
+        com = $('#msg').val();
+        id =  {{$contents->id}};
+        if (com.length < 5) {
+            alert('评论回复不能少于5个字');
+        } else {
+            $.get('/comment',{id:id,content:com},function(res){
+                if (res.code === 00000) {
+                    console.log(res);
+                    dl = $('#cmt').clone();
+                    dl.css('display','block');
+                    dl.find('#cnt').html(com);
+                    dl.find('#time').html(res.ctime);
 
-{{--赞和踩--}}
+                    $('.comment-list').append(dl);
+                } else if(res.code === 10000) {
+                    alert(res.msg);
+                }
+            },'json');
+        }
+    });
+
+</script>
+<!-- JS脚本结束 -->
+
+<!-- 赞和踩 -->
 <script>
     $diggGood   = $("#diggGood");//赞按钮
     $diggBad    = $("#diggBad");//踩按钮
-    {{--diggPost('good',{{$contents->id}})--}}
+    diggPost('good',{{$contents->id}})
 
     $diggGood.click(function(){
         diggPost('good',{{$contents->id}});
@@ -363,5 +340,7 @@
 <script type="text/javascript">
     //document.getElementById("click").innerHTML = document.getElementById("click_num").innerHTML;
 </script>
+
+
 </body>
 </html>

@@ -63,6 +63,8 @@ class Kernel extends HttpKernel
         'login' => \App\Http\Middleware\LoginMiddleware::class,
         //验证前台是否进入维护
         'homemaintain'  => \App\Http\Middleware\Homemaintain::class,
+        //进入个人中心
+        'HomeLogin' => \App\Http\Middleware\HomeLogin::class,
 
     ];
 }

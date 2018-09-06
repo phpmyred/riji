@@ -14,27 +14,30 @@
       </tr> 
      </thead> 
      <tbody> 
-      @foreach($data as $v)
-      <tr>
-       <td class="hy_title"> {{$v->title}}</td> 
-       <td>
-         <font color="black">
-           @if($v->status == 0)
-            通过审核
-           @elseif($v->status == 1)
-            未审核
-           @elseif($v->status == 2)
-            未通过审核
-           @endif
-         </font>
-       </td>
-       <td>{{date("Y-m-d H:i:s",$v->updated_at)}}</td> 
-       <td class="tools"> 
-        <a href="ps_article/del/{{$v->id}}">删除</a> 
-       </td>
-      </tr>
-      
-      @endforeach
+      @if($count < 1)
+        <td align="center" class="hy_title" colspan="4">暂无数据</td>
+      @else
+        @foreach($data as $v)
+        <tr>
+         <td class="hy_title"> {{$v->title}}</td> 
+         <td>
+           <font color="black">
+             @if($v->status == 0)
+              通过审核
+             @elseif($v->status == 1)
+              审核中
+             @elseif($v->status == 2)
+              未通过审核
+             @endif
+           </font>
+         </td>
+         <td>{{date("Y-m-d H:i:s",$v->updated_at)}}</td> 
+         <td class="tools"> 
+          <a href="ps_article/del/{{$v->id}}">删除</a> 
+         </td>
+        </tr>
+        @endforeach
+      @endif
      </tbody> 
     </table> 
     <div class="article_pages">

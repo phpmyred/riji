@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
 use think\Exception;
-
+use Cookie;
 class ListController extends Controller
 {
 
@@ -94,6 +94,13 @@ class ListController extends Controller
         $readTop10 = DB::table('content')->select('id','title','num')->orderBy('num','desc')->limit(10)->get();
         //获取年级分类
         $classCates = DB::table('cates')->select('id','pid','name')->whereIn('pid',['29','36','40'])->where('status','!=','1')->orderBy('id','asc')->get();
+        // 获取评论数据
+        $comment = DB::table('comment as c')
+                    ->join('users_detail as u','c.from_uid','=','u.uid')
+                    ->where('c.con_id',$id)
+                    ->select('c.content','c.created_at','u.nickname','u.uface','u.uid')
+                    ->get();
+        // dd($comment);
         return view('home.index.show',[
             'cates'         => $cate,
             'parent_cate'   => $parent_cate,
@@ -103,7 +110,8 @@ class ListController extends Controller
             'nextPage'      => $nextPage,
             'relateds'      => $relateds,
             'readTop10'     => $readTop10,
-            'classCates'    => $classCates
+            'classCates'    => $classCates,
+            'comment'       => $comment
         ]);
     }
 
