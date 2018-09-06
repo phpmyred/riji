@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Home\Person;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB;
-use App\Http\Requests\Content\ContentRijiSave;
+use App\Http\Requests\Home\Content;
 
 class RijiController extends Controller
 {
@@ -15,7 +15,7 @@ class RijiController extends Controller
     } 
 
     //日记添加处理
-    public function doadd(ContentRijiSave $req) {
+    public function doadd(Content $req) {
         $all = $req->session()->all();
         $id = $all['home_user']['id'];
         $name = $all['home_user']['name'];

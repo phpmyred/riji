@@ -39,7 +39,7 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::post('/digg','ListController@digg');// 传送参数digg为good时 为顶 | digg为bad时为 踩
 
     //个人中心模块
-    Route::group(['namespace' => 'Person'], function () {
+    Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
         Route::get('ps_index', 'IndexController@index');//我的个人中心
         Route::get('ps_index/qiandao','IndexController@qiandao'); //个人中心是否签到
         Route::get('ps_riji', 'RijiController@index'); //日记投稿

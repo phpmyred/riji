@@ -14,14 +14,18 @@
                 </tr>
               </thead>
               <tbody>
-                @foreach($data as $v)
-                <tr>
-                  <td class="hy_title">{{$v->id}}</td>
-                  <td>{{$v->name}}</td>
-                  <td>{{$v->score}}</td>
-                  <td>{{date("Y-m-d H:i:s",$v->created_at)}}</td>
-                </tr>
-                @endforeach
+                @if($count < 1)
+                  <td align="center" class="hy_title" colspan="4">暂无数据</td>
+                @else
+                  @foreach($data as $v)
+                  <tr>
+                    <td class="hy_title">{{$v->id}}</td>
+                    <td>{{$v->name}}</td>
+                    <td>{{$v->score}}</td>
+                    <td>{{date("Y-m-d H:i:s",$v->created_at)}}</td>
+                  </tr>
+                  @endforeach
+                @endif
               </tbody> 
             </table>
       <div class="article_pages">
