@@ -55,6 +55,16 @@ class SpaceController extends Controller
     public function gz(Request $req,$id) {
         $all = $req->session()->all();
         $login_id = $all['home_user']['id'];
+
+        $check = DB::table('guanzhu')
+            ->where('from_uid','=',$login_id)
+            ->where('to_uid','=',$id)
+            ->first();
+            // dd($check);
+        if(!empty($check)){
+            return back()->with('error','您已关注过该用户了');
+        }
+
         $data['from_uid'] = $login_id;
         $data['to_uid'] = $id;
         $data['create_at'] = time();

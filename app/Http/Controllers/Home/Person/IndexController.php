@@ -25,11 +25,40 @@ class IndexController extends Controller
         $to_uid = DB::table('guanzhu')->where('from_uid','=',$id)->count();
         $qd = DB::table('qiandao')->where('uid','=',$id)->get();
 
+        //获取评论表内容
+        $comment = DB::table('comment as c')
+            ->join('users_detail as ud','c.from_uid','=','ud.uid')
+            ->join('content as con','c.con_id','=','con.id')
+            ->select('c.created_at','ud.nickname','con.title','ud.uid','con.id')
+            ->orderBy('created_at','desc')
+            ->limit(10)
+            ->get();
+
+        //获取我所有的文章con_id
+        // $con_id = DB::table('comment as c')
+        //     ->join('content as con','c.con_id','=','con.id')
+        //     ->select('con.id')
+        //     ->where('con.uid','=',$id)
+            // ->first();
+        // dd($con_id);
+        //获取别人评论我的
+        $comment_me = DB::table('comment as c')
+            ->join('users_detail as ud','c.from_uid','=','ud.uid')
+            ->join('content as con','c.con_id','=','con.id')
+            ->select('c.created_at','ud.nickname','con.title','ud.uid','con.id')
+            ->where('con.uid','=',$id)
+            ->orderBy('created_at','desc')
+            ->limit(6)
+            ->get();
+            // dd($comment_me);
+
     	return view('home.Person.index',[
-            'data'   => $data[0],
-            'to_uid' => $to_uid,
-            'qd'     => $qd,
-            'score'  => $score
+            'data'       => $data[0],
+            'to_uid'     => $to_uid,
+            'qd'         => $qd,
+            'score'      => $score,
+            'comment'    => $comment,
+            'comment_me' => $comment_me
             ]);
     }
 

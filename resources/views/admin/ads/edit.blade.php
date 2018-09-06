@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label for="exampleInputFile">图片链接</label>
                             <input type="file" name="pic" id="file0"><br>
-                            <img style="width:100px" src="{{$data->pic}}" id="img0" alt="{{$data->name}}">
+                            <img style="width:100px" src="{{$data->pic}}" id="img0">
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">广告链接</label>

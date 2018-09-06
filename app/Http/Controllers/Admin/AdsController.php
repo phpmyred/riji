@@ -88,14 +88,20 @@ class AdsController extends Controller
     		//存放到指定位置
     		$req->file('pic')->move(Config::get('app.app_upload'),$name.'.'.$ext);
             //获取图片位置
-            $pic = Config::get('app.app_upload').'/'.$name.'.'.$ext;
+            $pic = ltrim(Config::get('app.app_upload').'/'.$name.'.'.$ext,'.');
     		$data['pic'] = $pic;
     	}
-    	
-    	$data['updated_at'] = time();
+        $data['updated_at'] = time();
+        //获取原来的图片
+        $sele = DB::table('advertising')->where('id','=',$data['id'])->first();
+        $oldPic = $sele->pic;
 
     	$res = DB::table('advertising')->where('id','=',$data['id'])->update($data);
 		if($res){
+            //判断如果有图片上传才删除原来的图片
+            if($req->hasFile('pic')){
+                unlink($oldPic);
+            }
     		return redirect('/bk_ads')->with('success','修改成功');
     	}else{
     		return redirect('/bk_ads/edit/{id}')->with('success','修改失败');

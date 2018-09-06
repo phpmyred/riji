@@ -15,7 +15,13 @@
       <dd>
         笔名：
         <span>
-          <input name="nickname" id="uname" value="{{$data->nickname}}" class="intxt" style="width: auto;height: 24px;border-radius: 3px;border:1px solid #ccc;" type="text">
+          <input name="nickname" id="uname" value="{{$data->nickname}}" class="intxt" style="width: auto;height: 24px;border-radius: 3px;border:1px solid #ccc;text-indent: 5px;" type="text">
+        </span>
+      </dd>
+      <dd>
+        qq：
+        <span>
+          <input name="qq" id="una" value="{{$data->qq}}" class="intxt" style="width: auto;height: 24px;border-radius: 3px;border:1px solid #ccc;margin-left: 10px;text-indent: 5px;" type="text">
         </span>
       </dd>
       <dd>

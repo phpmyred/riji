@@ -90,7 +90,29 @@
               </ul>
             </div>
             <div class="pl_conTxt">
-              <div class="">                 
+              <div class=""> 
+              @foreach($comment_me as $rows)
+                <ul id="dt_list" class="dt_list">
+                  <li>
+                    @if(time()-$rows->created_at < 3600)
+
+                      @if(date('i',time()-$rows->created_at) < 10)
+                        <span>{{date('i',time()-$rows->created_at)-0}}分钟前</span>
+                      @else
+                        <span>{{date('i',time()-$rows->created_at)}}分钟前</span>
+                      @endif
+                    
+                    @elseif(time()-$rows->created_at < 86400)
+                    <span>{{date('G',time()-$rows->created_at)-8}}小时前</span>
+                    @else
+                    <span>{{date('Y-m-d H:i:s',$rows->created_at)}}</span>
+                    @endif
+
+                    <a class="link" href="/ps_space/{{$rows->uid}}" target="_blank">{{$rows->nickname}}</a> 评论了文章 
+                    <a class="key_word" href="/list/{{$rows->id}}/show" target="_blank">{{$rows->title}}</a>
+                  </li>
+                </ul>
+              @endforeach
               </div>
             </div>
           </div>
@@ -102,11 +124,27 @@
             </div>
             <div class="pl_conTxt">
               <div class="">
-
+              @foreach($comment as $row)
                 <ul id="dt_list" class="dt_list">
-                  <li><span>36分钟前</span><a class="link" href="https://www.riji.cn/user/13561/" target="_blank">对对对对对对</a> 评论了文章 <a class="key_word" href="https://www.riji.cn/html/55229.html" target="_blank">老酸奶</a></li>
+                  <li>
+                    @if(time()-$row->created_at < 3600)
+
+                      @if(date('i',time()-$row->created_at) < 10)
+                        <span>{{date('i',time()-$row->created_at)-0}}分钟前</span>
+                      @else
+                        <span>{{date('i',time()-$row->created_at)}}分钟前</span>
+                      @endif
+                    
+                    @elseif(time()-$row->created_at < 86400)
+                    <span>{{date('G',time()-$row->created_at)-8}}小时前</span>
+                    @else
+                    <span>{{date('Y-m-d H:i:s',$row->created_at)}}</span>
+                    @endif
+                    <a class="link" href="/ps_space/{{$row->uid}}" target="_blank">{{$row->nickname}}</a> 评论了文章 
+                    <a class="key_word" href="/list/{{$row->id}}/show" target="_blank">{{$row->title}}</a>
+                  </li>
                 </ul>
-                        
+              @endforeach       
               </div>
             </div>
           </div>
