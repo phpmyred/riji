@@ -38,6 +38,13 @@
     <link href="/static/admin/js/advanced-datatable/css/demo_table.css" rel="stylesheet" />
     <link rel="stylesheet" href="/static/admin/js/data-tables/DT_bootstrap.css" />
 
+    <!--pickers css-->
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/bootstrap-datepicker/css/datepicker-custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/bootstrap-timepicker/css/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/bootstrap-colorpicker/css/colorpicker.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/bootstrap-daterangepicker/daterangepicker-bs3.css" />
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/bootstrap-datetimepicker/css/datetimepicker-custom.css" />
+
     <!--common-->
     <link href="/static/admin/css/style.css" rel="stylesheet">
     <link href="/static/admin/css/style-responsive.css" rel="stylesheet">
@@ -144,6 +151,17 @@ setInterval(function(){
 <script src="/static/admin/js/calendar/evnt.calendar.init.js"></script>
 <script src="/static/admin/js/calendar/moment-2.2.1.js"></script>
 <script src="/static/admin/js/underscore1.5.2.min.js"></script>
+
+<!--pickers plugins-->
+<script type="text/javascript" src="/static/admin/js/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-daterangepicker/moment.min.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-daterangepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-colorpicker/js/bootstrap-colorpicker.js"></script>
+<script type="text/javascript" src="/static/admin/js/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
+<!--pickers initialization-->
+<script src="/static/admin/js/pickers-init.js"></script>
 
 <!--common scripts for all pages-->
 <script src="/static/admin/js/scripts.js"></script>

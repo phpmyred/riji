@@ -10,10 +10,16 @@ class IndexController
 {
 
     public function index() {
-
+        $users_count    = DB::table('users')->orderBy('id')->count();//统计注册会员数量
+        $cates_count    = DB::table('cates')->where('pid','!=',0)->orderBy('id')->count();//分类总数
+        $content_count  = DB::table('content')->orderBy('id')->count();//日记条数
+        $links_count    = DB::table('links')->orderBy('id')->count();//友情链接数
         return view('admin.index.index',[
             'menu_index'    => 'active',
-
+            'users_count'   => $users_count,
+            'cates_count'   => $cates_count,
+            'content_count' => $content_count,
+            'links_count'   => $links_count
         ]);
     }
 

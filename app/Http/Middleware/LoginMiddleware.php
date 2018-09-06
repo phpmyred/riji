@@ -31,7 +31,7 @@ class LoginMiddleware
             $node_list = session('admin_node')['node_list'];
             // 和当前访问权限对比
             if ( empty($node_list[$controller]) || !in_array($action, $node_list[$controller])) {
-                return redirect('/bk_index')->with('error','对不起您，的访问权限不足，请联系我们伟大的涛哥');
+                return redirect('/bk_index')->with('error','对不起!您没有访问权限，请联系后台管理员');
             }
             return $next($request);
         }else{

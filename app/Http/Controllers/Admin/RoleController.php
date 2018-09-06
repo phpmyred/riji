@@ -19,7 +19,7 @@ class RoleController extends Controller
         //获取搜索关键词
         $k = $request->input('keywords');
         //获取列表数据
-        $data = DB::table('role')->where('name','like',"%".$k."%")->paginate(5);
+        $data = DB::table('role')->where('name','like',"%".$k."%")->paginate(10);
 
         return view('admin.AdminUser.role.index',[
             'menu_admin'    => 'active',
@@ -52,13 +52,11 @@ class RoleController extends Controller
     {
         // 获取提交的数据
         $data = $request->except(['_token','role']);
-        $data['created_at'] = time();
-        dd($data);
         $role = $request->input('role');
         //开启一个事务 角色添加成功后 返回该角色的id 然后与nid 拼接
         DB::beginTransaction();
         try {
-            $uid = DB::table('admin_users')->insertGetId($data);
+            $rid = DB::table('role')->insertGetId($data);
             if (!empty($role)) {
                 $datas = [];
                 foreach ($role as $k=>$v) {
@@ -168,15 +166,19 @@ class RoleController extends Controller
         // 获取该角色的权限
         $data = DB::table('role_node')->where('rid','=',$id)->select('nid')->get();
         // 判断是否之前分配过权限
+        $datas = [];
         if ($data) {
-            $datas = [];
             foreach ($data as $v) {
                 $datas[] = $v->nid;
             }
-            return view('admin.AdminUser.role.node',['data'=>$datas,'node'=>$node,'role'=>$role,'menu_admin'=>'active']);
-        } else {
-            return view('admin.AdminUser.role.node',['data'=>array(),'node'=>$node,'role'=>$role,'menu_admin'=>'active']);
         }
+        return view('admin.AdminUser.role.node',[
+            'data'=>$datas,
+            'node'=>$node,
+            'role'=>$role,
+            'menu_admin'=>'active'
+        ]);
+
     }
 
     /**

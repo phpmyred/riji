@@ -60,6 +60,7 @@
       </ul>
      </span>
       @endforeach
+     <a href="/">电影院</a>
     </div>
    </div>
   </div>
