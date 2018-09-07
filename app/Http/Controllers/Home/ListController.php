@@ -62,6 +62,9 @@ class ListController extends Controller
      * @return string
      */
     public function show($id) {
+        if ( session('home_user') ) {
+            $login_id = session('home_user')['id'];
+        }
         //$id对应的内容点击数量+1
         DB::table('content')->where('id',$id)->increment('num');
         //获取上一篇
@@ -98,9 +101,19 @@ class ListController extends Controller
         $comment = DB::table('comment as c')
                     ->join('users_detail as u','c.from_uid','=','u.uid')
                     ->where('c.con_id',$id)
-                    ->select('c.content','c.created_at','u.nickname','u.uface','u.uid')
+                    ->select('c.id','c.from_uid','c.content','c.created_at','u.nickname','u.uface','u.uid')
+                    ->orderBy('created_at','asc')
                     ->get();
-        // dd($comment);
+                    // dd($comment);
+        //获取回复内容
+        $recomment = DB::table('comment_reply as cr')
+                    ->join('users_detail as ud','cr.from_uid','=','ud.uid')
+                    ->where('cr.con_id',$id)
+                    // ->where('cr.from_uid',$login_id)
+                    ->select('cr.id','cr.reply_id','cr.reply_content','cr.created_at','cr.from_uid','cr.c_id','ud.nickname','ud.uface','ud.uid')
+                    ->orderBy('created_at','asc')
+                    ->get();
+            // dd($recomment);
         return view('home.index.show',[
             'cates'         => $cate,
             'parent_cate'   => $parent_cate,
@@ -111,7 +124,8 @@ class ListController extends Controller
             'relateds'      => $relateds,
             'readTop10'     => $readTop10,
             'classCates'    => $classCates,
-            'comment'       => $comment
+            'comment'       => $comment,
+            'recomment'     => $recomment
         ]);
     }
 
