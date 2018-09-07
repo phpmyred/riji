@@ -28,7 +28,10 @@
             <h4>登录日志</h4>
         </div>
         <div class="panel-body col-sm-3">
-            <button type="button" class="btn btn-info" id="exportExcel">导出到Excel</button>
+            <form action="/bk_adminuser/getLogFile" method="post">
+                {{csrf_field()}}
+                <button type="submit" class="btn btn-info" id="exportExcel">导出到Excel</button>
+            </form>
         </div>
         <div class="panel-body col-sm-6 text-right">
             <form class="form-inline" role="form" method="get" action="/bk_adminuser/log">
@@ -82,11 +85,6 @@
     </div>
    </div>
   </div>
-<script>
-$("#exportExcel").click(function(){
-    alert( 123 );
-});
-</script>
 <!--右侧显示内容区域 结束-->
 @endsection
 

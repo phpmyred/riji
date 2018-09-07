@@ -183,7 +183,7 @@ Route::group(['middleware'=>'login','namespace' => 'Admin'], function () {
     Route::post('bk_adminuser/dorole', 'AdminUserController@dorole');//管理员角色分配操作
     Route::get('bk_adminuser/log', 'AdminUserController@log');//登录日志页面
     Route::get('bk_adminuser/logdel/{id}', 'AdminUserController@logdel')->where(['id' => '\d+']);//登录日志删除
-    Route::get('bk_adminuser/exportLogin','AdminUserController@exportLog');//日记记录以Excel文件导出
+    Route::post('bk_adminuser/getLogFile','AdminUserController@getLogFile');//日记记录以Excel文件导出
 
     //系统设置模块
     Route::get('/bk_system/homemaintain', 'SystemController@maintain_home');//前台维护页面
