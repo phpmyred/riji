@@ -141,45 +141,56 @@
                                     <img src="{{$v->uface}}" width="46" height="46">
                                 </a>
                             </dt>
-                            <dd id="comm">
+                            <dd id="comm" class="comm">
                                 <a href="" target="_blank">
                                     <span style="color:#3ACA81">{{$v->nickname}}</span>
                                 </a>：{{$v->content}}
                                 <div class="comment-info"> {{date('m-d H:i',$v->created_at)}}
-                                    <a href="javascript:void(0);" onclick="Ajaxrecommend({{$v->uid}})">回复</a>
+                                    <a href="javascript:void(0);" onclick="Ajaxrecommend({{$v->id}})">回复</a>
                                 </div>
+                                <!-- 回复内容 -->
+                                <!-- 回复表中的对应评论id和评论表id相等时显示对应回复内容 -->
                                 <div class="comment-recommend">
-                                    <dl class="fix wu" id="wu">
-                                        <dt>
-                                            <a href="" target="_blank">
-                                                <img src="/images/face/boy8.jpg" width="46" height="46">
-                                            </a>
-                                        </dt>
-                                        <dd>
-                                            <a href="" target="_blank">
-                                                <span style="color:#3ACA81"></span>
-                                            </a>：
-                                            <img src="/image/yiwen.gif">
-                                            <img src="/image/yiwen.gif">什么鬼怎么打出来的6666666666666
-                                            <div class="comment-info"> 05-12 10:57
-                                                <a href="javascript:void(0);" onclick="Ajaxrecommend(1828)">回复
+                                @foreach($recomment as $value)
+                                    @if( $value->c_id == $v->id)
+                                    
+                                        <dl class="fix wu" id="wu">
+                                            <dt>
+                                                <a href="" target="_blank">
+                                                    <img src="{{$value->uface}}" width="46" height="46">
                                                 </a>
-                                            </div>
-                                        </dd>
-                                    </dl>
+                                            </dt>
+                                            <dd>
+                                                <a href="" target="_blank">
+                                                    <span style="color:#3ACA81">{{$value->nickname}}</span>
+                                                </a>：
+                                                {{$value->reply_content}}
+                                                <div class="comment-info"> {{date('m-d H:i',$value->created_at)}}
+                                                    <a href="javascript:void(0);" onclick="ReAjaxrecommend({{$v->id}},'{{$value->nickname}}')">回复
+                                                    </a>
+                                                </div>
+                                            </dd>
+                                        </dl>
+                                    
+                                    @else
+
+                                    @endif
+                                @endforeach
                                 </div>
+                                <!-- 回复内容结束 -->
                                 <!-- 这里是评论框 -->
-                                <div class="comment-post" style="display: none;" id="text{{$v->uid}}">
+                                <div class="comment-post{{$v->id}} comment-post" style="display: none" id="text{{$v->uid}}">
                                     <div class="emoticons">
                                         <div class="publisher">
                                             <div class="comment-msg">
-                                                <textarea name="msg" id="msg4367" class="comment-msg-txt"></textarea>
+                                                <textarea name="msg" id="msg4367" class="comment-msg-txt recomment recomment{{$v->id}}"></textarea>
                                                 <p></p>
                                                 <p>
                                                     <a class="trigger" href="javascript:;">☺</a>
-                                                        <button type="button" class="button" onclick="AjaxReComment()">回复</button>
-                                                        <button type="button" class="button2 mr20" onclick="DelComment()">取消</button>
+                                                        <button type="button" class="button" onclick="AjaxReComment({{$v->from_uid}},{{$v->id}})">回复</button>
+                                                        <button type="button" class="button2 mr20" onclick="DelComment({{$v->id}})">取消</button>
                                                 </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -265,6 +276,24 @@
     </dd>
 </dl>
 
+<dl class="fix wu" id="clone" style="display: none;">
+    <dt>
+        <a href="" target="_blank">
+            <img src="{{session('home_user')['uface']}}" width="46" height="46">
+        </a>
+    </dt>
+    <dd>
+        <a href="" target="_blank">
+            <span style="color:#3ACA81">{{session('home_user')['nickname']}}:</span>
+        </a>：
+        <p id="cnts"></p>
+        <div class="comment-info"> <span id="times"></span>
+            <a href="javascript:void(0);" onclick="ReAjaxrecommend({{$v->id}},'{{$value->nickname}}')">回复
+            </a>
+        </div>
+    </dd>
+</dl>
+
 </div>
 <!-- 评论的JS -->
 <script type="text/javascript">
@@ -292,9 +321,47 @@
 
     // 回复点击事件
     function Ajaxrecommend(id){
-        d = $(this).parents('dd').find('#comm').children('.comment-post').html();
-        // console.log()
-        alert(d);
+        //点击任何回复清空回复框内容
+        $('.recomment').val("");
+        $('.comment-post').css('display','none');
+        //拼接显示相对应的回复框
+        $('.'+'comment-post'+id).css('display','block');
+    }
+
+    //回复@点击事件
+    function ReAjaxrecommend(id,nickname){
+        span = '@'+nickname+'：';
+        $('.recomment').html(span);
+        $('.comment-post').css('display','none');
+        $('.'+'comment-post'+id).css('display','block');
+    }
+
+    //点击取消隐藏回复框
+    function DelComment(id){
+        $('.'+'comment-post'+id).css('display','none');
+    }
+
+    //回复
+    function AjaxReComment(from_uid,id){
+        recontent = $('.'+'recomment'+id).val();
+        cont_id =  {{$contents->id}};
+        alert(recontent.length);
+        if (recontent.length < 12) {
+            alert('评论回复不能少于5个字');
+        } else {
+           $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
+                if(res.code == 10001){
+                    dll = $('#wu').clone();
+                    dll.css('display','block');
+                    dll.find('#cnts').html(recontent);
+                    dll.find('#times').html(res.time); 
+                    $('.comment-post').append(dll);
+
+                }else if(res.code == 10000){
+                    alert(res.msg);
+                }
+           });
+        }
     }
 
 </script>
