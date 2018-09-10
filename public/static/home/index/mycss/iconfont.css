@@ -17,3 +17,14 @@
 
 .icon-guanbi:before { content: "\e7b7"; }
 
+#tc-btn{
+      position: fixed;
+      right: 20px;
+      bottom: 0px;
+      width: 150px;
+      height: 90px;
+      background: url(tuichu.png) no-repeat;
+    }
+#tc-btn:hover{
+  background: url(tuichu1.png) no-repeat; 
+}
