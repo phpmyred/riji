@@ -264,13 +264,12 @@ class AdminUserController extends Controller
 
     //将登陆日记以excel格式导出
     public function getLogFile() {
-
         //excel表中数据
         $data = DB::table('admin_users as au')
             ->join('admin_log as al','au.id','=','al.uid')
             ->select('al.id','au.name','al.ip','al.login_time','al.desc')
             ->get();
-        //excel中表字段名称
+        //excel中表字段名称(需要与select查询时的字段位置一致)
         $cellName = ['编号','用户名','登录IP','登录时间','描述'];
 
         //记录执行当前操作用户的信息
@@ -299,16 +298,28 @@ class AdminUserController extends Controller
 
         $phpexcel->setActiveSheetIndex(0);//设置当前活动sheet
         $objSheet   = $phpexcel->getActiveSheet();//获取当前活动sheet
-        $objSheet->setTitle($name);//设置当前sheet标题
+        $objSheet->setTitle($title);//设置当前sheet标题
         $objSheet->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//设置全部单元格内容为水平居中
         $objSheet->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);//设置全部单元格内容垂直居中
         $objSheet->getDefaultStyle()->getFont()->setName('微软雅黑')->setSize('14');
 
         //处理表头标题
-        $objSheet->mergeCells($cellKey[$leftNumber].'1:'.$cellKey[count($fieldName)+$leftNumber-1].'1');//合并单元格,如果是拆分单元格需要先合并再拆分，否则会报错
-        $objSheet->setCellValue($cellKey[$leftNumber].'1',$title);
-        $objSheet->getStyle($cellKey[$leftNumber].'1')->getFont()->setBold(true)->setSize(20);
-        $objSheet->getStyle($cellKey[$leftNumber].'1')->getFont()->getColor()->setRGB('cc4125');
+        $objSheet->mergeCells($cellKey[$leftNumber].($topNumber-1).':'.$cellKey[count($fieldName)+$leftNumber-1].($topNumber-1));//合并单元格,如果是拆分单元格需要先合并再拆分，否则会报错
+        $objSheet->setCellValue($cellKey[$leftNumber].($topNumber-1),$title);
+        $tableTitleStyle = [
+            'font'  => [
+                'bold'      => true,
+                'size'      => 20,
+                'color'     => ['rgb'=>'cc4125']
+            ],
+            'borders'   => [
+                'outline'   => [
+                    'style'     => \PHPExcel_Style_Border::BORDER_THICK,
+                    'color'     => ['rgb'=>'85e2ca']
+                ]
+            ]
+        ];
+        $objSheet->getStyle( $cellKey[$leftNumber].($topNumber-1).':'.$cellKey[count($fieldName)+$leftNumber-1].($topNumber-1) )->applyFromArray($tableTitleStyle);
 
         //处理表字段标题 从第二行开始
         foreach ( $fieldName as $k=>$v ) {
@@ -325,15 +336,13 @@ class AdminUserController extends Controller
         foreach ($data as $k=>$v) {
             $index = 0;
             foreach ($v as $k2=>$v2) {
-                if ($index < count($fieldName)) {
-                    $objSheet->setCellValue($cellKey[$leftNumber+$index].($k+$topNumber+1),$v2);
-                }
+                $objSheet->setCellValue($cellKey[$leftNumber+$index].($k+$topNumber+1),$v2);
                 $index++;
             }
         }
 
         //浏览器输出 第一个参数如果为 excel2007则文件后缀为 .xlsx  如果为excel5 则文件后缀名为.xls
-        $this->browser_export('excel2007',$filename);
+        $this->browser_export($filename);
         $objWriter->save('php://output');
         exit;
     }
@@ -353,12 +362,12 @@ class AdminUserController extends Controller
         return $cellKey;
     }
 
-    protected function browser_export($type,$filename) {
+    protected function browser_export($filename,$type='excel2007') {
         ob_end_clean();
         if ( $type == 'excel5' ) {//如果是excel03 也就是文件后缀名为 .xls
             header('Content-Type: application/vnd.ms-excel');
             header('Content-Disposition: attachment;filename='.$filename.'.xls');
-        } else {//excel2007 文件后缀名为.xlsx
+        } else if ( $type == 'excel2007' ) {//excel2007 文件后缀名为.xlsx
             header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
             header('Content-Disposition: attachment;filename='.$filename.'.xlsx');
         }

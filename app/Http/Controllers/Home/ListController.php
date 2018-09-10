@@ -3,14 +3,18 @@
 
 
 namespace App\Http\Controllers\Home;
+
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
-use think\Exception;
+use Illuminate\Support\Facades\Redis;
+use \Exception;
 use Cookie;
+use JuheApi;
+use Illuminate\Support\Facades\Cache;
+
 class ListController extends Controller
 {
-
     /**
      * 列表页面, 根据$id(分类id) 将这个分类的所有数据 列出来
      * @param $id
@@ -233,6 +237,33 @@ class ListController extends Controller
                 'msg'       => '请求方式非法',
                 'time'      => time()
             ]);
+        }
+    }
+
+    //获取聚合提供的笑话大全api数据
+    public function jokeList() {
+        $cate = $this->getCatesBypid(0);
+        //获取阅读排行中前10条
+        $readTop10 = DB::table('content')->select('id','title','num')->orderBy('num','desc')->limit(10)->get();
+
+        return view('home.index.joke',[
+            'cates'     => $cate,
+            'readTop10'     => $readTop10,
+        ]);
+    }
+
+    public function getJokeData(Request $req) {
+        $page = $req->input('page');
+        $jokelistKey = 'jokelist_'.$page;
+        $redis = Redis::connection('default');
+        $redis->select(1);
+        if ( $redis->exists( $jokelistKey ) ) {
+            return $redis->get( $jokelistKey );
+        } else {
+            $res = JuheApi::joke( $page ,20 );
+            $data = json_encode( $res , JSON_UNESCAPED_UNICODE );
+            $redis->setex( $jokelistKey , 7200 , $data);//2小时更新一次API数据
+            return $data;
         }
     }
 

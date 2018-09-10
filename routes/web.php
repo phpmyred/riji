@@ -39,6 +39,8 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::post('/digg','ListController@digg');// 传送参数digg为good时 为顶 | digg为bad时为 踩
     Route::get('/comment','CommentContorller@index');//评论AJAX
     Route::get('/recomment','CommentContorller@recomment'); //回复AJAX
+    Route::get('/jokeList','ListController@jokeList');//进入笑话大全列表页面
+    Route::post('/getJokeData','ListController@getJokeData');//获取笑话大全数据，默认获取第一页
 
     //个人中心模块
     Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {

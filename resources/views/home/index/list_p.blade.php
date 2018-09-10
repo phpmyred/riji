@@ -38,6 +38,7 @@
                 <a style="cursor:pointer;" href="/list/{{$v->id}}">{{$v->name}}</a>
             </span>
         @endforeach
+            <a href="/jokeList">笑话大全</a>
         </div>
     </div>
 </div>
