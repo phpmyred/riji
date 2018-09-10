@@ -37,7 +37,10 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::get('/list/{id}','ListController@index');//列表页面
     Route::get('/list/{id}/show','ListController@show');//详情页面
     Route::post('/digg','ListController@digg');// 传送参数digg为good时 为顶 | digg为bad时为 踩
-    Route::get('/comment','CommentContorller@index');//回复AJAX
+    Route::get('/comment','CommentContorller@index');//评论AJAX
+    Route::get('/recomment','CommentContorller@recomment'); //回复AJAX
+    Route::get('/jokeList','ListController@jokeList');//进入笑话大全列表页面
+    Route::post('/getJokeData','ListController@getJokeData');//获取笑话大全数据，默认获取第一页
 
     //个人中心模块
     Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
@@ -183,7 +186,7 @@ Route::group(['middleware'=>'login','namespace' => 'Admin'], function () {
     Route::post('bk_adminuser/dorole', 'AdminUserController@dorole');//管理员角色分配操作
     Route::get('bk_adminuser/log', 'AdminUserController@log');//登录日志页面
     Route::get('bk_adminuser/logdel/{id}', 'AdminUserController@logdel')->where(['id' => '\d+']);//登录日志删除
-    Route::get('bk_adminuser/exportLogin','AdminUserController@exportLog');//日记记录以Excel文件导出
+    Route::post('bk_adminuser/getLogFile','AdminUserController@getLogFile');//日记记录以Excel文件导出
 
     //系统设置模块
     Route::get('/bk_system/homemaintain', 'SystemController@maintain_home');//前台维护页面

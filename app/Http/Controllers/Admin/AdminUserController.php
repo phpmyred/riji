@@ -9,6 +9,8 @@ use Hash;
 // 引入校验类
 use App\Http\Requests\AdminUser\AdminInsert;
 use App\Http\Requests\AdminUser\AdminUpdate;
+use PHPExcel;
+
 class AdminUserController extends Controller
 {
     /**
@@ -261,8 +263,115 @@ class AdminUserController extends Controller
     }
 
     //将登陆日记以excel格式导出
-    public function exportLog(Request $req) {
+    public function getLogFile() {
+        //excel表中数据
+        $data = DB::table('admin_users as au')
+            ->join('admin_log as al','au.id','=','al.uid')
+            ->select('al.id','au.name','al.ip','al.login_time','al.desc')
+            ->get();
+        //excel中表字段名称(需要与select查询时的字段位置一致)
+        $cellName = ['编号','用户名','登录IP','登录时间','描述'];
 
+        //记录执行当前操作用户的信息
+        $this->saveLog('导出登录日志文件');
+
+        $this->exportLog('后台登录日志记录表','登录日志',$cellName,$data,2,3);
+    }
+
+    /**
+     * @param $title string 表标题
+     * @param $name  string 文件名称
+     * @param $fieldName array 字段名称
+     * @param $top  integer 字段标题显示行数    数据显示函数 +1
+     * @param @left integer 数据距离左侧多少个单元 默认6个单元
+     * @param $data object 表数据
+     */
+    protected function exportLog($title,$name,$fieldName,$data,$top=2,$left=6) {
+        $phpexcel   = new PHPExcel();//实例化phpexcel类
+        $objWriter  = new \PHPExcel_Writer_Excel2007($phpexcel);//定义excel版本 2007版 文件后缀名为 .xlsx
+        //定义配置
+        $name       = iconv('UTF-8','GB2312',$name);
+        $filename   = $name.date('_YmdHis');//保存文件名
+        $cellKey    = $this->getCellKey();
+        $topNumber  = $top;//表标题为第一行 字段标题为第二行 数据为第三行及之后
+        $leftNumber = $left;//距离左侧多少个空格
+
+        $phpexcel->setActiveSheetIndex(0);//设置当前活动sheet
+        $objSheet   = $phpexcel->getActiveSheet();//获取当前活动sheet
+        $objSheet->setTitle($title);//设置当前sheet标题
+        $objSheet->getDefaultStyle()->getAlignment()->setHorizontal(\PHPExcel_Style_Alignment::HORIZONTAL_CENTER);//设置全部单元格内容为水平居中
+        $objSheet->getDefaultStyle()->getAlignment()->setVertical(\PHPExcel_Style_Alignment::VERTICAL_CENTER);//设置全部单元格内容垂直居中
+        $objSheet->getDefaultStyle()->getFont()->setName('微软雅黑')->setSize('14');
+
+        //处理表头标题
+        $objSheet->mergeCells($cellKey[$leftNumber].($topNumber-1).':'.$cellKey[count($fieldName)+$leftNumber-1].($topNumber-1));//合并单元格,如果是拆分单元格需要先合并再拆分，否则会报错
+        $objSheet->setCellValue($cellKey[$leftNumber].($topNumber-1),$title);
+        $tableTitleStyle = [
+            'font'  => [
+                'bold'      => true,
+                'size'      => 20,
+                'color'     => ['rgb'=>'cc4125']
+            ],
+            'borders'   => [
+                'outline'   => [
+                    'style'     => \PHPExcel_Style_Border::BORDER_THICK,
+                    'color'     => ['rgb'=>'85e2ca']
+                ]
+            ]
+        ];
+        $objSheet->getStyle( $cellKey[$leftNumber].($topNumber-1).':'.$cellKey[count($fieldName)+$leftNumber-1].($topNumber-1) )->applyFromArray($tableTitleStyle);
+
+        //处理表字段标题 从第二行开始
+        foreach ( $fieldName as $k=>$v ) {
+            if ( $k == 2|| $k == 3 ) {
+                $objSheet->getColumnDimension($cellKey[$leftNumber+$k])->setWidth(mb_strlen($v)*5);
+            } else if ( $k == 4 ){
+                $objSheet->getColumnDimension($cellKey[$leftNumber+$k])->setWidth(mb_strlen($v)*10);
+            }
+            $objSheet->setCellValue($cellKey[$leftNumber+$k].$topNumber,$v);//设置字段标题
+            $objSheet->getStyle($cellKey[$leftNumber+$k].$topNumber,$v)->getFont()->getColor()->setRGB('6aa84f');
+        }
+
+        //处理数据
+        foreach ($data as $k=>$v) {
+            $index = 0;
+            foreach ($v as $k2=>$v2) {
+                $objSheet->setCellValue($cellKey[$leftNumber+$index].($k+$topNumber+1),$v2);
+                $index++;
+            }
+        }
+
+        //浏览器输出 第一个参数如果为 excel2007则文件后缀为 .xlsx  如果为excel5 则文件后缀名为.xls
+        $this->browser_export($filename);
+        $objWriter->save('php://output');
+        exit;
+    }
+
+    /**
+     * 根据下标获取单元格所在列位置
+     * @param $index
+     * @return mixed
+     */
+    protected function getCellKey() {
+        $cellKey    = [
+            'A','B','C','D','E','F','G','H','I','J','K','L','M',
+            'N','O','P','Q','R','S','T','U','V','W','X','Y','Z',
+            'AA','AB','AC','AD','AE','AF','AG','AH','AI','AJ','AK','AL','AM',
+            'AN','AO','AP','AQ','AR','AS','AT','AU','AV','AW','AX','AY','AZ'
+        ];
+        return $cellKey;
+    }
+
+    protected function browser_export($filename,$type='excel2007') {
+        ob_end_clean();
+        if ( $type == 'excel5' ) {//如果是excel03 也就是文件后缀名为 .xls
+            header('Content-Type: application/vnd.ms-excel');
+            header('Content-Disposition: attachment;filename='.$filename.'.xls');
+        } else if ( $type == 'excel2007' ) {//excel2007 文件后缀名为.xlsx
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment;filename='.$filename.'.xlsx');
+        }
+        header('Cache-Control: max-age=0');//禁止浏览器缓存
 
     }
 

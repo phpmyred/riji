@@ -86,7 +86,7 @@
       </ul>
      </span>
       @endforeach
-     <a href="/">电影院</a>
+     <a href="/jokeList">笑话大全</a>
     </div>
    </div>
   </div>

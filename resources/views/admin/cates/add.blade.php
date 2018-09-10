@@ -41,7 +41,11 @@
                                             @php
                                                 $n = substr_count($v->path,',')-1;
                                             @endphp
+
                                             <option value="{{$v->id}}" @if($v->id == $cate_id) selected @endif>{!!str_repeat('&nbsp;',4*$n)!!}|{{str_repeat('-',$n+1)}} {{$v->name}}</option>
+
+                                            <option value="{{$v->id}}" @if($v->id == $cate_id) selected @endif>{!!  str_repeat('&nbsp;',4*$n)!!}|{!! str_repeat('-',$n+1) !!} {{$v->name}}</option>
+
                                         @endforeach
                                         </select>
                                     </div>

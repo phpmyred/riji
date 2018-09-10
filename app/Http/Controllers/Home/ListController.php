@@ -3,14 +3,18 @@
 
 
 namespace App\Http\Controllers\Home;
+
 use App\Http\Controllers\Controller;
 use DB;
 use Illuminate\Http\Request;
-use think\Exception;
+use Illuminate\Support\Facades\Redis;
+use \Exception;
 use Cookie;
+use JuheApi;
+use Illuminate\Support\Facades\Cache;
+
 class ListController extends Controller
 {
-
     /**
      * 列表页面, 根据$id(分类id) 将这个分类的所有数据 列出来
      * @param $id
@@ -62,6 +66,9 @@ class ListController extends Controller
      * @return string
      */
     public function show($id) {
+        if ( session('home_user') ) {
+            $login_id = session('home_user')['id'];
+        }
         //$id对应的内容点击数量+1
         DB::table('content')->where('id',$id)->increment('num');
         //获取上一篇
@@ -98,9 +105,19 @@ class ListController extends Controller
         $comment = DB::table('comment as c')
                     ->join('users_detail as u','c.from_uid','=','u.uid')
                     ->where('c.con_id',$id)
-                    ->select('c.content','c.created_at','u.nickname','u.uface','u.uid')
+                    ->select('c.id','c.from_uid','c.content','c.created_at','u.nickname','u.uface','u.uid')
+                    ->orderBy('created_at','asc')
                     ->get();
-        // dd($comment);
+                    // dd($comment);
+        //获取回复内容
+        $recomment = DB::table('comment_reply as cr')
+                    ->join('users_detail as ud','cr.from_uid','=','ud.uid')
+                    ->where('cr.con_id',$id)
+                    // ->where('cr.from_uid',$login_id)
+                    ->select('cr.id','cr.reply_id','cr.reply_content','cr.created_at','cr.from_uid','cr.c_id','ud.nickname','ud.uface','ud.uid')
+                    ->orderBy('created_at','asc')
+                    ->get();
+            // dd($recomment);
         return view('home.index.show',[
             'cates'         => $cate,
             'parent_cate'   => $parent_cate,
@@ -111,7 +128,8 @@ class ListController extends Controller
             'relateds'      => $relateds,
             'readTop10'     => $readTop10,
             'classCates'    => $classCates,
-            'comment'       => $comment
+            'comment'       => $comment,
+            'recomment'     => $recomment
         ]);
     }
 
@@ -219,6 +237,33 @@ class ListController extends Controller
                 'msg'       => '请求方式非法',
                 'time'      => time()
             ]);
+        }
+    }
+
+    //获取聚合提供的笑话大全api数据
+    public function jokeList() {
+        $cate = $this->getCatesBypid(0);
+        //获取阅读排行中前10条
+        $readTop10 = DB::table('content')->select('id','title','num')->orderBy('num','desc')->limit(10)->get();
+
+        return view('home.index.joke',[
+            'cates'     => $cate,
+            'readTop10'     => $readTop10,
+        ]);
+    }
+
+    public function getJokeData(Request $req) {
+        $page = $req->input('page');
+        $jokelistKey = 'jokelist_'.$page;
+        $redis = Redis::connection('default');
+        $redis->select(1);
+        if ( $redis->exists( $jokelistKey ) ) {
+            return $redis->get( $jokelistKey );
+        } else {
+            $res = JuheApi::joke( $page ,20 );
+            $data = json_encode( $res , JSON_UNESCAPED_UNICODE );
+            $redis->setex( $jokelistKey , 7200 , $data);//2小时更新一次API数据
+            return $data;
         }
     }
 
