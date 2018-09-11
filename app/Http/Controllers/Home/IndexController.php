@@ -113,6 +113,7 @@ class IndexController extends Controller
                     ->get();
         // 前台下的主要内容
         $list = $this->pon(1);
+        $list2 = $this->pon(2);
         // 站内前12个会员积分排行
         $user = DB::table('users as u')
                     ->join('users_detail as d','u.id','=','d.uid')
@@ -134,6 +135,7 @@ class IndexController extends Controller
             'pic'      => $pic,
             'notice'   => $notice,
             'con1'     => $list,
+            'con2'     => $list2,
             'users'    => $user,
             'link'     => $link
         ]);

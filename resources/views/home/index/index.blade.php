@@ -48,7 +48,13 @@
     iframe{
         width: 100%;
         height: 100%;
+        border: none;
     }
+    .open{
+      top:0px;
+      right: 10px;
+    }
+
   </style>
  </head>
  <body id="Jbody">
@@ -59,7 +65,7 @@
     <em class="head-zq"></em>
     <div class="search">
      <div id="s-form" class="form">
-      <img  style="position: absolute;width: 100px;" src="/static/home/index/images/liao.jpg" id="chat" class="open">
+      <img  style="position: absolute;width: 150px;" src="/static/home/index/images/664.png" id="chat" class="open">
      </div>
     </div>
    </div>
@@ -323,7 +329,65 @@
     </ul>
    </div>
   </div>
+  </div>
+  <div style="clear:both"></div>
+  @if($con2)
+  <div class="main tab3 clearfix" id="main2">
+   <div class="left660 fl border shadow">
+    <div class="th clearfix">
+     <p class="tabTit fl">{{$con2[0]}}</p>
+     <div class="th-b fr">
+      @foreach($con2[1] as $c)
+      <a href="/list/{{$c->id}}" target="_blank">{{$c->name}}</a>
+      <em></em>
+      @endforeach
+     </div>
     </div>
+    <div class="pic-txt">
+     <div class="pics">
+     <!-- 两图片的位置 -->
+     @foreach($con2[5] as $v)
+      <span><a target="_blank" href="/list/{{$v->id}}/show"><img src="{{$v->img}}" border="0" width="180" height="135" alt="{{$v->title}}" /><em></em><i>{{$v->title}}</i></a></span>
+     @endforeach
+     </div>
+     <div class="txtbox">
+      <ul class="txt" style="margin-top:20px">
+      @foreach($con2[2] as $nie)
+       <li><a href="/list/{{$nie->id}}/show" target="_blank">{{$nie->title}}</a> </li>
+      @endforeach
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- 排行内容 -->
+   <div class="right306 border shadow fr">
+    <div class="slide03">
+     <div class="control">
+      <ul id="myTab">
+       <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
+       <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
+      </ul>
+     </div>
+     <div class="tb-slide03">
+      <div class="c" id="myTab_Content0">
+       <ul class="hotPicUlList">
+        @foreach($con2[3] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+      <div class="c" id="myTab_Content1" style="display:none;">
+       <ul class="hotPicUlList">
+        @foreach($con2[4] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  @endif
   <div style="clear:both"></div>
   <div class="main mb30">
    <div class="i3_lBox border shadow">
@@ -350,6 +414,7 @@
     </div>
    </div>
   </div>
+
   <div class="main mb30">
    <div class="i3_lBox border shadow">
     <div class="i3lBox-th">
@@ -442,19 +507,26 @@
     <div style="display:none; " id="room-pic" >{{session('home_user')['uface']}}</div>
   @else
     <div style="display:none; " id="room-user" >老王</div>
-    <div style="display:none; " id="room-pic" >/static/home/index/images/liao.jpg</div>
+    <div style="display:none; " id="room-pic" >/static/home/index/mycss/tou/toukui</div>
   @endif
   <!-- 聊天室 -->
   <div class="chat" id="room">
     <iframe src="http://127.0.0.1:8090" id="chatroom"></iframe>
-    <img src="/static/home/index/images/liao.jpg" width="100px;" id="chat" class="img1 open">
+    <!-- <img src="/static/home/index/images/liao.jpg" width="100px;" id="chat" class="img1 open"> -->
+    <a href="javascript:void(0)" id="tc-btn"></a>
   </div>
   <script src="/static/home/index/js/dpl-tab_v2.js" type="text/javascript"></script>
  </body>
  <script type="text/javascript">
-    // alert($('#room-user').html());
-    rurl = "http://127.0.0.1:8090?uname="+$('#room-user').html()+'&pic=http://riji.org'+$('#room-pic').html();
-    // alert(rurl);
+    // 判断是否游客登录
+    if ($('#room-user').html() == '老王') {
+      r = Math.ceil(Math.random()*10000);
+      pic = Math.ceil(Math.random()*100);
+      rurl = "http://127.0.0.1:8090?uname="+'游客'+r+'&pic=http://riji.org'+$('#room-pic').html()+pic+'.JPG';
+    } else {
+      rurl = "http://127.0.0.1:8090?uname="+$('#room-user').html()+'&pic=http://riji.org'+$('#room-pic').html();
+    }
+
     $('#chatroom').attr('src',rurl);
     // alert($('#chatroom').attr('src'));
     // 登录的ajax
@@ -509,8 +581,8 @@
       });
 
      // 聊天室
-     $('.open').click(function(){
-        $('#room').toggle(3000);
+     $('.open,#tc-btn').click(function(){
+        $('#room').toggle(2000);
         // alert('555');
      });
  </script>

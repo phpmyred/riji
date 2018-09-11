@@ -20,7 +20,7 @@
   <div class="ab_right">
     <div class="shop-nav"><a>会员中心</a></div>
     <div class="moudle-one new_moudle">
-      
+
       <div class="infor-div clearfix">
         <div class="fl portrait"><img src="{{$data->uface}}" width="98" height="98"></div>
         <div class="kinds_of fl">
@@ -47,7 +47,7 @@
               <i class="bd-qq every-i"></i>
               <div class="notice">
                 <i class="triangle"></i>{{$data->qq}}
-              </div>            
+              </div>
             </div>
             <!--<div class="every  fl"> <a href="#"><i class="no-phone every-i"></i></a>
               <div class="notice"> <i class="triangle"></i>点击绑定</div>
@@ -61,25 +61,23 @@
           </div>
           <div class="Balance  new_balance">
             <p class="fl">
-              积分：<span id="jf">{{$data->score}}</span> 
-              人气：<span>{{$data->fame}}</span>  
+              积分：<span id="jf">{{$data->score}}</span>
+              人气：<span>{{$data->fame}}</span>
               粉丝：<span>{{$to_uid}}</span>
             </p>
             @foreach($qd as $v)
-            <a href="javascript:void(0)" class="qd_btn fl">
               @if($v->status == 0)
-              未签到
+              <a href="javascript:void(0)" class="qd_btn fl" style="background: #04CE9B;">签到</a>
               @elseif($v->status == 1)
-              已签到
+              <a href="javascript:void(0)" class="qd_btn fl">已签到</a>
               @endif
-            </a>
             @endforeach
 
           </div>
         </div>
         <div class="fl reply-box"> </div>
       </div>
-      
+
       <div style="clear:both"></div>
       <div class="context">
       	<div class="zb_wrap">
@@ -90,7 +88,7 @@
               </ul>
             </div>
             <div class="pl_conTxt">
-              <div class=""> 
+              <div class="">
               @foreach($comment_me as $rows)
                 <ul id="dt_list" class="dt_list">
                   <li>
@@ -101,14 +99,14 @@
                       @else
                         <span>{{date('i',time()-$rows->created_at)}}分钟前</span>
                       @endif
-                    
+
                     @elseif(time()-$rows->created_at < 86400)
                     <span>{{date('G',time()-$rows->created_at)-8}}小时前</span>
                     @else
                     <span>{{date('Y-m-d H:i:s',$rows->created_at)}}</span>
                     @endif
 
-                    <a class="link" href="/ps_space/{{$rows->uid}}" target="_blank">{{$rows->nickname}}</a> 评论了文章 
+                    <a class="link" href="/ps_space/{{$rows->uid}}" target="_blank">{{$rows->nickname}}</a> 评论了文章
                     <a class="key_word" href="/list/{{$rows->id}}/show" target="_blank">{{$rows->title}}</a>
                   </li>
                 </ul>
@@ -134,17 +132,17 @@
                       @else
                         <span>{{date('i',time()-$row->created_at)}}分钟前</span>
                       @endif
-                    
+
                     @elseif(time()-$row->created_at < 86400)
                     <span>{{date('G',time()-$row->created_at)-8}}小时前</span>
                     @else
                     <span>{{date('Y-m-d H:i:s',$row->created_at)}}</span>
                     @endif
-                    <a class="link" href="/ps_space/{{$row->uid}}" target="_blank">{{$row->nickname}}</a> 评论了文章 
+                    <a class="link" href="/ps_space/{{$row->uid}}" target="_blank">{{$row->nickname}}</a> 评论了文章
                     <a class="key_word" href="/list/{{$row->id}}/show" target="_blank">{{$row->title}}</a>
                   </li>
                 </ul>
-              @endforeach       
+              @endforeach
               </div>
             </div>
           </div>
@@ -173,6 +171,7 @@
       if(data.code == 1){
         alert('签到成功，获得'+data.num+'积分');
         qd.text('已签到');
+        qd.css('background','#ff7e69');
         $('#jf').text(data.score);
       }else if(data == 0){
         alert('今日已签到过,请不要重复签到');
