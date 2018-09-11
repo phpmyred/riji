@@ -239,7 +239,7 @@
                             $("#modal_reg").removeClass('reg_hide');
                             setInterval(function(){
                                 $("#modal_reg>.reg>i").trigger('click');
-                                window.location.href='http://www.project2.com';
+                                window.location.href='/';
                             },3000);
                         } else {
                             $("#modal_reg").find('.reg_body').text(res.msg);

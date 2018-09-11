@@ -12,15 +12,26 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
-    public function saveLog($desc) {
+    public function saveLog($desc)
+    {
         $insertData = [
-            'uid'       => session('admin_info')['uid'],
-            'ip'        => $_SERVER['REMOTE_ADDR'],
-            'desc'      => $desc,
-            'login_time'=> time()
+            'uid' => session('admin_info')['uid'],
+            'ip' => $_SERVER['REMOTE_ADDR'],
+            'desc' => $desc,
+            'login_time' => time()
         ];
         $res = DB::table('admin_log')->insert($insertData);
         return $res;
+    }
+
+    public function returnJson($msg,$code='000')
+    {
+        $data = [
+            'code'  => $code,
+            'msg'   => $msg,
+            'time'  => time()
+        ];
+        return response()->json($data);
     }
 
 }
