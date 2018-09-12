@@ -55,6 +55,7 @@ class CatesController extends Controller
         }
         //执行数据库插入
         if ( DB::table('cates')->insert($data) ) {
+            $this->clearRedisCache();//调用清除缓存类
             return  back()->with('success','添加分类成功');
         } else {
             return  back()->with('error','添加分类失败');
@@ -83,6 +84,7 @@ class CatesController extends Controller
         }
         //执行修改操作
         if ( DB::table('cates')->where('id',$data['cates_id'])->update(['name'=>$data['name']]) ) {
+            $this->clearRedisCache();//调用清除缓存类
             return redirect('/bk_cates')->with('success','修改分类名称成功!');
         } else {
             return redirect("/bk_cates/edit-{$data['cates_id']}")->with('error','修改分类名称失败!');
@@ -101,6 +103,7 @@ class CatesController extends Controller
         }
         //直接删除当前没有子类的分类
         if ( DB::table('cates')->where('id','=',$id)->delete() ) {
+            $this->clearRedisCache();//调用清除缓存类
             return back()->with('success','删除成功');
         } else {
             return back()->with('error','删除失败');
@@ -130,6 +133,14 @@ class CatesController extends Controller
         } else {
             return back()->with('error',"标记失败");
         }
+    }
+
+    /**
+     * 执行分类的增删改时  调用清除 首页和列表页等关于分类导航数据的缓存
+     */
+    private function clearRedisCache() {
+        $redis = $this->getRedis(1);
+        $redis->del(['key_nav_cates_lists','key_nav_cates_index']);
     }
 
 }

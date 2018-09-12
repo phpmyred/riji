@@ -39,7 +39,7 @@
 <div class="nav2">
     <div class="main2">
         <div class="subNav2 fl">
-            <a href="http://www.project2.com">首页</a>
+            <a href="/">首页</a>
         @foreach($cates as $k=>$v)
             <a href="/list/{{$v->id}}" style="cursor:pointer;" title="小学生日记">{{$v->name}}</a>
         @endforeach
