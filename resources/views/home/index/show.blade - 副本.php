@@ -136,12 +136,12 @@
                         @foreach($comment as $v)
                         <dl class="fix fixss{{$v->id}}" >
                             <dt>
-                                <a href="/ps_space/{{$v->uid}}" target="_blank">
+                                <a href="" target="_blank">
                                     <img src="{{$v->uface}}" width="46" height="46">
                                 </a>
                             </dt>
                             <dd id="comm" class="comm">
-                                <a href="/ps_space/{{$v->uid}}" target="_blank">
+                                <a href="" target="_blank">
                                     <span style="color:#3ACA81" id="nicknames">{{$v->nickname}}</span>
                                 </a>：{{$v->content}}
                                 <div class="comment-info"> {{date('m-d H:i',$v->created_at)}}
@@ -156,14 +156,14 @@
                                 @foreach($recomment as $value)
                                     @if( $value->c_id == $v->id)
                                         <!-- 遍历数据表中的回复内容 -->
-                                        <dl class="fix{{$value->uid}} wu" id="wu">
+                                        <dl class="fix{{$value->id}} wu" id="wu">
                                             <dt>
-                                                <a href="/ps_space/{{$value->uid}}" target="_blank">
+                                                <a href="" target="_blank">
                                                     <img src="{{$value->uface}}" width="46" height="46">
                                                 </a>
                                             </dt>
                                             <dd>
-                                                <a href="/ps_space/{{$value->uid}}" target="_blank">
+                                                <a href="" target="_blank">
                                                     <span style="color:#3ACA81" id="nickname">{{$value->nickname}}</span>
                                                 </a>：
                                                 <span class="contentss">{{$value->reply_content}}</span>
@@ -198,7 +198,8 @@
                         <textarea name="msg" id="msg4367" class="comment-msg-txt recomment recomment{{$v->id}}"></textarea>
                         <p></p>
                         <p>
-                            <button type="button" class="button" refrom_uid='{{$v->from_uid or ""}}' revid='{{$v->id}}' reuid='{{$v->uid or ""}}' >回复</button>
+                            <a class="trigger" href="javascript:;">☺</a>
+                            <button type="button" class="button" refrom_uid='{{$v->from_uid}}' revid='{{$v->id}}' reuid='{{$v->uid}}' >回复</button>
                             <button type="button" class="button2 mr20 {{$v->id}}" delid='{{$v->id}}'>取消</button>
                         </p>
                     </div>
@@ -267,44 +268,38 @@
 
 
 <!-- 这个是评论的东西 -->
-<dl class="fix fixss{{$v->id}} cmt" style="display: none" >
+<!-- <dl class="fix{{$value->id}}" id='cmt' style="display: none;">
     <dt>
         <a href="" target="_blank">
             <img src="{{session('home_user')['uface']}}" width="46" height="46">
         </a>
     </dt>
-    <dd id="comm" class="comm">
+    <dd >
         <a href="" target="_blank">
-            <span style="color:#3ACA81" id="nicknames">{{session('home_user')['nickname']}}:</span>
-        </a>：
-        <span id="cnt"></span>
-        <div class="comment-info"> <span id="time"></span>
-            <a href="javascript:void(0);" class="response" vid="" from_uid="">回复</a>
+            <span style="color:#3ACA81">{{session('home_user')['nickname']}}:</span>
+        </a> <span id="cnt"></span>
+        <div class="comment-info" > <span id="time"></span>
+            <a href="javascript:void(0);" class="response" vid="" from_uid="" >回复</a>
+            <span id="getid"></span>
+            <a class="del{{$v->id}}" id="getids" href="javascript:void(0);" style="float: right" onclick="del({{$v->id}})">删除</a>
             
-            <a class="del" id="getids" href="javascript:void(0);" style="float: right" onclick="">删除</a>                                       
-           
         </div>
-        <!-- 回复内容 -->
-        <!-- 回复表中的对应评论id和评论表id相等时显示对应回复内容 -->
-        <div class="comment-recommend fixs{{$v->id}}">
-        
-        </div>
-        <!-- 回复内容结束 -->
     </dd>
-</dl>
+</dl> -->
+
 <!-- 回复模板 -->
 <dl class="fix wus" id="wu" style="display: none">
     <dt>
         <a href="" target="_blank">
-            <img src="{{session('home_user')['uface']}}" width="46" height="46">
+            <img src="{{session('home_user')['uface'] or ''}}" width="46" height="46">
         </a>
     </dt>
     <dd>
         <a href="" target="_blank">
             <span style="color:#3ACA81" id="nickname">{{session('home_user')['nickname']}}:</span>
         </a>：
-        <span class="contents"></span>
-        <div class="comment-info"> <span class="times"></span>
+        <span id="cnt"></span>
+        <div class="comment-info"> <span id="time"></span>
             
             <a class="dels" id="getid" href="javascript:void(0);" onclick="dels" style="position: relative;left: 453px">删除
             </a>
@@ -319,28 +314,24 @@
     $('#comment').click(function(){
         com = $('#msg').val();
         id =  {{$contents->id}};
+
         if (com.length < 5) {
             alert('评论回复不能少于5个字');
         } else {
             $.get('/comment',{id:id,content:com},function(res){
                 if (res.code === 00000) {
-                    //克隆副本
+                    console.log(res);
                     dl = $('.cmt').clone();
                     dl.css('display','block');
-                    //为副本设置类名
                     dl.attr('class','fix fixss'+id);
-                    //设置属性
                     dl.find('#cnt').html(com);
                     dl.find('#time').html(res.ctime);
                     dl.find('.response').attr('from_uid',{{session('home_user')['id']}});
                     dl.find('.response').attr('vid',res.id);
                     dl.find('#getids').attr('class','del'+res.id);
                     dl.find('#getids').attr('onclick','del('+res.id+')');
-                    //插入到最后
                     $('.comment-list').append(dl);
-                    //清空文本框的值
                     $('#msg').val('');
-                    location.reload();
                 } else if(res.code === 10000) {
                     alert(res.msg);
                 }
@@ -349,9 +340,9 @@
     });
 
     // 回复点击事件
-    responses = $('.comment-list').find(".fix").find('.comm').find('.comment-info').find('.response');
-    responses.each(function(i){     
-        $(this).on('click',function(){
+    responses = $(".fix").find('.comm').find('.comment-info').find('.response');
+    responses.each(function(){
+        $(this).click(function(){
             comments = $('.comment-list').find('.fix').find('.comm').find('.comment-recommend').find('.comment-post');
             //移除原来的文本框
             comments.each(function(){
@@ -409,9 +400,6 @@
                             dll.find('.times').html(res.time); 
                             dll.find('#getid').attr('class','dels'+res.id);
                             dll.find('#getid').attr('onclick','dels('+res.id+')');
-                            dll.find('dt').find('a').attr('href','/ps_space/{{$value->uid}}');
-                            dll.find('dd').find('a').attr('href','/ps_space/{{$value->uid}}');
-
                             // $('.fixss'+id).find('.fixs'+id).append(dll);
                             mod.append(dll);
                             
@@ -443,36 +431,36 @@
     //回复
 
     // ReComments = $('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id).find('.comment-post'+id).find('.emoticons').find('.publisher').find('.comment-msg').find('p').find('.button');
-    // ReComments.each(function(){
-    //     $(this).click(function(){
-    //         from_uid = $(this).attr('refrom_uid');
-    //         id = $(this).attr('revid');
-    //         uid = $(this).attr('reuid');
+    ReComments.each(function(){
+        $(this).click(function(){
+            from_uid = $(this).attr('refrom_uid');
+            id = $(this).attr('revid');
+            uid = $(this).attr('reuid');
 
-    //         recontent = $('.'+'recomment'+id).val();
-    //         cont_id =  {{$contents->id}};
-    //         if (recontent.length < 5) {
-    //             alert('评论回复不能少于5个字');
-    //         } else {
-    //            $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
-    //                 if(res.code == 10001){
-    //                     dll = $('.wus').clone();
-    //                     dll.css('display','block');
-    //                     dll.find('.contents').html(recontent);
-    //                     dll.find('.times').html(res.time); 
-    //                     dll.find('#getid').attr('class','dels'+res.id);
-    //                     dll.find('#getid').attr('onclick','dels('+res.id+')');
-    //                     // $('.fixss'+id).find('.fixs'+id).append(dll);
-    //                     $('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id).append(dll);
-    //                     // DelComment(id);
-    //                 }else if(res.code == 10000){
-    //                     alert(res.msg);
-    //                 }
-    //            },'json');
-    //         }
+            recontent = $('.'+'recomment'+id).val();
+            cont_id =  {{$contents->id}};
+            if (recontent.length < 5) {
+                alert('评论回复不能少于5个字');
+            } else {
+               $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
+                    if(res.code == 10001){
+                        dll = $('.wus').clone();
+                        dll.css('display','block');
+                        dll.find('.contents').html(recontent);
+                        dll.find('.times').html(res.time); 
+                        dll.find('#getid').attr('class','dels'+res.id);
+                        dll.find('#getid').attr('onclick','dels('+res.id+')');
+                        // $('.fixss'+id).find('.fixs'+id).append(dll);
+                        $('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id).append(dll);
+                        // DelComment(id);
+                    }else if(res.code == 10000){
+                        alert(res.msg);
+                    }
+               },'json');
+            }
             
-    //     });
-    // });
+        });
+    });
  
 
     //评论删除

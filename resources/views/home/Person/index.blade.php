@@ -125,19 +125,7 @@
               @foreach($comment as $row)
                 <ul id="dt_list" class="dt_list">
                   <li>
-                    @if(time()-$row->created_at < 3600)
-
-                      @if(date('i',time()-$row->created_at) < 10)
-                        <span>{{date('i',time()-$row->created_at)-0}}分钟前</span>
-                      @else
-                        <span>{{date('i',time()-$row->created_at)}}分钟前</span>
-                      @endif
-
-                    @elseif(time()-$row->created_at < 86400)
-                    <span>{{date('G',time()-$row->created_at)-8}}小时前</span>
-                    @else
-                    <span>{{date('Y-m-d H:i:s',$row->created_at)}}</span>
-                    @endif
+                    <span>{{date('m-d H:i',$row->created_at)}}</span>
                     <a class="link" href="/ps_space/{{$row->uid}}" target="_blank">{{$row->nickname}}</a> 评论了文章
                     <a class="key_word" href="/list/{{$row->id}}/show" target="_blank">{{$row->title}}</a>
                   </li>

@@ -18,7 +18,7 @@ class HomeLogin
         if(session('home_user')['id']){
             return $next($request);
         }else{
-            return redirect("/");
+            return redirect("/")->with('error','请先登录');
         }
     }
 }
