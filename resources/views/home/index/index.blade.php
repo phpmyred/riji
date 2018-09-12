@@ -54,15 +54,18 @@
       top:0px;
       right: 10px;
     }
-
+    .logo2{
+      margin-top:10px;
+    }
+    #tc-btn{
+      position: absolute;
+    }
   </style>
  </head>
  <body id="Jbody">
   <div class="main" id="main1">
    <div class="head">
-    <a><em class="head-title"></em></a>
-    <a href="https://www.riji.cn/" target="_blank"><em class="head-channel">日记大全</em></a>
-    <em class="head-zq"></em>
+    <a href="/" target="_blank"><img src="/static/home/index/images/logo2.png" class="logo2"></a>
     <div class="search">
      <div id="s-form" class="form">
       <img  style="position: absolute;width: 150px;" src="/static/home/index/images/664.png" id="chat" class="open">
@@ -392,23 +395,23 @@
   <div class="main mb30">
    <div class="i3_lBox border shadow">
     <div class="i3lBox-th">
-     <h3 class="mark">教育图库</h3>
+     <h3 class="mark">站内向导</h3>
     </div>
     <div class="lBox-tb">
      <ul class="picTxt-ul">
       <li>
-       <a href="#" target="_blank">
-        <img src="/static/home/index/picture/sptu1.jpg" width="220" height="150" /><i>手抄报</i>
+       <a href="/list/29" target="_blank">
+        <img src="/static/home/index/images/rijiben.jpg" width="" height="150" /><i>日记记录生活</i>
        </a>
       </li>
-      <li>
-       <a><img src="/static/home/index/picture/sptu2.jpg" width="220" height="150" /><i>黑板报</i></a>
+       <li>
+       <a href="/getXingzuo/摩羯座" target="_blank"><img src="/static/home/index/images/xing.jpg" width="" height="150" /><i>运势憧憬未来</i></a>
       </li>
       <li>
-       <a href="https://www.riji.cn/jbh/" target="_blank"><img src="/static/home/index/picture/sptu3.jpg" width="220" height="150" /><i>简笔画</i></a>
+       <a href="/jokeList"><img src="/static/home/index/images/gaoxiao.jpg" width="220" height="150" /><i>笑话释放压力</i></a>
       </li>
       <li>
-       <a><img src="/static/home/index/picture/sptu4.jpg" width="220" height="150" /><i>手工小制作</i></a>
+       <a href="javascript:void(0)" class="chuishui"><img src="/static/home/index/images/xiaoxiao.jpg" width="250" height="150" /><i>吹水增进感情</i></a>
       </li>
      </ul>
     </div>
@@ -581,7 +584,7 @@
       });
 
      // 聊天室
-     $('.open,#tc-btn').click(function(){
+     $('.open,#tc-btn,.chuishui').click(function(){
         $('#room').toggle(2000);
         // alert('555');
      });

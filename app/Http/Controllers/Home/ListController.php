@@ -252,6 +252,162 @@ class ListController extends Controller
         ]);
     }
 
+     //获取聚合提供的星座运势api数据
+    public function xingzuo($name) {
+        $cate = $this->getCatesBypid(0);
+        //获取阅读排行中前10条
+        $readTop10 = DB::table('content')->select('id','title','num')->orderBy('num','desc')->limit(10)->get();
+        // 获取星座列表
+        $xingzuo = DB::table('xingzuo')->select('name','url','mon')->get();
+        // dd($xingzuo);
+        $redis = Redis::connection('default');
+        $redis->select(2);
+        $data = [];
+        // 查看今日运势的信息有没在缓存 没则调用接口
+        if ( $redis->exists($name.'today') ) {
+            $data[] = json_decode( $redis->get($name.'today'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'today');
+        }
+        // 查看明日运势的信息有没在缓存 没则调用接口
+        if ( $redis->exists($name.'tomorrow') ) {
+            $data[] = json_decode( $redis->get($name.'tomorrow'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'tomorrow');
+        }
+        // 获取下周运势是否有在Redis ,没则调用接口
+        if ( $redis->exists($name.'week') ) {
+            $data[] = json_decode( $redis->get($name.'week'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'week');
+        }
+         // 获取下周运势是否有在Redis ,没则调用接口
+        if ( $redis->exists($name.'nextweek') ) {
+            $data[] = json_decode( $redis->get($name.'nextweek'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'nextweek');
+        }
+         // 获取本月运势是否有在Redis ,没则调用接口
+        if ( $redis->exists($name.'month') ) {
+            $data[] = json_decode( $redis->get($name.'month'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'month');
+        }
+         // 获取今年运势是否有在Redis ,没则调用接口
+        if ( $redis->exists($name.'year') ) {
+            $data[] = json_decode( $redis->get($name.'year'),true);
+        } else {
+            $data[] = $this->getXingzuo($name,'year');
+        }
+        // dd($data);
+        return view('home.index.xingzuo',[
+            'cates'     => $cate,
+            'readTop10'     => $readTop10,
+            'data'          => $data,
+            'xingzuo'       => $xingzuo
+        ]);
+    }
+
+
+    /**
+     * 调用星座数据的方法
+     * @param  [string] $consName [星座名称，如:白羊座]
+     * @param  [string] $type     [运势类型：today,tomorrow,week,nextweek,month,year]
+     * @return [type]           [description]
+     */
+    public function getXingzuo($consName,$type){
+        //配置您申请的appkey
+        $appkey = "7a4622e755403eca8b955f483cbe1f2f";
+        //************1.运势查询************
+        $url = "http://web.juhe.cn:8080/constellation/getAll";
+        $params = array(
+              "key" => $appkey,//应用APPKEY(应用详细页查询)
+              "consName" => $consName,//星座名称，如:白羊座
+              "type" => $type,//运势类型：today,tomorrow,week,nextweek,month,year
+        );
+        $paramstring = http_build_query($params);
+        $content = $this->juhecurl($url,$paramstring);
+        $result = json_decode($content,true);
+        if($result){
+            if($result['error_code']=='0'){
+                // 判断如果是今日或者明日的做数据处理
+                if ($type == 'today' || $type == 'tomorrow') {
+                    // 数据处理
+                    $result['health'] = ceil((int)$result['health']/100*5);
+                    $result['love'] = ceil((int)$result['love']/100*5);
+                    $result['all'] = ceil((int)$result['all']/100*5);
+                    $result['money'] = ceil((int)$result['money']/100*5);
+                    $result['work'] = ceil((int)$result['work']/100*5);
+                }
+                // 将星座图片加入数据
+                $pic = DB::table('xingzuo')->select('img','mon')->where('name',$consName)->first();
+                $result['pic'] = $pic->img;
+                $result['mon'] = $pic->mon;
+                // 将数据存入Redis
+                $key = $consName.$type;
+                $redis = Redis::connection('default');
+                $redis->select(2);
+                $data = json_encode($result, JSON_UNESCAPED_UNICODE );
+                // 获取到当前到凌晨00点的秒数
+                $time = date('H-i-s');
+                $rtiem = explode('-', $time);
+                $s = $rtiem[0]*60*60+$rtiem[1]*60+$rtiem[2];
+                $redis->setex( $key, $s ,$data);//一天一更新
+                return $result;
+            }else{
+
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * 请求接口返回内容
+     * @param  string $url [调用星座接口的地址]
+     * @param  string $params [星座]
+     * @param  int $ipost [是否采用POST形式]
+     * @return  string
+     */
+    public function juhecurl($url,$params=false,$ispost=0){
+        $httpInfo = array();
+        $ch = curl_init();
+
+        curl_setopt( $ch, CURLOPT_HTTP_VERSION , CURL_HTTP_VERSION_1_1 );
+        curl_setopt( $ch, CURLOPT_USERAGENT , 'JuheData' );
+        curl_setopt( $ch, CURLOPT_CONNECTTIMEOUT , 60 );
+        curl_setopt( $ch, CURLOPT_TIMEOUT , 60);
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER , true );
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        if( $ispost )
+        {
+            curl_setopt( $ch , CURLOPT_POST , true );
+            curl_setopt( $ch , CURLOPT_POSTFIELDS , $params );
+            curl_setopt( $ch , CURLOPT_URL , $url );
+        }
+        else
+        {
+            if($params){
+                curl_setopt( $ch , CURLOPT_URL , $url.'?'.$params );
+            }else{
+                curl_setopt( $ch , CURLOPT_URL , $url);
+            }
+        }
+        $response = curl_exec( $ch );
+        if ($response === FALSE) {
+            //echo "cURL Error: " . curl_error($ch);
+            return false;
+        }
+        $httpCode = curl_getinfo( $ch , CURLINFO_HTTP_CODE );
+        $httpInfo = array_merge( $httpInfo , curl_getinfo( $ch ) );
+        curl_close( $ch );
+        // var_dump($response);
+        return $response;
+    }
+
+
+    // 获取聚合提供的笑话大全api数据的 ajax
     public function getJokeData(Request $req) {
         $page = $req->input('page');
         $jokelistKey = 'jokelist_'.$page;

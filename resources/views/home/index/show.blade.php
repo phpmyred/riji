@@ -153,7 +153,7 @@
                                 <div class="comment-recommend">
                                 @foreach($recomment as $value)
                                     @if( $value->c_id == $v->id)
-                                    
+
                                         <dl class="fix wu" id="wu">
                                             <dt>
                                                 <a href="" target="_blank">
@@ -171,7 +171,7 @@
                                                 </div>
                                             </dd>
                                         </dl>
-                                    
+
                                     @else
 
                                     @endif
@@ -354,7 +354,7 @@
                     dll = $('#wu').clone();
                     dll.css('display','block');
                     dll.find('#cnts').html(recontent);
-                    dll.find('#times').html(res.time); 
+                    dll.find('#times').html(res.time);
                     $('.comment-post').append(dll);
 
                 }else if(res.code == 10000){
