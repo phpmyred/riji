@@ -72,7 +72,10 @@ class NoticeController extends Controller
     //修改页面
     public function edit($id) {
     	$data = DB::table('notice')->where('id','=',$id)->first();
-    	return view('admin.notice.edit',['data'=>$data]);
+    	return view('admin.notice.edit',[
+            'menu_notice' => 'active',
+    	    'data'=>$data
+        ]);
     }
 
     //处理修改
