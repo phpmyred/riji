@@ -43,7 +43,7 @@ class AdsController extends Controller
     		//存放到指定位置
     		$req->file('pic')->move(Config::get('app.app_upload'),$name.'.'.$ext);
             //获取图片位置
-            $pic = Config::get('app.app_upload').'/'.$name.'.'.$ext;
+            $pic = ltrim(Config::get('app.app_upload').'/'.$name.'.'.$ext,'.');
     	}
     	$data['pic'] = $pic;
     	$data['created_at'] = time();
@@ -61,7 +61,7 @@ class AdsController extends Controller
     public function delete($id) {
         //获取删除轮播图的图片
         $info = DB::table('advertising')->where('id','=',$id)->first();
-        $pic=$info->pic;
+        $pic='.'.$info->pic;
 
     	$res = DB::table('advertising')->where('id','=',$id)->delete();
     	if($res){
@@ -94,7 +94,7 @@ class AdsController extends Controller
         $data['updated_at'] = time();
         //获取原来的图片
         $sele = DB::table('advertising')->where('id','=',$data['id'])->first();
-        $oldPic = $sele->pic;
+        $oldPic = '.'.$sele->pic;
 
     	$res = DB::table('advertising')->where('id','=',$data['id'])->update($data);
 		if($res){

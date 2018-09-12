@@ -143,7 +143,7 @@ Route::group(['middleware'=>'login','namespace' => 'Admin'], function () {
     Route::post('bk_links/doedit', 'LinksController@doedit'); //处理修改
     Route::get('bk_link/change/{id}', 'LinksController@change'); // 启用/禁用链接
     Route::get('bk_links/dels', 'LinksController@del'); //ajax删除
-
+    Route::get('bk_links/checkList', 'LinksController@checkList'); //友情链接审核
 
     //公告模块
     Route::get('bk_notice', 'NoticeController@index'); //公告列表页

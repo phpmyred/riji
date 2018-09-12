@@ -161,9 +161,9 @@ class IndexController extends Controller
         $data['updated_at'] = time();
 
         if(DB::table('links')->insert($data)){
-            return back()->with('success','添加成功');
+            return back()->with('success','申请成功');
         }else{
-            return back()->with('error','添加失败');
+            return back()->with('error','申请失败');
         }
     }
 

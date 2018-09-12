@@ -107,6 +107,7 @@
                 <ul class="sub-menu-list">
                     <li class="{{$menu_links_index or ''}}"><a href="/bk_links"> 友情链接列表</a></li>
                     <li class="{{$menu_links_add or ''}}"><a href="/bk_links/add"> 添加友情链接</a></li>
+                    <li class="{{$menu_links_checkList or ''}}"><a href="/bk_links/checkList"> 友情链接审核列表</a></li>
                 </ul>
             </li>
             <li class="menu-list {{$menu_notice or ''}}">

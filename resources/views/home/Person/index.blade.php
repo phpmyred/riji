@@ -92,20 +92,7 @@
               @foreach($comment_me as $rows)
                 <ul id="dt_list" class="dt_list">
                   <li>
-                    @if(time()-$rows->created_at < 3600)
-
-                      @if(date('i',time()-$rows->created_at) < 10)
-                        <span>{{date('i',time()-$rows->created_at)-0}}分钟前</span>
-                      @else
-                        <span>{{date('i',time()-$rows->created_at)}}分钟前</span>
-                      @endif
-
-                    @elseif(time()-$rows->created_at < 86400)
-                    <span>{{date('G',time()-$rows->created_at)-8}}小时前</span>
-                    @else
-                    <span>{{date('Y-m-d H:i:s',$rows->created_at)}}</span>
-                    @endif
-
+                    <span>{{date('m-d H:i',$rows->created_at)}}</span>
                     <a class="link" href="/ps_space/{{$rows->uid}}" target="_blank">{{$rows->nickname}}</a> 评论了文章
                     <a class="key_word" href="/list/{{$rows->id}}/show" target="_blank">{{$rows->title}}</a>
                   </li>
@@ -127,7 +114,7 @@
                   <li>
                     <span>{{date('m-d H:i',$row->created_at)}}</span>
                     <a class="link" href="/ps_space/{{$row->uid}}" target="_blank">{{$row->nickname}}</a> 评论了文章
-                    <a class="key_word" href="/list/{{$row->id}}/show" target="_blank">{{$row->title}}</a>
+                    <a class="key_word" href="/list/{{$row->id}}/show" target="_blank">{{changeStr($row->title,12,'...')}}</a>
                   </li>
                 </ul>
               @endforeach
