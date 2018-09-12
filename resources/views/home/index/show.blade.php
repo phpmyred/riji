@@ -389,13 +389,6 @@
                 } else {
                     mod = $(this).parents('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id);
                     o = $(this);
-                    // alert(mod);
-                    // dll = $('.wus').clone();
-                    // dll.css('display','block');
-                    // dll.find('.contents').html(recontent);
-                    // dll.find('.times').html('123'); 
-                    // alert(dll);
-                    // mod.append(dll);
 
                     $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
                         if(res.code == 10001){
@@ -426,54 +419,7 @@
         });
     });
 
-    //点击取消隐藏回复框
-    // delids = $('.comment-post').find('.emoticons').find('.publisher').find('.comment-msg').find('p').find('.button2');
-    // delids = $('.comment-list').find('.fix').find('.comm').find('.fixs'+id).find('.comment-post').find('.emoticons').find('.publisher').find('.comment-msg').find('p').find('.button2');
-    // alert(delids.length);
-    // delids.each(function(){
-    //     $(this).click(function(){
-    //         alert($(this));
-    //         id = $(this).attr('delid');
-    //         alert('.comment-post'+id);
-    //         $('.comment-post'+id).remove();
-    //     });
-    // });
-
-
-    //回复
-
-    // ReComments = $('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id).find('.comment-post'+id).find('.emoticons').find('.publisher').find('.comment-msg').find('p').find('.button');
-    // ReComments.each(function(){
-    //     $(this).click(function(){
-    //         from_uid = $(this).attr('refrom_uid');
-    //         id = $(this).attr('revid');
-    //         uid = $(this).attr('reuid');
-
-    //         recontent = $('.'+'recomment'+id).val();
-    //         cont_id =  {{$contents->id}};
-    //         if (recontent.length < 5) {
-    //             alert('评论回复不能少于5个字');
-    //         } else {
-    //            $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
-    //                 if(res.code == 10001){
-    //                     dll = $('.wus').clone();
-    //                     dll.css('display','block');
-    //                     dll.find('.contents').html(recontent);
-    //                     dll.find('.times').html(res.time); 
-    //                     dll.find('#getid').attr('class','dels'+res.id);
-    //                     dll.find('#getid').attr('onclick','dels('+res.id+')');
-    //                     // $('.fixss'+id).find('.fixs'+id).append(dll);
-    //                     $('.comment-list').find('.fixss'+id).find('.comm').find('.fixs'+id).append(dll);
-    //                     // DelComment(id);
-    //                 }else if(res.code == 10000){
-    //                     alert(res.msg);
-    //                 }
-    //            },'json');
-    //         }
-            
-    //     });
-    // });
- 
+   
 
     //评论删除
     function del(id) { 
