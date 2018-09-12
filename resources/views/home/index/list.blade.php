@@ -50,13 +50,13 @@
             <a href="/">首页</a>
         @foreach($cates as $k => $v)
             <span class="subNav-more2">
-                <a style="cursor:pointer;" href="/list/{{$v->id}}">{{$v->name}}</a>
+                <a style="cursor:pointer;" href="/list/{{$v['id']}}">{{$v['name']}}</a>
                 <em class="subNav-more-btn2"></em>
-            @if( !empty($v->child) )
+            @if( !empty($v['child']) )
                 <ul class="subNav-more-ul2">
-                @foreach($v->child as $k2=>$v2)
+                @foreach($v['child'] as $k2=>$v2)
                     <li class="subNav-more-li">
-                        <a style="cursor:pointer;" href="/list/{{$v2->id}}" target="_blank" title="{{$v2->name}}">{{$v2->name}}</a>
+                        <a style="cursor:pointer;" href="/list/{{$v2['id']}}" target="_blank" title="{{$v2['name']}}">{{$v2['name']}}</a>
                     </li>
                 @endforeach
                 </ul>
@@ -71,7 +71,7 @@
     <div class="left665">
         <div class="lBox qaList part">
             <div class="lBox-th2 qaList-nav">
-                <a class="toc current" href="https://www.riji.cn/shujiariji/" target="_self">{{$cate_info->name}}大全</a>
+                <a class="toc current" href="/list/{{$cate_info->id}}" target="_self">{{$cate_info->name}}大全</a>
             </div>
             <div class="lBox-tb">
                 <ul class="qaList-ulList ">
