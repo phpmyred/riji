@@ -161,7 +161,8 @@ $(function(){
                     }
                 }
             } else {
-                alert( res.reason );
+                alert( '获取数据失败' );
+                console.log( res );
             }
         },error:function (err) {
             console.log( err );
