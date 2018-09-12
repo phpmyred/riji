@@ -295,12 +295,12 @@
 <!-- 回复模板 -->
 <dl class="fix wus" id="wu" style="display: none">
     <dt>
-        <a href="" target="_blank">
+        <a href="/ps_space/{{session('home_user')['id']}}" target="_blank">
             <img src="{{session('home_user')['uface']}}" width="46" height="46">
         </a>
     </dt>
     <dd>
-        <a href="" target="_blank">
+        <a href="/ps_space/{{session('home_user')['id']}}" target="_blank">
             <span style="color:#3ACA81" id="nickname">{{session('home_user')['nickname']}}:</span>
         </a>：
         <span class="contents"></span>
@@ -402,8 +402,7 @@
                             dll.find('.times').html(res.time); 
                             dll.find('#getid').attr('class','dels'+res.id);
                             dll.find('#getid').attr('onclick','dels('+res.id+')');
-                            dll.find('dt').find('a').attr('href','/ps_space/{{$value->uid}}');
-                            dll.find('dd').find('a').attr('href','/ps_space/{{$value->uid}}');
+
 
                             // $('.fixss'+id).find('.fixs'+id).append(dll);
                             mod.append(dll);
