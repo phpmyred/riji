@@ -10,6 +10,7 @@ use DB;
 use Cache;
 use Cookie;
 use App\Http\Requests\Links\Links;
+use Illuminate\Support\Facades\Redis;
 
 class IndexController extends Controller
 {
@@ -86,8 +87,27 @@ class IndexController extends Controller
      * @return [type] [description]
      */
     public function index(Request $req) {
-        //  获取所有分类
-        $cate = getCatesBypid(0);
+        $redis = $this->getRedis(1);//实例化redis类并选中1号redis库
+        //分类(导航栏缓存)
+        $key_index_cates = 'key_nav_cates_index';
+        //如果缓存存在则直接获取缓存数据 否则查库返回并存缓存
+        if ( $redis->exists( $key_index_cates ) ) {
+            $cate = $redis->get( $key_index_cates );
+        } else {
+            //  获取所有分类
+            $cate = json_encode(getCatesBypid(0));
+            $redis->set( $key_index_cates , $cate );
+        }
+        //导航栏中的星座数据缓存
+        $key_index_constellation = 'key_nav_constellation';
+        if ( $redis->exists( $key_index_constellation ) ) {
+            $constellation = $redis->get( $key_index_constellation );
+        } else {
+            //获取星座信息
+            $constellation = DB::table('xingzuo')->get();
+            $redis->set( $key_index_constellation , json_encode($constellation) );
+        }
+
         // 热门日记
         $data = DB::table('cates')->where('status', '3')->limit(5)->get();
         // 原创下的文章
@@ -128,7 +148,7 @@ class IndexController extends Controller
                     ->where('status','0')
                     ->get();
         return view('home.index.index',[
-            'cates' => $cate,
+            'cates' => json_decode( $cate , true ),
             'data' => $data,
             'data_recommand' => $data_recommand,
             'new'      => $new,
@@ -137,7 +157,8 @@ class IndexController extends Controller
             'con1'     => $list,
             'con2'     => $list2,
             'users'    => $user,
-            'link'     => $link
+            'link'     => $link,
+            'constellation' => json_decode( $constellation , true )
         ]);
     }
 
@@ -161,9 +182,9 @@ class IndexController extends Controller
         $data['updated_at'] = time();
 
         if(DB::table('links')->insert($data)){
-            return back()->with('success','添加成功');
+            return back()->with('success','申请成功');
         }else{
-            return back()->with('error','添加失败');
+            return back()->with('error','申请失败');
         }
     }
 

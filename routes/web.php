@@ -39,9 +39,13 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::post('/digg','ListController@digg');// 传送参数digg为good时 为顶 | digg为bad时为 踩
     Route::get('/comment','CommentContorller@index');//评论AJAX
     Route::get('/recomment','CommentContorller@recomment'); //回复AJAX
+    Route::get('/show_del','CommentContorller@del'); //ajax评论删除
+    Route::get('/show_dels','CommentContorller@dels'); //ajax回复删除
+
     Route::get('/jokeList','ListController@jokeList');//进入笑话大全列表页面
     Route::post('/getJokeData','ListController@getJokeData');//获取笑话大全数据，默认获取第一页
     Route::get('/getXingzuo/{name}','ListController@xingzuo');//获取笑话大全的内容
+
 
     //个人中心模块
     Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
@@ -140,7 +144,7 @@ Route::group(['middleware'=>'login','namespace' => 'Admin'], function () {
     Route::post('bk_links/doedit', 'LinksController@doedit'); //处理修改
     Route::get('bk_link/change/{id}', 'LinksController@change'); // 启用/禁用链接
     Route::get('bk_links/dels', 'LinksController@del'); //ajax删除
-
+    Route::get('bk_links/checkList', 'LinksController@checkList'); //友情链接审核
 
     //公告模块
     Route::get('bk_notice', 'NoticeController@index'); //公告列表页

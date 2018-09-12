@@ -20,8 +20,15 @@ class ListController extends Controller
      * @param $id
      */
     public function index($id) {
-        //导航栏分类列表
-        $cate = $this->getCatesBypid(0);
+        $redis = $this->getRedis(1);
+        $key = 'key_nav_cates_lists';
+        if ( $redis->exists( $key ) ) {
+            $cate = $redis->get( $key );
+        } else {
+            //导航栏分类列表
+            $cate = json_encode($this->getCatesBypid(0));
+            $redis->set( $key , $cate );
+        }
         //根据$id获取该分类的列表数据和类名称和类id
         $cate_info = DB::table('cates')->where('id',$id)->select(['id','name','pid'])->first();
         //获取阅读排行中前10条
@@ -35,7 +42,7 @@ class ListController extends Controller
                 ->where('c.id',$id)
                 ->paginate(5);
             return view('home.index.list',[
-                'cates'     => $cate,
+                'cates'     => json_decode($cate,true),
                 'list'      => $list,
                 'cate_info' => $cate_info,
                 'readTop10' => $readTop10,
@@ -49,7 +56,7 @@ class ListController extends Controller
                 $lists[] = $v;
             }
             return view('home.index.list_p',[
-                'cates'     => $cate,
+                'cates'     => json_decode($cate,true),
                 'cate_info' => $cate_info,
                 'lists'     => $lists,
                 'readTop10' => $readTop10,
@@ -66,9 +73,6 @@ class ListController extends Controller
      * @return string
      */
     public function show($id) {
-        if ( session('home_user') ) {
-            $login_id = session('home_user')['id'];
-        }
         //$id对应的内容点击数量+1
         DB::table('content')->where('id',$id)->increment('num');
         //获取上一篇
@@ -113,7 +117,6 @@ class ListController extends Controller
         $recomment = DB::table('comment_reply as cr')
                     ->join('users_detail as ud','cr.from_uid','=','ud.uid')
                     ->where('cr.con_id',$id)
-                    // ->where('cr.from_uid',$login_id)
                     ->select('cr.id','cr.reply_id','cr.reply_content','cr.created_at','cr.from_uid','cr.c_id','ud.nickname','ud.uface','ud.uid')
                     ->orderBy('created_at','asc')
                     ->get();
@@ -425,6 +428,7 @@ class ListController extends Controller
 
     //无限级递归方法
     public function getCatesBypid($pid){
+
         $s = DB::table('cates')->where('pid','=',$pid)->orderBy('id','asc')->get();
         //遍历
         $data=[];

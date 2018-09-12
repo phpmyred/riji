@@ -35,7 +35,7 @@
             <a href="/">首页</a>
         @foreach($cates as $k=>$v)
             <span class="subNav-more2">
-                <a style="cursor:pointer;" href="/list/{{$v->id}}">{{$v->name}}</a>
+                <a style="cursor:pointer;" href="/list/{{$v['id']}}">{{$v['name']}}</a>
             </span>
         @endforeach
             <a href="/jokeList">笑话大全</a>

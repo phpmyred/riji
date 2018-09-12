@@ -13,8 +13,6 @@
       </dl>	
 	<dl class="guize">
       <dt>积分中心</dt>
-      <dd><a href="">礼品兑换</a></dd>
-      <dd><a href="">兑换记录</a></dd>
       <dd><a href="/ps_qiandao">签到记录</a></dd>
 	</dl>
     <dl class="guize">

@@ -13,13 +13,28 @@ class LinksController extends Controller
 	//友情链接列表页
     public function index(Request $req) {
         $k = $req->input('keywords');
-    	$links = DB::table('links')->where('name','like','%'.$k.'%')->paginate(5);
+    	$links = DB::table('links')
+            ->where('name','like','%'.$k.'%')
+            ->where('status','!=','2')
+            ->paginate(5);
     	return view('admin.links.index',[
     		'menu_links' => 'active',
     		'menu_links_index' => 'active',
     		'links' => $links,
             'request' => $req->all()
     		]);
+    }
+
+    //友情链接审核列表
+    public function checkList(Request $req) {
+        $check = DB::table('links')
+            ->where('status','=','2')
+            ->get();
+        return view('admin.links.check',[
+                'menu_links' => 'active',
+                'menu_links_checkList' => 'active',
+                'check'=> $check
+            ]);
     }
 
     //友情链接添加页
@@ -83,7 +98,10 @@ class LinksController extends Controller
         }else if($arr[0]->status == 1){
             $res = DB::table('links')->where('id','=',$id)->update(['status'=>'0']);
             return redirect('/bk_links')->with('success','修改成功');
-        }   
+        }else if($arr[0]->status == 2){
+            $res = DB::table('links')->where('id','=',$id)->update(['status'=>'0']);
+            return redirect('/bk_links/checkList')->with('success','审核通过');
+        } 
     }
 
     //ajax删除处理
