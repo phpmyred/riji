@@ -105,7 +105,7 @@ class LoginController extends Controller
                     'uid'       => $uid,
                 ]);
                 $info = [
-                    'links' => "http://www.project2.com/registerActive/{{$uid}}/{{$token}}",
+                    'links' => "http://www.riji.com/registerActive/{$uid}/{$token}",
                     'uname' => $data['name'],
                     'tip'   => '点击激活账号'
                 ];
@@ -149,12 +149,19 @@ class LoginController extends Controller
                 'status'=> '0'
             ];
             if ( DB::table('users')->where('id',$id)->update($up) ) {
-                echo '帐号已激活!';
+                return view('home.login.activeResultPage',[
+                    'tip'   => '帐号已激活'
+                ]);
             } else {
-                echo '帐号激活失败';
+                return view('home.login.activeResultPage',[
+                    'tip'   => '帐号激活失败',
+                    'backUrl'          => back()->getTargetUrl()
+                ]);
             }
         } else {
-            echo '帐号激活验证失败';
+            return view('home.login.activeResultPage',[
+                'tip'   => '帐号激活验证失败'
+            ]);
         }
     }
 
