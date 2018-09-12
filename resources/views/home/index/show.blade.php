@@ -125,7 +125,7 @@
                             <div class="publisher">
                                 <textarea name="msg" id="msg" class="comment-msg-txt"></textarea>
                                 <div style="width:704px">
-                                    
+
                                     <button type="button" class="button" id="comment">评论</button>
                                 </div>
                             </div>
@@ -147,7 +147,7 @@
                                 <div class="comment-info"> {{date('m-d H:i',$v->created_at)}}
                                     <a href="javascript:void(0);" class="response" vid="{{$v->id}}" from_uid="{{$v->from_uid}}" >回复</a>
                                     @if($v->uid == session('home_user')['id'])
-                                    <a class="del{{$v->id}} {{$v->id}}" href="javascript:void(0);" style="float: right" onclick="del({{$v->id}})">删除</a>                                       
+                                    <a class="del{{$v->id}} {{$v->id}}" href="javascript:void(0);" style="float: right" onclick="del({{$v->id}})">删除</a>
                                     @endif
                                 </div>
                                 <!-- 回复内容 -->
@@ -155,13 +155,10 @@
                                 <div class="comment-recommend fixs{{$v->id}}">
                                 @foreach($recomment as $value)
                                     @if( $value->c_id == $v->id)
-<<<<<<< HEAD
-
                                         <dl class="fix wu" id="wu">
-=======
                                         <!-- 遍历数据表中的回复内容 -->
                                         <dl class="fix{{$value->uid}} wu" id="wu">
->>>>>>> 1e5a18b08d7e16802a06f29c0e1d7dd1d287f1d7
+
                                             <dt>
                                                 <a href="/ps_space/{{$value->uid}}" target="_blank">
                                                     <img src="{{$value->uface}}" width="46" height="46">
@@ -179,26 +176,21 @@
                                                     @endif
                                                 </div>
                                             </dd>
-<<<<<<< HEAD
                                         </dl>
-
                                     @else
-
-=======
-                                        </dl>            
->>>>>>> 1e5a18b08d7e16802a06f29c0e1d7dd1d287f1d7
+                                        </dl>
                                     @endif
                                 @endforeach
-                          
+
                                 </div>
                                 <!-- 回复内容结束 -->
-                                
-                               
+
+
                             </dd>
                         </dl>
                         @endforeach
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -292,14 +284,14 @@
         <span id="cnt"></span>
         <div class="comment-info"> <span id="time"></span>
             <a href="javascript:void(0);" class="response" vid="" from_uid="">回复</a>
-            
-            <a class="del" id="getids" href="javascript:void(0);" style="float: right" onclick="">删除</a>                                       
-           
+
+            <a class="del" id="getids" href="javascript:void(0);" style="float: right" onclick="">删除</a>
+
         </div>
         <!-- 回复内容 -->
         <!-- 回复表中的对应评论id和评论表id相等时显示对应回复内容 -->
         <div class="comment-recommend fixs{{$v->id}}">
-        
+
         </div>
         <!-- 回复内容结束 -->
     </dd>
@@ -317,10 +309,10 @@
         </a>：
         <span class="contents"></span>
         <div class="comment-info"> <span class="times"></span>
-            
+
             <a class="dels" id="getid" href="javascript:void(0);" onclick="dels" style="position: relative;left: 453px">删除
             </a>
-           
+
         </div>
     </dd>
 </dl>
@@ -362,7 +354,7 @@
 
     // 回复点击事件
     responses = $('.comment-list').find(".fix").find('.comm').find('.comment-info').find('.response');
-    responses.each(function(i){     
+    responses.each(function(i){
         $(this).on('click',function(){
             comments = $('.comment-list').find('.fix').find('.comm').find('.comment-recommend').find('.comment-post');
             //移除原来的文本框
@@ -378,7 +370,7 @@
             $('.recomment').val("");
             clone.css('display','block');
             $(this).parents('.comment-info').parents('.comm').find('.fixs'+id).append(clone);
-            
+
             //移除文本框
             delids = $(this).parents('.comm').find('.fixs'+id).find('.comment-post'+id).find('.emoticons').find('.publisher').find('.comment-msg').find('p').find('.button2');
             //单击取消移除文本框
@@ -411,7 +403,7 @@
                             dll.attr('class','fix'+id);
                             dll.css('display','block');
                             dll.find('.contents').html(recontent);
-                            dll.find('.times').html(res.time); 
+                            dll.find('.times').html(res.time);
                             dll.find('#getid').attr('class','dels'+res.id);
                             dll.find('#getid').attr('onclick','dels('+res.id+')');
 
@@ -436,7 +428,7 @@
 
                             // $('.fixss'+id).find('.fixs'+id).append(dll);
                             mod.append(dll);
-                            
+
                             // alert('a');
                             // dll.remove();
                         }else if(res.code == 10000){
@@ -448,10 +440,10 @@
         });
     });
 
-   
+
 
     //评论删除
-    function del(id) { 
+    function del(id) {
         $.get('/show_del',{id:id},function(res){
             if(res.code == 10001){
                 alert(res.msg);
