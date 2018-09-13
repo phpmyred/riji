@@ -55,17 +55,23 @@ class ListController extends Controller
                 $v->child = DB::table('content')->orderBy('id','desc')->where('cid',$v->id)->select(['id','title'])->get();
                 $lists[] = $v;
             }
+
+            //列表页广告
+            $data = DB::table('advertising')->select('pic','name','url')->get();
+            
+
             return view('home.index.list_p',[
                 'cates'     => json_decode( $cate ),
                 'cate_info' => $cate_info,
                 'lists'     => $lists,
                 'readTop10' => $readTop10,
                 'classCates'=> $classCates,
-
+                'data'      => $data
             ]);
         }
 
     }
+
 
     /**
      * 详情页面
