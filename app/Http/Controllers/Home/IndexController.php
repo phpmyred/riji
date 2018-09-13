@@ -162,7 +162,6 @@ class IndexController extends Controller
         ]);
     }
 
-
     /**
      * 公告详情
      * @param $id
