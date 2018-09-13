@@ -11,9 +11,9 @@
     <link rel="stylesheet" type="text/css" href="/static/home/register/static/css/mycss1.css">
     <link rel="stylesheet" type="text/css" href="/static/home/register/mycss/mycss.css">
     <script type="text/javascript" src="/static/home/register/static/js/jquery-3.1.1.js"></script>
-
     <style type="text/css">
         .wawa{
+            top: 0px;
             left: -50px;
         }
         .tupian{
@@ -22,14 +22,21 @@
         .regNew_top{
             z-index: 50;
         }
+        #modal_reg>.reg>i {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color:gray;
+            color: white;
+            line-height: 20px;
+        }
     </style>
 </head>
-
 <body>
-<div class="regNew_top">
+<div class="regNew_top" style="height: 80px; line-height: 80px;">
     <div class="reg_topCon tupian">
         <a href="/">
-            <div class="logo" style="z-index: 50"></div>
+            <img style="height: 60px;" src="/static/home/index/images/logo2.png" class="logo2">
         </a>
         <div class="clock">
             <img src="/static/home/register/img/aa.png" width="100px" class="wawa">
@@ -58,11 +65,17 @@
                         <div class="col-lg-7">
                             <input type="text" autocomplete="off" placeholder="请输入邮箱..." id="f_email" class="form-control" name="email">
                         </div>
-                        <span  class="col-lo-3 hide">邮箱错误</span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">验证码</label>
+                        <div class="col-lg-7">
+                            <input type="text" style="float:left; width: 140px;" autocomplete="off" placeholder="验证码..." id="f_vcode" class="form-control" name="vcode">
+                            <img src="{{captcha_src()}}" id="vcodeImg" style="cursor: pointer; float: right; height: 40px;" onclick="this.src='{{captcha_src()}}'+Math.random()">
+                        </div>
                     </div>
                     <div class="form-group text-center" style="text-align: center;">
                         <div class="col-lg-4">
-                            <button class="reg_btn btn_disabled" id="forgetPwd" disabled type="submit">找回密码</button>
+                            <button class="reg_btn" id="forgetPwd" type="submit">找回密码</button>
                         </div>
                     </div>
                 </form>
@@ -76,77 +89,71 @@
         $(function(){
             $fm_forget  = $("#fm_forget");
             $f_email    = $("#f_email");
+            $f_vcode    = $("#f_vcode");
             //禁用form表单下所有input的回车提交表单事件
             $fm_forget.find('input').keydown(function(event){
                 if (event.keyCode === 13) {
                     event.preventDefault ? event.preventDefault() : event.returnValue = false;
                 }
             });
-            //检测邮箱是否存在
-            $f_email.blur(function(){
-                that = $(this);
-                that_val = that.val();
-                reg_email = /^\w+@\w+(\.\w+){1,3}$/;
-                if ( !that.val().length ) {
-                    that.parent().next("span").removeClass('hide').css({'color':'red'}).text('邮箱为空!');
-                    $("#forgetPwd").attr('disabled','true').addClass('btn_disabled');
-                    return false;
-                } else if( !reg_email.test(that_val) ) {
-                    $("#forgetPwd").attr('disabled','true').addClass('btn_disabled');
-                    that.parent().next("span").removeClass('hide').css('color','red').text('请输入正确的邮箱格式');
-                    return false;
-                }
-                that.parent().next("span").addClass('hide');
-
-                $.ajax({
-                    url: '/regCheckEmail',
-                    method: 'post',
-                    dataType:'json',
-                    contentType:'application/x-www-form-urlencoded',
-                    data:{email:that_val},
-                    success:function(res) {
-                        if ( res.code === '111' ) {//邮箱存在
-                            that.parent().next("span").removeClass('hide').css('color','green').text('邮箱帐号存在');
-                            $("#forgetPwd").removeAttr('disabled').removeClass('btn_disabled');
-                        } else {//邮箱不存在
-                            $("#forgetPwd").attr('disabled','true').addClass('btn_disabled');
-                            that.parent().next("span").removeClass('hide').css('color','red').text('邮箱不存在');
-                        }
-                    },error:function(err) {
-                        console.log('网络错误');
-                    },beforeSend:function(xhr) {
-                        xhr.setRequestHeader('X-CSRF-TOKEN',$("#csrftoken").attr('content'))
-                    }
-                });
-            });
-
+            submit_time = null;
             $fm_forget.submit(function(ev){
                 that = $(this);
+                reg_email = /^\w+@\w+(\.\w+){1,3}$/;
                 if ( !$f_email.val().length ) {
-                    $f_email.parent().next("span").removeClass('hide').css('color','red').text('邮箱为空');
+                    $("#modal_reg").find('.reg_body').text( '邮箱不能为空' );
+                    $("#modal_reg").removeClass('reg_hide');
+                    clearInterval(submit_time);
+                    submit_time = setInterval(function(){
+                        $("#modal_reg>.reg>i").trigger('click');
+                    },1500);
+                    return false;
+                } else if ( !reg_email.test($f_email.val()) ) {
+                    $("#modal_reg").find('.reg_body').text( '邮箱格式错误' );
+                    $("#modal_reg").removeClass('reg_hide');
+                    clearInterval(submit_time);
+                    submit_time = setInterval(function(){
+                        $("#modal_reg>.reg>i").trigger('click');
+                    },1500);
                     return false;
                 }
-                $("#forgetPwd").attr('disabled','true').addClass('btn_disabled');
+
+                if ( !$f_vcode.val().length ) {
+                    $("#modal_reg").find('.reg_body').text( '请输入验证码' );
+                    $("#modal_reg").removeClass('reg_hide');
+                    clearInterval(submit_time);
+                    submit_time = setInterval(function(){
+                        $("#modal_reg>.reg>i").trigger('click');
+                    },1500);
+                    return false;
+                }
+
                 $.ajax({
                     url: '/doforget',
                     method: 'POST',
                     contentType:'application/x-www-form-urlencoded',
                     dataType:'json',
-                    data:{email:$f_email.val()},
+                    data:{
+                        email: $f_email.val(),
+                        vcode: $f_vcode.val()
+                    },
                     success:function(res){
                         if ( res.code === '000' ) {
                             $("#modal_reg").find('.reg_body').text(res.msg);
                             $("#modal_reg").removeClass('reg_hide');
-                            setInterval(function(){
+                            clearInterval(submit_time);
+                            submit_time = setInterval(function(){
                                 $("#modal_reg>.reg>i").trigger('click');
-                                window.location.href='http://www.project2.com';
-                            },3000);
+                                window.location.href='/';
+                            },2000);
                         } else {
+                            $("#vcodeImg").trigger('click');
                             $("#modal_reg").find('.reg_body').text(res.msg);
                             $("#modal_reg").removeClass('reg_hide');
-                            setInterval(function(){
+                            clearInterval(submit_time);
+                            submit_time = setInterval(function(){
                                 $("#modal_reg>.reg>i").trigger('click');
-                            },3000);
+                            },2000);
                         }
                     },error:function(err) {
                         console.log('网络错误');
@@ -157,6 +164,7 @@
                 ev.preventDefault();    //阻止表单的默认跳转
             });
         });
+
     </script>
 </div>
 <div id="modal_reg" class="reg_hide">

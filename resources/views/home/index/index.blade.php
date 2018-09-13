@@ -65,7 +65,9 @@
  <body id="Jbody">
   <div class="main" id="main1">
    <div class="head">
-    <a href="/" target="_blank"><img src="/static/home/index/images/logo2.png" class="logo2"></a>
+    <a href="/">
+     <img src="/static/home/index/images/logo2.png" class="logo2">
+    </a>
     <div class="search">
      <div id="s-form" class="form">
       <img  style="position: absolute;width: 150px;" src="/static/home/index/images/664.png" id="chat" class="open">

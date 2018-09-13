@@ -161,7 +161,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Debugbar插件
         Barryvdh\Debugbar\ServiceProvider::class,
-
+        //图片验证码类
+        Mews\Captcha\CaptchaServiceProvider::class,
 
     ],
 
@@ -212,6 +213,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        'Captcha' => Mews\Captcha\Facades\Captcha::class,
 
     ],
 

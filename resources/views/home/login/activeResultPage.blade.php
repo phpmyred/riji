@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="ThemeBucket">
 
-    <title>404 Page</title>
+    <title>木知网_链接处理结果</title>
 
     <link href="/static/admin/css/style.css" rel="stylesheet">
     <link href="/static/admin/css/style-responsive.css" rel="stylesheet">
@@ -23,7 +23,6 @@
 
         <section class="error-wrapper text-center">
             <h2>{{$tip}}</h2>
-            <h2>{{$backUrl or ''}}</h2>
             <a class="back-btn" href="/"> 前往首页</a>
         </section>
 

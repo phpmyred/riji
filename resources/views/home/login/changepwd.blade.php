@@ -136,14 +136,14 @@
                             $("#modal_reg").removeClass('reg_hide');
                             setInterval(function(){
                                 $("#modal_reg>.reg>i").trigger('click');
-                                window.location.href='http://www.project2.com';
-                            },3000);
+                                window.location.href='/';
+                            },2000);
                         } else {
                             $("#modal_reg").find('.reg_body').text(res.msg);
                             $("#modal_reg").removeClass('reg_hide');
                             setInterval(function(){
                                 $("#modal_reg>.reg>i").trigger('click');
-                            },3000);
+                            },2000);
                         }
                     },error:function(err) {
                         console.log('网络错误');

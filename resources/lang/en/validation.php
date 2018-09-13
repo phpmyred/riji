@@ -112,6 +112,7 @@ return [
     'unique'               => 'The :attribute has already been taken.',
     'uploaded'             => 'The :attribute failed to upload.',
     'url'                  => 'The :attribute format is invalid.',
+    'captcha'              => ':attribute 错误',
 
     /*
     |--------------------------------------------------------------------------
@@ -141,6 +142,8 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'captcha'   => '验证码'
+    ],
 
 ];

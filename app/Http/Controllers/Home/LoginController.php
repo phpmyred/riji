@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use DB;
 use Hash;
 use Cache;
+use Validator;
 use Mail;
 use Illuminate\Http\Request;
 use Cookie;
@@ -233,16 +234,36 @@ class LoginController extends Controller
     //发送邮箱路径  进入修改密码页面
     public function doforget(Request $req) {
         $email = $req->input('email');
+        $rules = ['email' => 'required|email', 'vcode' => 'required|captcha'];
+        $validator = Validator::make($req->all(),$rules);
+        if ( !empty( $validator->errors()->messages() ) ) {
+            return response()->json([
+                'code'      => '111',
+                'msg'       => '验证码错误',
+                'time'      => time()
+            ]);
+        }
+
         $info = DB::table('users')->where('email','=',$email)->first();
         if ( $info ) {
             $data = [
-                'links' => "http://www.project2.com/changepwd/{$info->id}/{$info->token}",
+                'links' => "http://www.riji.com/changepwd/{$info->id}/{$info->token}",
                 'uname' => $info->name,
                 'tip'   => '点击前往修改密码',
             ];
             //发送邮件给用户,成功返回true
             $res = SendEmail($email,$data);
             if ( $res ) {
+                $redis = $this->getRedis(3);//将修改密码的用户信息放入到
+                $key_forget_pwd = 'key_forget_pwd_'.$email;
+                if ( $redis->exists( $key_forget_pwd ) ) {
+                    return response()->json([
+                        'code'      => '000',
+                        'msg'       => '修改密码链接已经发送至邮件中,请登录邮箱进入修改1!',
+                        'time'      => time()
+                    ]);
+                }
+                $redis->setex( $key_forget_pwd , 600, $email );
                 return response()->json([
                     'code'      => '000',
                     'msg'       => '修改密码链接已经发送至邮件中,请登录邮箱进入修改!',
@@ -271,6 +292,15 @@ class LoginController extends Controller
      */
     public function changePwd($id,$token) {
         $info = DB::table('users')->where('id','=',$id)->first();
+        $email = $info->email;
+        $redis = $this->getRedis(3);//将修改密码的用户信息放入到
+        $key_forget_pwd = 'key_forget_pwd_'.$email;
+        if ( !$redis->exists( $key_forget_pwd ) ) {
+            return view('home.login.activeResultPage',[
+                'tip'   => '链接已失效'
+            ]);
+        }
+
         //如果邮箱中的验证码和id通过验证后  就进入修改密码页面
         if ($info && $info->token == $token) {
             return view('home.login.changepwd',[
@@ -278,7 +308,9 @@ class LoginController extends Controller
                 'token' => $token
             ]);
         } else {
-            return redirect('/forget');
+            return view('home.login.activeResultPage',[
+                'tip'   => '邮箱验证失败'
+            ]);
         }
     }
 
@@ -292,9 +324,14 @@ class LoginController extends Controller
         $token  = $req->input('token');
         $pass   = $req->input('pass');
         $info = DB::table('users')->where('id',$id)->first();
+        $email = $info->email;
         if ( $info && $info->token == $token ) {
             $pass = Hash::make($pass);
             if ( DB::table('users')->where('id',$id)->update(['pass'=>$pass]) ) {
+                $redis = $this->getRedis(3);//将修改密码的用户信息放入到
+                $key_forget_pwd = 'key_forget_pwd_'.$email;
+                $redis->del([$key_forget_pwd]);
+
                 return response()->json([
                     'code'      => '000',
                     'msg'       => '修改密码成功',

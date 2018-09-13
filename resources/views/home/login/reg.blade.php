@@ -14,6 +14,7 @@
     <script type="text/javascript" src="/static/home/register/static/js/jquery-3.1.1.js"></script>
     <style type="text/css">
         .wawa{
+            top: -10px;
             left: -50px;
         }
         .tupian{
@@ -27,10 +28,10 @@
 
 <body>
 
-<div class="regNew_top">
+<div class="regNew_top" style="height: 80px; line-height: 80px;">
     <div class="reg_topCon tupian">
         <a href="/">
-            <div class="logo" style="z-index: 50"></div>
+            <img style="height: 60px;" src="/static/home/index/images/logo2.png" class="logo2">
         </a>
         <div class="clock">
             <img src="/static/home/register/img/aa.png" width="100px" class="wawa">
