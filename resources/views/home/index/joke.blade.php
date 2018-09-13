@@ -45,12 +45,17 @@
             font-size: 20px;
             text-align: center;
         }
+        .logo{
+            background: none;
+        }
     </style>
 </head>
 <body id="Jbody">
 <div class="head">
     <div class="main">
-        <a style="cursor:pointer;" class="logo" href="/"></a>
+        <a style="cursor:pointer;" class="logo" href="/">
+            <img src="/static/home/index/images/logo2.png" class="logo2">
+        </a>
         <a style="cursor:pointer;" href="/" class="name fl">日记</a>
         <p class="h-crumb">
             <em class="arr"></em>
