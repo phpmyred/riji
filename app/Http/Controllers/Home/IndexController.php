@@ -154,7 +154,7 @@ class IndexController extends Controller
                     ->where('status','0')
                     ->get();
         return view('home.index.index',[
-            'cates' => json_decode( $cate , true ),
+            'cates' => json_decode( $cate ),
             'data' => $data,
             'data_recommand' => $data_recommand,
             'new'      => $new,
@@ -168,7 +168,7 @@ class IndexController extends Controller
             'con6'     => $list6,
             'users'    => $user,
             'link'     => $link,
-            'constellation' => json_decode( $constellation , true )
+            'constellation' => json_decode( $constellation )
         ]);
     }
 

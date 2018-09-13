@@ -79,11 +79,11 @@
      <a href="/">首页</a>
     @foreach($cates as $v)
      <span class="subNav-more2">
-      <a href="/list/{{$v['id']}}" target="_blank" > {{$v['name']}} </a>
+      <a href="/list/{{$v->id}}" target="_blank" > {{$v->name}} </a>
       <em class="subNav-more-btn2"></em>
       <ul class="subNav-more-ul2">
-        @foreach($v['dev'] as $val)
-       <li class="subNav-more-li"><a href="/list/{{$val['id']}}" target="_blank" title="一年级日记">{{$val['name']}}</a>
+        @foreach($v->dev as $val)
+       <li class="subNav-more-li"><a href="/list/{{$val->id}}" target="_blank" title="一年级日记">{{$val->name}}</a>
        </li>
         @endforeach
       </ul>
@@ -95,7 +95,7 @@
       <ul class="subNav-more-ul2">
         @foreach( $constellation as $v )
         <li class="subNav-more-li">
-         <a href="{{$v['url']}}" target="_blank" title="一年级日记">{{$v['name']}}</a>
+         <a href="{{$v->url}}" target="_blank" title="一年级日记">{{$v->name}}</a>
        </li>
        @endforeach
       </ul>

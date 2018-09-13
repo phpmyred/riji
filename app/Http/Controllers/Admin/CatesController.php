@@ -140,7 +140,7 @@ class CatesController extends Controller
      */
     private function clearRedisCache() {
         $redis = $this->getRedis(1);
-        $redis->del(['key_nav_cates_lists','key_nav_cates_index']);
+        $redis->del(['key_nav_cates_lists','key_nav_cates_index','key_nav_cate_show']);
     }
 
 }
