@@ -3,7 +3,7 @@
     <!--logo and iconic logo start-->
     <div class="logo">
         <a href="/bk_index" title="后台首页">
-            <img src="/static/admin/images/logo.png" alt="">
+            <img src="/static/admin/images/logo3.png" alt="" height ="34px">
         </a>
     </div>
 

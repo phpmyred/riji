@@ -403,6 +403,238 @@
   </div>
   @endif
   <div style="clear:both"></div>
+  @if($con3)
+  <div class="main tab3 clearfix" id="main2">
+   <div class="left660 fl border shadow">
+    <div class="th clearfix">
+     <p class="tabTit fl">{{$con3[0]}}</p>
+     <div class="th-b fr">
+      @foreach($con3[1] as $c)
+      <a href="/list/{{$c->id}}" target="_blank">{{$c->name}}</a>
+      <em></em>
+      @endforeach
+     </div>
+    </div>
+    <div class="pic-txt">
+     <div class="pics">
+     <!-- 两图片的位置 -->
+     @foreach($con3[5] as $v)
+      <span><a target="_blank" href="/list/{{$v->id}}/show"><img src="{{$v->img}}" border="0" width="180" height="135" alt="{{$v->title}}" /><em></em><i>{{$v->title}}</i></a></span>
+     @endforeach
+     </div>
+     <div class="txtbox">
+      <ul class="txt" style="margin-top:20px">
+      @foreach($con3[2] as $nie)
+       <li><a href="/list/{{$nie->id}}/show" target="_blank">{{$nie->title}}</a> </li>
+      @endforeach
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- 排行内容 -->
+   <div class="right306 border shadow fr">
+    <div class="slide03">
+     <div class="control">
+      <ul id="myTab">
+       <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
+       <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
+      </ul>
+     </div>
+     <div class="tb-slide03">
+      <div class="c" id="myTab_Content0">
+       <ul class="hotPicUlList">
+        @foreach($con3[3] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+      <div class="c" id="myTab_Content1" style="display:none;">
+       <ul class="hotPicUlList">
+        @foreach($con3[4] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  @endif
+  <div style="clear:both"></div>
+  @if($con4)
+  <div class="main tab3 clearfix" id="main2">
+   <div class="left660 fl border shadow">
+    <div class="th clearfix">
+     <p class="tabTit fl">{{$con4[0]}}</p>
+     <div class="th-b fr">
+      @foreach($con4[1] as $c)
+      <a href="/list/{{$c->id}}" target="_blank">{{$c->name}}</a>
+      <em></em>
+      @endforeach
+     </div>
+    </div>
+    <div class="pic-txt">
+     <div class="pics">
+     <!-- 两图片的位置 -->
+     @foreach($con4[5] as $v)
+      <span><a target="_blank" href="/list/{{$v->id}}/show"><img src="{{$v->img}}" border="0" width="180" height="135" alt="{{$v->title}}" /><em></em><i>{{$v->title}}</i></a></span>
+     @endforeach
+     </div>
+     <div class="txtbox">
+      <ul class="txt" style="margin-top:20px">
+      @foreach($con4[2] as $nie)
+       <li><a href="/list/{{$nie->id}}/show" target="_blank">{{$nie->title}}</a> </li>
+      @endforeach
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- 排行内容 -->
+   <div class="right306 border shadow fr">
+    <div class="slide03">
+     <div class="control">
+      <ul id="myTab">
+       <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
+       <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
+      </ul>
+     </div>
+     <div class="tb-slide03">
+      <div class="c" id="myTab_Content0">
+       <ul class="hotPicUlList">
+        @foreach($con4[3] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+      <div class="c" id="myTab_Content1" style="display:none;">
+       <ul class="hotPicUlList">
+        @foreach($con4[4] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  @endif
+  <div style="clear:both"></div>
+  @if($con5)
+  <div class="main tab3 clearfix" id="main2">
+   <div class="left660 fl border shadow">
+    <div class="th clearfix">
+     <p class="tabTit fl">{{$con5[0]}}</p>
+     <div class="th-b fr">
+      @foreach($con5[1] as $c)
+      <a href="/list/{{$c->id}}" target="_blank">{{$c->name}}</a>
+      <em></em>
+      @endforeach
+     </div>
+    </div>
+    <div class="pic-txt">
+     <div class="pics">
+     <!-- 两图片的位置 -->
+     @foreach($con5[5] as $v)
+      <span><a target="_blank" href="/list/{{$v->id}}/show"><img src="{{$v->img}}" border="0" width="180" height="135" alt="{{$v->title}}" /><em></em><i>{{$v->title}}</i></a></span>
+     @endforeach
+     </div>
+     <div class="txtbox">
+      <ul class="txt" style="margin-top:20px">
+      @foreach($con5[2] as $nie)
+       <li><a href="/list/{{$nie->id}}/show" target="_blank">{{$nie->title}}</a> </li>
+      @endforeach
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- 排行内容 -->
+   <div class="right306 border shadow fr">
+    <div class="slide03">
+     <div class="control">
+      <ul id="myTab">
+       <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
+       <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
+      </ul>
+     </div>
+     <div class="tb-slide03">
+      <div class="c" id="myTab_Content0">
+       <ul class="hotPicUlList">
+        @foreach($con5[3] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+      <div class="c" id="myTab_Content1" style="display:none;">
+       <ul class="hotPicUlList">
+        @foreach($con5[4] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  @endif
+  <div style="clear:both"></div>
+  @if($con6)
+  <div class="main tab3 clearfix" id="main2">
+   <div class="left660 fl border shadow">
+    <div class="th clearfix">
+     <p class="tabTit fl">{{$con6[0]}}</p>
+     <div class="th-b fr">
+      @foreach($con6[1] as $c)
+      <a href="/list/{{$c->id}}" target="_blank">{{$c->name}}</a>
+      <em></em>
+      @endforeach
+     </div>
+    </div>
+    <div class="pic-txt">
+     <div class="pics">
+     <!-- 两图片的位置 -->
+     @foreach($con6[5] as $v)
+      <span><a target="_blank" href="/list/{{$v->id}}/show"><img src="{{$v->img}}" border="0" width="180" height="135" alt="{{$v->title}}" /><em></em><i>{{$v->title}}</i></a></span>
+     @endforeach
+     </div>
+     <div class="txtbox">
+      <ul class="txt" style="margin-top:20px">
+      @foreach($con6[2] as $nie)
+       <li><a href="/list/{{$nie->id}}/show" target="_blank">{{$nie->title}}</a> </li>
+      @endforeach
+      </ul>
+     </div>
+    </div>
+   </div>
+   <!-- 排行内容 -->
+   <div class="right306 border shadow fr">
+    <div class="slide03">
+     <div class="control">
+      <ul id="myTab">
+       <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
+       <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
+      </ul>
+     </div>
+     <div class="tb-slide03">
+      <div class="c" id="myTab_Content0">
+       <ul class="hotPicUlList">
+        @foreach($con6[3] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+      <div class="c" id="myTab_Content1" style="display:none;">
+       <ul class="hotPicUlList">
+        @foreach($con6[4] as $val)
+        <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
+        @endforeach
+       </ul>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  @endif
+  <div style="clear:both"></div>
   <div class="main mb30">
    <div class="i3_lBox border shadow">
     <div class="i3lBox-th">

@@ -8,7 +8,7 @@
     <meta name="author" content="ThemeBucket">
     {{--<link rel="shortcut icon" href="" type="image/png">--}}
 
-    <title>@yield('title','印象日记后台')</title>
+    <title>@yield('title','木知网后台')</title>
 
     <!--icheck-->
     <link href="/static/admin/js/iCheck/skins/minimal/minimal.css" rel="stylesheet">
@@ -96,10 +96,12 @@ setInterval(function(){
 
 <!-- 右侧内容区域 开始-->
 @section('container')
+
 @show
 <!-- 右侧内容区域 结束-->
 
 </div>
+
 </section>
 
 

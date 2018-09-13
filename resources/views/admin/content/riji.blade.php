@@ -1,5 +1,5 @@
 @extends('admin.AdminPublic.index')
-@section('title','会员列表')
+@section('title','内容列表')
 @section('container')
     <!-- 右侧顶部搜索部分 开始 -->
     @include('admin.AdminPublic.header')
@@ -10,7 +10,7 @@
             <!--breadcrumbs start -->
             <ul class="breadcrumb panel">
                 <li><a href="/bk_index"><i class="fa fa-home"></i> 首页</a></li>
-                <li><a href="#">内容管理</a></li>
+                <li><a href="/bk_content/riji">内容管理</a></li>
                 <li class="active">内容列表</li>
             </ul>
             <!--breadcrumbs end -->
@@ -61,7 +61,9 @@
                                         @elseif($v->recommand == '1')
                                             <a class="label label-warning" id="add-without-image" href="/bk_content/riji/{{$v->id}}/unrecommand">取消推荐</a>
                                         @endif
+                                        @if ( $v->uid == session('admin_info')['uid'] )
                                         <a class="label label-info" id="add-without-image" href="/bk_content/riji/edit/{{$v->id}}">修改</a>
+                                        @endif
                                         <a class="label label-default" id="add-max" href="/bk_content/riji/del/{{$v->id}}" onclick="return confirm('确定删除吗?')">删除</a>
                                     </td>
                                 </tr>

@@ -42,7 +42,10 @@
                                     <div class="col-xs-2">
                                         <select name="cid" class="form-control m-bot15">
                                             @foreach($cate_data as $k=>$v)
-                                                <option value="{{$v->id}}" @if($info->cid == $v->id) selected @endif>{{$v->name}}日记</option>
+                                                @php
+                                                    $n = substr_count($v->path,',')-1;
+                                                @endphp
+                                                <option value="{{$v->id}}" @if($v->pid=='0') disabled @endif >{!! str_repeat('&nbsp;',4*$n) !!}|{!! str_repeat('-',$n+1) !!} {{$v->name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
