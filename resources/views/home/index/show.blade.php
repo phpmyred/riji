@@ -273,12 +273,12 @@
 <!-- 这个是评论的东西 -->
 <dl class="fix fixss{{$v->id}} cmt" style="display: none" >
     <dt>
-        <a href="" target="_blank">
+        <a href="{{session('home_user')['id']}}" target="_blank">
             <img src="{{session('home_user')['uface']}}" width="46" height="46">
         </a>
     </dt>
     <dd id="comm" class="comm">
-        <a href="" target="_blank">
+        <a href="{{session('home_user')['id']}}" target="_blank">
             <span style="color:#3ACA81" id="nicknames">{{session('home_user')['nickname']}}:</span>
         </a>：
         <span id="cnt"></span>
@@ -406,25 +406,6 @@
                             dll.find('.times').html(res.time);
                             dll.find('#getid').attr('class','dels'+res.id);
                             dll.find('#getid').attr('onclick','dels('+res.id+')');
-
-<<<<<<< HEAD
-    //回复
-    function AjaxReComment(from_uid,id){
-        recontent = $('.'+'recomment'+id).val();
-        cont_id =  {{$contents->id}};
-        alert(recontent.length);
-        if (recontent.length < 12) {
-            alert('评论回复不能少于5个字');
-        } else {
-           $.get('/recomment',{cont_id:cont_id,recontent:recontent,reply_id:from_uid,id:id},function(res){
-                if(res.code == 10001){
-                    dll = $('#wu').clone();
-                    dll.css('display','block');
-                    dll.find('#cnts').html(recontent);
-                    dll.find('#times').html(res.time);
-                    $('.comment-post').append(dll);
-=======
->>>>>>> 1e5a18b08d7e16802a06f29c0e1d7dd1d287f1d7
 
                             // $('.fixss'+id).find('.fixs'+id).append(dll);
                             mod.append(dll);
