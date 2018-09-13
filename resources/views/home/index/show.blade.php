@@ -31,7 +31,7 @@
             margin-top: 15px;
             height: 40px;
         }
-        .main a{
+        .main>a{
             float: left;
         }
     </style>
@@ -59,9 +59,9 @@
     <div class="l-box fl">
         <div class="mb30 shadow border">
             <div id="path">
-                <a href='/'>日记网</a> >
-                <a href='/list/{{$parent_cate->id}}'>{{$parent_cate->name}}</a> >
-                <a href='/list/{{$childrent_cate->id}}'>{{$childrent_cate->name}}</a> >
+                <a href='/'>日记网 </a> >
+                <a href='/list/{{$parent_cate->id}}'>{{$parent_cate->name}} </a> >
+                <a href='/list/{{$childrent_cate->id}}'>{{$childrent_cate->name}}</a>
             </div>
             <div class="l-th mb16 ar2_bt" style="height: 100px;">
                 <h1>{{$contents->title}}</h1>
@@ -85,9 +85,13 @@
                         <div class="wgt_name clearfix">
                             @if( $contents->is_admin === '0' )
                                 <a class="user_name" rel="nofollow" href="/ps_space/{{$contents->uid}}" target="_blank">{{$contents->uname}}</a>
+                                @if ( in_array( session('home_user')['id'] , $gz_from_ids ) )
+                                <a class="gzBtn" id="guanzhu" href="javascript:void(0);">已关注</a>
+                                @else
                                 <a class="gzBtn" id="guanzhu" href="javascript:void(0);">关注</a>
+                                @endif
                             @else
-                                <a class="user_name" rel="nofollow" href="javascript:void(0);" target="_blank">{{$contents->uname}}</a>
+                                <a class="user_name" rel="nofollow" href="javascript:void(0);">{{$contents->uname}}</a>
                             @endif
                         </div>
                         <div class="carefield">
@@ -124,8 +128,20 @@
                         </div>
                     </div>
                     <ul>
-                        <li>上一篇：@if($lastPage) <a href='/list/{{$lastPage->id}}/show' title="{{$lastPage->title}}">{{changeStr($lastPage->title,20,'...')}}</a> @else 没有了 @endif </li>
-                        <li>下一篇：@if($nextPage) <a href='/list/{{$nextPage->id}}/show' title="{{$nextPage->title}}">{{changeStr($nextPage->title,20,'...')}}</a> @else 没有了 @endif </li>
+                        <li>上一篇：
+                            @if($lastPage)
+                                <a href='/list/{{$lastPage->id}}/show' title="{{$lastPage->title}}">{{changeStr($lastPage->title,20,'...')}}</a>
+                            @else
+                                没有了
+                            @endif
+                        </li>
+                        <li>下一篇：
+                            @if($nextPage)
+                                <a href='/list/{{$nextPage->id}}/show' title="{{$nextPage->title}}">{{changeStr($nextPage->title,20,'...')}}</a>
+                            @else
+                                没有了
+                            @endif
+                        </li>
                     </ul>
                     <div style="clear:both"></div>
                     <div class="emoticons">
@@ -273,7 +289,6 @@
     <div class="bqsm">Copyright &copy; 2018</div>
     <div id="asas"></div>
 </div>
-
 
 <!-- 这个是评论的东西 -->
 <dl class="fix fixss{{$v->id}} cmt" style="display: none" >
@@ -507,15 +522,19 @@
 <script>
 $(function(){
     $("#guanzhu").click(function(){
+        let that = $(this);
         //先检测当前用户是否登录
         @if ( empty( session('home_user')['id'] ) )
             alert('请先登录');
             window.location.href='/';
         @else
-            alert( '/user/{{$contents->uid}}/guanzhu' );
-            {{--$.ajax({--}}
-                {{--url: "/user/{{$contents->uid}}/guanzhu"--}}
-            {{--});--}}
+            $.get('/user/guanzhu',{to_uid: {{$contents->uid}} },function(res){
+                if ( res.code === '00000' ) {
+                    that.text('已关注');
+                } else {
+                    alert( res.msg );
+                }
+        },'json');
         @endif
     });
 });

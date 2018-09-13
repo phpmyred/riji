@@ -94,6 +94,17 @@ class ListController extends Controller
         $info = DB::table('content')
             ->where('id','=',$id)
             ->first();
+
+        //获取本条内容用户所被关注的用户(array)
+        $gz_fromuid = DB::table('guanzhu')->select('from_uid')->where('to_uid','=',$info->uid)->get()->toArray();
+        if ( !empty($gz_fromuid) ) {
+            foreach ($gz_fromuid as $k=>$v) {
+                $gz_from_ids[] = $v->from_uid;
+            }
+        } else {
+            $gz_from_ids = [];
+        }
+
         $child_cate = DB::table('cates')->select('id','name','pid')->where('id','=',$info->cid)->first();
         $parent_cate = DB::table('cates')->select('id','name')->where('id','=',$child_cate->pid)->first();
         if ( DB::table('content')->select('is_admin')->where('is_admin','=','0')->where('id',$id)->first() ) {
@@ -141,7 +152,8 @@ class ListController extends Controller
             'readTop10'     => $readTop10,
             'classCates'    => $classCates,
             'comment'       => $comment,
-            'recomment'     => $recomment
+            'recomment'     => $recomment,
+            'gz_from_ids'        => $gz_from_ids
         ]);
     }
 
@@ -369,11 +381,25 @@ class ListController extends Controller
      * @param Request $req
      * @param $uid
      */
-    public function guanzhu( Request $req , $uid ) {
-        $from_uid   = $req->input('from_uid');  //点击关注的用户id
-        $to_uid     = $uid; //被关注的用户id
-
-        return $this->returnJson('测试数据','111');
+    public function guanzhu( Request $req ) {
+        $from_uid   = session('home_user')['id'];  //点击关注的用户id
+        $to_uid     = $req->input('to_uid'); //被关注的用户id
+        $check = DB::table('guanzhu')
+            ->where('from_uid','=',$from_uid)
+            ->where('to_uid','=',$to_uid)
+            ->exists();
+        if ( $check ) {
+            return $this->returnJson('您已关注该用户','10001');
+        }
+        $data['from_uid']   = $from_uid;
+        $data['to_uid']     = $to_uid;
+        $data['create_at']  = time();
+        $res = DB::table('guanzhu')->insert($data);
+        if ( $res ) {
+            return $this->returnJson('关注成功','00000');
+        } else {
+            return $this->returnJson('关注失败','10002');
+        }
     }
 
     /**

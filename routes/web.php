@@ -45,8 +45,7 @@ Route::group(['middleware' => 'homemaintain','namespace'=>'Home'],function() {
     Route::get('/jokeList','ListController@jokeList');//进入笑话大全列表页面
     Route::post('/getJokeData','ListController@getJokeData');//获取笑话大全数据，默认获取第一页
     Route::get('/getXingzuo/{name}','ListController@xingzuo');//进入星座页面
-    Route::post('/user/:id/guanzhu','ListController@guanzhu');//关注用户
-
+    Route::get('/user/guanzhu','ListController@guanzhu');//关注用户
 
     //个人中心模块
     Route::group(['middleware' => 'HomeLogin','namespace' => 'Person'], function () {
