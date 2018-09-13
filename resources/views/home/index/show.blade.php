@@ -211,7 +211,8 @@
                         </dl>
                         @endforeach
                     </div>
-
+                    <div class="comment-more fang" style="display: none;"> <a href="javascript:void(0);" id="jiazai">加载更多</a> </div>
+                    <div class="comment-more shou" style="display: none;"> <a href="javascript:void(0);" id="shouqi">点击收起</a> </div>
                 </div>
             </div>
         </div>
@@ -340,6 +341,32 @@
 </div>
 <!-- 评论的JS -->
 <script type="text/javascript">
+    // 加载更多的点击事件
+    if($('.comment-list').height() > 400) {
+        $('.fang').css('display','block');
+        $('.comment-list').css('height','400px');
+        $('.comment-list').css('overflow','hidden');
+    }
+
+    $('#jiazai').click(function(){
+        $('#jiazai').html('加载中。。。');
+        setTimeout(function() {
+            $('.fang').css('display','none');
+            $('.shou').css('display','block');
+            $('.comment-list').css('height','auto');
+            $('.comment-list').css('overflow','visible');
+        }, 2000);
+    });
+
+    $('#shouqi').click(function(){
+        $('.comment-list').css('height','400px');
+        $('.comment-list').css('overflow','hidden');
+        $('.fang').css('display','block');
+        $('.shou').css('display','none');
+        $('#jiazai').html('加载更多');
+    });
+
+    //评论的点击事件
     $('#comment').click(function(){
         com = $('#msg').val();
         id =  {{$contents->id}};
