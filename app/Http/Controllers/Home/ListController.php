@@ -147,6 +147,9 @@ class ListController extends Controller
                     ->orderBy('created_at','asc')
                     ->get();
             // dd($recomment);
+        //列表页广告
+        $data = DB::table('advertising')->select('pic','name','url')->get();
+
         return view('home.index.show',[
             'cates'         => json_decode($cate),
             'parent_cate'   => $parent_cate,
@@ -159,7 +162,8 @@ class ListController extends Controller
             'classCates'    => $classCates,
             'comment'       => $comment,
             'recomment'     => $recomment,
-            'gz_from_ids'        => $gz_from_ids
+            'gz_from_ids'   => $gz_from_ids,
+            'data'          => $data
         ]);
     }
 

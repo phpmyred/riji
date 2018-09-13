@@ -8,6 +8,12 @@
     <title>{{$contents->title}}_日记网</title>
     <meta name="keywords" content="" />
     <meta name="description" content="" />
+    
+     <!-- 广告 -->
+    <link rel="stylesheet" type="text/css" href="/static/home/ads/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="/static/home/ads/css/htmleaf-demo.css">
+    <link rel="stylesheet" type="text/css" href="/static/home/ads/css/style.css">
+    <!-- 广告结束 -->
     <link rel="stylesheet" type="text/css" href="/static/home/show/css/index_3.css">
     <link rel="stylesheet" type="text/css" href="/static/home/show/css/comment_3.css">
     <style type="text/css">
@@ -107,7 +113,29 @@
             <div class="l-tbody">
                 <div class="art-text">
                     <div style="float:right; width:336px; height:250px;padding-left:15px; padding-top:8px; padding-bottom:5px;">
-                        <script type="text/javascript">a300();</script>
+                        <div class="htmleaf-container">
+                            <div class="mod18" style="width: 270px">
+                                <span id="prev" class="btn prev"></span>
+                                <span id="next" class="btn next"></span>
+                                <span id="prevTop" class="btn prev"></span>
+                                <span id="nextTop" class="btn next" style="right:10px;"></span>
+                                <div id="picBox" class="picBox" style="width: 270px;height:210px;background-color: #fff;">
+                                    <ul class="cf">
+                                        @foreach($data as $v)
+                                        <li> <a href="{{$v->url}}"><img src="{{$v->pic}}" alt="" style="width:270px; height:215px;"></a> <span style="bottom: 20px">{{$v->name}}</span> </li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div id="listBox" class="listBox" style="width:270px;margin-left:-3px;height: 80px;margin-top: -12px">
+                                    <ul class="cf">
+                                        @foreach($data as $v)
+                                        <li class="on"><i class="arr2"></i><img style="width: 56px;height: 44px" src="{{$v->pic}}" alt=""></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
                     </div>
                     <div>
                         {!! $contents->content !!}
@@ -571,6 +599,10 @@ $(function(){
     //document.getElementById("click").innerHTML = document.getElementById("click_num").innerHTML;
 </script>
 
-
+<!-- 广告 -->
+<script src="/static/home/ads/js/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+<script>window.jQuery || document.write('<script src="/static/home/ads/js/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="/static/home/ads/js/jqueryPhoto.js" type="text/javascript"></script>
+<!-- 广告结束 -->
 </body>
 </html>
