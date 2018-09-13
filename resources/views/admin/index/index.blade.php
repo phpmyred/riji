@@ -1,5 +1,5 @@
 @extends('admin.AdminPublic.index')
-@section('title','印象日记后台2')
+@section('title','木知网后台')
 @section('container')
 <!--右侧显示内容区域 开始-->
 <div class="wrapper">
@@ -19,7 +19,7 @@
             <div class="col-md-6 col-xs-12 col-sm-6">
               <div class="panel purple">
                 <div class="symbol">
-                  <i class="fa fa-gavel"></i>
+                  <i class="fa fa-user-md"></i>
                 </div>
                 <div class="state-value">
                   <div class="value">{{$users_count}}</div>
@@ -41,6 +41,30 @@
           </div>
           <div class="row state-overview">
             <div class="col-md-6 col-xs-12 col-sm-6">
+              <div class="panel purple" style="background: #2be278;box-shadow: 0 5px 0 #2be278;">
+                <div class="symbol">
+                  <i class="fa fa-check-square"></i>
+                </div>
+                <div class="state-value">
+                  <div class="value">{{$qiandao_count}}</div>
+                  <div class="title">本日签到数量</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xs-12 col-sm-6">
+              <div class="panel red" style="background: #fb8f56;box-shadow: 0 5px 0 #fb8f56;">
+                <div class="symbol">
+                  <i class="fa fa-edit"></i>
+                </div>
+                <div class="state-value">
+                  <div class="value">{{$data_count}}</div>
+                  <div class="title">会员投稿记录</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row state-overview">
+            <div class="col-md-6 col-xs-12 col-sm-6">
               <div class="panel blue">
                 <div class="symbol">
                   <i class="fa fa-money"></i>
@@ -54,7 +78,7 @@
             <div class="col-md-6 col-xs-12 col-sm-6">
               <div class="panel green">
                 <div class="symbol">
-                  <i class="fa fa-eye"></i>
+                  <i class="fa fa-clipboard"></i>
                 </div>
                 <div class="state-value">
                   <div class="value">{{$content_count}}</div>
