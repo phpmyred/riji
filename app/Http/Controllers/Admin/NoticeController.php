@@ -12,7 +12,7 @@ class NoticeController extends Controller
     //公告列表页
     public function index(Request $req) {
     	$tot = DB::table('notice')->count(); //获取总条数	
-    	$num = 3; //每页显示条数
+    	$num = 5; //每页显示条数
     	$count = ceil($tot/$num); //获取总页数
     	$page = $req->input('page'); //获取附加参数值
     	if(empty($page)){

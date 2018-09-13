@@ -1,6 +1,5 @@
 @include('home.PersonPublic.header')
 
-<!-- <link rel="stylesheet" type="text/css" href="/static/home/person/css/user_002.css"> -->
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/user.css">
 <link rel="stylesheet" type="text/css" href="/static/home/person/css/riji.css">
 <!-- 文章 -->
@@ -50,7 +49,12 @@
 <!--设置语言类型-->
 <script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 
-
+<style>
+  .ps_logo2{
+    margin-top:-5px;
+    width: 80%;
+  }
+</style>
 </head>
 <body>
 
@@ -61,7 +65,9 @@
 </div>
 <div id="rj_header" class="header">
   <div class="w1000 clearfix">
-    <div class="fl logo"><a target="_blank" href="https://www.riji.cn/"></a></div>	
+    <div class="fl logo">
+      <a href="/"><img src="/static/home/index/images/logo2.png" class="ps_logo2"></a>
+    </div>	
   </div>           
 </div>
 

@@ -192,7 +192,7 @@ html{height:100%;overflow-y: scroll;}
 .header_view{background: #04CE9B ;height: 30px; overflow:hidden;}
 .header_top_view {width: 1100px; margin:0px auto;height: 30px;}
 #rj_header {background-color: #fff;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);height:68px;margin-bottom: 15px;width: 100%;}
-#rj_header .logo a {width: 107px;height:40px;background: url(https://www.riji.cn/images/logo2.png) 0 -23px no-repeat;display: block;display: block;}
+#rj_header .logo a {width: 107px;height:40px;}
 .islogin {width:600px;float:right;height: 30px;color: #fff;line-height: 32px; text-align:right; font-size:13px;}
 .islogin a { font-size:14px;color: #fff;font-weight: bold;}
 .w1000{width: 1100px; margin:0px auto;overflow: hidden;}

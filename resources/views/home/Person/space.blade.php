@@ -5,12 +5,19 @@
   <link rel="stylesheet" type="text/css" href="/static/home/person/css/space.css" /> 
   <link rel="stylesheet" type="text/css" href="/static/home/person/css/article.css" /> 
   <title>{{$msg->nickname}}的日记与作文</title> 
+  <style>
+    #space_logo{
+      height: 60%;
+
+      width: 60%;
+    }
+  </style>
  </head> 
  <body> 
   <!--登录显示--> 
   <div class="headerIn"> 
    <div class="logo">
-    <a href="/"><img src="/static/home/person/images/logo.png" alt="" /></a>
+    <a href="/"><img src="/static/home/index/images/logo2.png" id="space_logo" alt="" /></a>
    </div> 
    <div class="navi">
    </div> 
