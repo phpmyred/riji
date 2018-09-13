@@ -41,7 +41,7 @@
         <div class="subNav2 fl">
             <a href="/">首页</a>
         @foreach($cates as $k=>$cate_v)
-            <a href="/list/{{$cate_v['id']}}" style="cursor:pointer;" title="小学生日记">{{$cate_v['name']}}</a>
+            <a href="/list/{{$cate_v->id}}" style="cursor:pointer;" title="小学生日记">{{$cate_v->name}}</a>
         @endforeach
         <a href="/jokeList">笑话大全</a>
         </div>
@@ -155,7 +155,6 @@
                                 <div class="comment-recommend fixs{{$v->id}}">
                                 @foreach($recomment as $value)
                                     @if( $value->c_id == $v->id)
-                                        <dl class="fix wu" id="wu">
                                         <!-- 遍历数据表中的回复内容 -->
                                         <dl class="fix{{$value->uid}} wu" id="wu">
 
@@ -176,8 +175,6 @@
                                                     @endif
                                                 </div>
                                             </dd>
-                                        </dl>
-                                    @else
                                         </dl>
                                     @endif
                                 @endforeach

@@ -73,24 +73,14 @@ class ListController extends Controller
      * @return string
      */
     public function show($id) {
-        $redis = $this->getRedis(1);//实例化redis类并选中1号库
         //$id对应的内容点击数量+1
         DB::table('content')->where('id',$id)->increment('num');
         //获取上一篇
         $lastPage = DB::table('content')->orderBy('id','desc')->where('id','<',$id)->limit(1)->first();
         //获取下一篇
         $nextPage = DB::table('content')->orderBy('id','asc')->where('id','>',$id)->limit(1)->first();
-        //将导航栏中的全部顶级分类 缓存起来
-        $key_riji_show = 'key_nav_cate_show';
-        if ( $redis->exists( $key_riji_show ) ) {
-            $cate = $redis->get( $key_riji_show );
-        } else {
-            //导航栏分类列表
-            $cate = DB::table('cates')->select('id','name')->where('pid','=',0)->orderBy('id','asc')->get();
-            $cate = json_encode( $cate );
-            $redis->set( $key_riji_show , $cate );
-        }
-
+        //导航栏分类列表
+        $cate = DB::table('cates')->select('id','name')->where('pid','=',0)->orderBy('id','asc')->get();
         //根据内容参数$id 获取内容数据 以及根据内容数据中的cid 获取 内容页面子导航链接
         $info = DB::table('content')
             ->where('id','=',$id)
@@ -132,7 +122,7 @@ class ListController extends Controller
                     ->get();
             // dd($recomment);
         return view('home.index.show',[
-            'cates'         => json_decode( $cate , true),
+            'cates'         => $cate,
             'parent_cate'   => $parent_cate,
             'childrent_cate'=> $child_cate,
             'contents'      => $contents,
@@ -160,21 +150,20 @@ class ListController extends Controller
             $uid    = $req->input('uid');
             $id     = $req->input('id');//日记内容id
             $info   = DB::table('content')->where('id',$id)->first();
-            //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
-            $check = DB::table('feeling')->where([
-                'uid'   => $uid,
-                'cid'   => $id
-            ])->exists();
-            if ( $check ) {
-                return response()->json([
-                    'code'      => '111',
-                    'msg'       => '已评价过,不能重复评价',
-                    'time'      => time()
-                ]);
-            }
-
             //如果$type 为good 则表示 点赞  为bad则为点踩
             if ( $type == 'good' ) {
+                //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
+                $check = DB::table('feeling')->where([
+                    'uid'   => $uid,
+                    'cid'   => $id
+                ])->exists();
+                if ( $check ) {
+                    return response()->json([
+                        'code'      => '111',
+                        'msg'       => '已评价过,不能重复评价',
+                        'time'      => time()
+                    ]);
+                }
 
                 DB::beginTransaction();
                 try {
@@ -207,6 +196,18 @@ class ListController extends Controller
                 }
 
             } else if( $type == 'bad' ) {   //点踩
+                //记录点赞时的用户id和日记内容id 防止重复点踩（先验证用户记录是否已存在 feeling表中）
+                $check = DB::table('feeling')->where([
+                    'uid'   => $uid,
+                    'cid'   => $id
+                ])->exists();
+                if ( $check ) {
+                    return response()->json([
+                        'code'      => '111',
+                        'msg'       => '已评价过,不能重复评价',
+                        'time'      => time()
+                    ]);
+                }
 
                 DB::beginTransaction();
                 try {
