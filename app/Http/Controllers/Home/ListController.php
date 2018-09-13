@@ -42,7 +42,7 @@ class ListController extends Controller
                 ->where('c.id',$id)
                 ->paginate(5);
             return view('home.index.list',[
-                'cates'     => json_decode($cate,true),
+                'cates'     => json_decode( $cate ),
                 'list'      => $list,
                 'cate_info' => $cate_info,
                 'readTop10' => $readTop10,
@@ -56,7 +56,7 @@ class ListController extends Controller
                 $lists[] = $v;
             }
             return view('home.index.list_p',[
-                'cates'     => json_decode($cate,true),
+                'cates'     => json_decode( $cate ),
                 'cate_info' => $cate_info,
                 'lists'     => $lists,
                 'readTop10' => $readTop10,
@@ -73,14 +73,23 @@ class ListController extends Controller
      * @return string
      */
     public function show($id) {
+        $redis = $this->getRedis(1);//实例化redis并选中1号库
         //$id对应的内容点击数量+1
         DB::table('content')->where('id',$id)->increment('num');
         //获取上一篇
         $lastPage = DB::table('content')->orderBy('id','desc')->where('id','<',$id)->limit(1)->first();
         //获取下一篇
         $nextPage = DB::table('content')->orderBy('id','asc')->where('id','>',$id)->limit(1)->first();
-        //导航栏分类列表
-        $cate = DB::table('cates')->select('id','name')->where('pid','=',0)->orderBy('id','asc')->get();
+        $key_show = 'key_nav_cate_show';
+        if ( $redis->exists( $key_show ) ) {
+            $cate = $redis->get( $key_show );
+        } else {
+            //导航栏分类列表
+            $cate = DB::table('cates')->select('id','name')->where('pid','=',0)->orderBy('id','asc')->get();
+            $cate = json_encode( $cate );
+            $redis->set( $key_show , $cate );
+        }
+
         //根据内容参数$id 获取内容数据 以及根据内容数据中的cid 获取 内容页面子导航链接
         $info = DB::table('content')
             ->where('id','=',$id)
@@ -122,7 +131,7 @@ class ListController extends Controller
                     ->get();
             // dd($recomment);
         return view('home.index.show',[
-            'cates'         => $cate,
+            'cates'         => json_decode($cate),
             'parent_cate'   => $parent_cate,
             'childrent_cate'=> $child_cate,
             'contents'      => $contents,
