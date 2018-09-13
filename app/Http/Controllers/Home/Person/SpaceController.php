@@ -59,9 +59,9 @@ class SpaceController extends Controller
         $check = DB::table('guanzhu')
             ->where('from_uid','=',$login_id)
             ->where('to_uid','=',$id)
-            ->first();
+            ->exists();
             // dd($check);
-        if(!empty($check)){
+        if( $check ){
             return back()->with('error','您已关注过该用户了');
         }
 

@@ -94,6 +94,17 @@ class ListController extends Controller
         $info = DB::table('content')
             ->where('id','=',$id)
             ->first();
+
+        //获取本条内容用户所被关注的用户(array)
+        $gz_fromuid = DB::table('guanzhu')->select('from_uid')->where('to_uid','=',$info->uid)->get()->toArray();
+        if ( !empty($gz_fromuid) ) {
+            foreach ($gz_fromuid as $k=>$v) {
+                $gz_from_ids[] = $v->from_uid;
+            }
+        } else {
+            $gz_from_ids = [];
+        }
+
         $child_cate = DB::table('cates')->select('id','name','pid')->where('id','=',$info->cid)->first();
         $parent_cate = DB::table('cates')->select('id','name')->where('id','=',$child_cate->pid)->first();
         if ( DB::table('content')->select('is_admin')->where('is_admin','=','0')->where('id',$id)->first() ) {
@@ -141,10 +152,12 @@ class ListController extends Controller
             'readTop10'     => $readTop10,
             'classCates'    => $classCates,
             'comment'       => $comment,
-            'recomment'     => $recomment
+            'recomment'     => $recomment,
+            'gz_from_ids'        => $gz_from_ids
         ]);
     }
 
+    //点赞/点踩
     public function digg(Request $req) {
         if ( empty( session('home_user') ) ) {
             return response()->json([
@@ -159,20 +172,20 @@ class ListController extends Controller
             $uid    = $req->input('uid');
             $id     = $req->input('id');//日记内容id
             $info   = DB::table('content')->where('id',$id)->first();
+            //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
+            $check = DB::table('feeling')->where([
+                'uid'   => $uid,
+                'cid'   => $id
+            ])->exists();
+            if ( $check ) {
+                return response()->json([
+                    'code'      => '111',
+                    'msg'       => '已评价过,不能重复评价',
+                    'time'      => time()
+                ]);
+            }
             //如果$type 为good 则表示 点赞  为bad则为点踩
             if ( $type == 'good' ) {
-                //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
-                $check = DB::table('feeling')->where([
-                    'uid'   => $uid,
-                    'cid'   => $id
-                ])->exists();
-                if ( $check ) {
-                    return response()->json([
-                        'code'      => '111',
-                        'msg'       => '已评价过,不能重复评价',
-                        'time'      => time()
-                    ]);
-                }
 
                 DB::beginTransaction();
                 try {
@@ -205,18 +218,6 @@ class ListController extends Controller
                 }
 
             } else if( $type == 'bad' ) {   //点踩
-                //记录点赞时的用户id和日记内容id 防止重复点踩（先验证用户记录是否已存在 feeling表中）
-                $check = DB::table('feeling')->where([
-                    'uid'   => $uid,
-                    'cid'   => $id
-                ])->exists();
-                if ( $check ) {
-                    return response()->json([
-                        'code'      => '111',
-                        'msg'       => '已评价过,不能重复评价',
-                        'time'      => time()
-                    ]);
-                }
 
                 DB::beginTransaction();
                 try {
@@ -376,6 +377,32 @@ class ListController extends Controller
     }
 
     /**
+     * 关注用户按钮接口
+     * @param Request $req
+     * @param $uid
+     */
+    public function guanzhu( Request $req ) {
+        $from_uid   = session('home_user')['id'];  //点击关注的用户id
+        $to_uid     = $req->input('to_uid'); //被关注的用户id
+        $check = DB::table('guanzhu')
+            ->where('from_uid','=',$from_uid)
+            ->where('to_uid','=',$to_uid)
+            ->exists();
+        if ( $check ) {
+            return $this->returnJson('您已关注该用户','10001');
+        }
+        $data['from_uid']   = $from_uid;
+        $data['to_uid']     = $to_uid;
+        $data['create_at']  = time();
+        $res = DB::table('guanzhu')->insert($data);
+        if ( $res ) {
+            return $this->returnJson('关注成功','00000');
+        } else {
+            return $this->returnJson('关注失败','10002');
+        }
+    }
+
+    /**
      * 请求接口返回内容
      * @param  string $url [调用星座接口的地址]
      * @param  string $params [星座]
@@ -417,7 +444,6 @@ class ListController extends Controller
         // var_dump($response);
         return $response;
     }
-
 
     // 获取聚合提供的笑话大全api数据的 ajax
     public function getJokeData(Request $req) {
