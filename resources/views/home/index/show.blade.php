@@ -40,8 +40,8 @@
     <div class="main2">
         <div class="subNav2 fl">
             <a href="/">首页</a>
-        @foreach($cates as $k=>$v)
-            <a href="/list/{{$v->id}}" style="cursor:pointer;" title="小学生日记">{{$v->name}}</a>
+        @foreach($cates as $k=>$cate_v)
+            <a href="/list/{{$cate_v['id']}}" style="cursor:pointer;" title="小学生日记">{{$cate_v['name']}}</a>
         @endforeach
         <a href="/jokeList">笑话大全</a>
         </div>
@@ -199,11 +199,11 @@
             <div class="emoticons">
                 <div class="publisher">
                     <div class="comment-msg">
-                        <textarea name="msg" id="msg4367" class="comment-msg-txt recomment recomment{{$v->id}}"></textarea>
+                        <textarea name="msg" id="msg4367" class="comment-msg-txt recomment recomment{{$v->id or ''}}"></textarea>
                         <p></p>
                         <p>
-                            <button type="button" class="button" refrom_uid='{{$v->from_uid or ""}}' revid='{{$v->id}}' reuid='{{$v->uid or ""}}' >回复</button>
-                            <button type="button" class="button2 mr20 {{$v->id}}" delid='{{$v->id}}'>取消</button>
+                            <button type="button" class="button" refrom_uid='{{$v->from_uid or ""}}' revid='{{$v->id or ''}}' reuid='{{$v->uid or ""}}' >回复</button>
+                            <button type="button" class="button2 mr20 {{$v->id or ''}}" delid='{{$v->id or ''}}'>取消</button>
                         </p>
                     </div>
                 </div>
@@ -347,6 +347,7 @@
                     location.reload();
                 } else if(res.code === 10000) {
                     alert(res.msg);
+                    window.location.href = '/';
                 }
             },'json');
         }
@@ -473,20 +474,22 @@
                 uid: $("meta[name='id']").attr('content')
             },
             success:function(res) {
-                if ( res.type == 'good' && res.code == '000' ) { //点赞后点赞数通过DOM加上
+                if ( res.type === 'good' && res.code === '000' ) { //点赞成功后点踩数+1
                     $(".c_good").find('i').each(function(){
                         $n1 = parseInt( $(this).text() );
                         $(this).text( $n1+1 );
                     });
-                } else if( res.type == 'bad' && res.code == '111' ) {
+                } else if( res.type === 'bad' && res.code === '000' ) {//点踩成功后点踩数+1
                     $(".c_bad").find('i').each(function(){
                         $n1 = parseInt( $(this).text() );
                         $(this).text( $n1+1 );
                     });
-                } else if( res.code == '222') {
+                } else if ( res.code === '111' ) {
+                    alert( res.msg );
+                } else if( res.code === '222') {
+                    alert( res.msg );
                     window.location.href='/';
                 }
-                alert( res.msg );
             },error:function(err) {
                 console.log('网络错误');
             },beforeSend:function(xhr) {

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Content\ContentRijiEdit;
 use App\Http\Requests\Content\ContentRijiSave;
+use function Couchbase\defaultDecoder;
 use DB;
 use Illuminate\Http\Request;
 
@@ -26,6 +27,7 @@ class ContentController extends Controller
             ->where('a.uname','like','%'.$keywords.'%')
             ->orderBy('a.id','desc')
             ->paginate(8);
+
         return view('admin.content.riji',[
             'menu_content'      => 'active',
             'menu_content_riji' => 'active',
@@ -89,6 +91,11 @@ class ContentController extends Controller
      * 进入日记修改页面
      */
     public function riji_edit($id) {
+        $info = DB::table('content')->where('id',$id)->first();
+        if ( $info->uid != session('admin_info')['uid'] ) {
+            return redirect('/bk_content/riji')->with('error','不允许修改他人发表内容');
+        }
+
         $cates = DB::table('cates')->orderBy('id','asc')->orderByRaw('concat(path,id)')->select('id','name','pid','path')->get();
         foreach ($cates as $k=>$v){
             if ($v->pid != 0) {
@@ -122,6 +129,7 @@ class ContentController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function riji_del($id) {
+
         if (DB::table('content')->where('id',$id)->delete()){
             return back()->with('success','删除日记成功!');
         } else {
