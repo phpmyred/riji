@@ -144,7 +144,7 @@
      </div>
      <div class="hotlist">
       <div class="term">
-       热门日记
+       热门推荐
       </div>
       <div class="term_list">
        <ul>
@@ -493,20 +493,20 @@
    <div class="right306 border shadow fr">
     <div class="slide03">
      <div class="control">
-      <ul id="myTab">
+      <ul id="myTab4">
        <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
        <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
       </ul>
      </div>
      <div class="tb-slide03">
-      <div class="c" id="myTab_Content0">
+      <div class="c" id="myTab4_Content0">
        <ul class="hotPicUlList">
         @foreach($con4[3] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
         @endforeach
        </ul>
       </div>
-      <div class="c" id="myTab_Content1" style="display:none;">
+      <div class="c" id="myTab4_Content1" style="display:none;">
        <ul class="hotPicUlList">
         @foreach($con4[4] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
@@ -551,20 +551,20 @@
    <div class="right306 border shadow fr">
     <div class="slide03">
      <div class="control">
-      <ul id="myTab">
+      <ul id="myTab5">
        <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
        <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
       </ul>
      </div>
      <div class="tb-slide03">
-      <div class="c" id="myTab_Content0">
+      <div class="c" id="myTab5_Content0">
        <ul class="hotPicUlList">
         @foreach($con5[3] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
         @endforeach
        </ul>
       </div>
-      <div class="c" id="myTab_Content1" style="display:none;">
+      <div class="c" id="myTab5_Content1" style="display:none;">
        <ul class="hotPicUlList">
         @foreach($con5[4] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
@@ -609,20 +609,20 @@
    <div class="right306 border shadow fr">
     <div class="slide03">
      <div class="control">
-      <ul id="myTab">
+      <ul id="myTab6">
        <li class="active" onmouseover="nTabs(this,0);"><a>阅读排行<em></em></a></li>
        <li class="normal" onmouseover="nTabs(this,1);"><a>最新投稿<em></em></a></li>
       </ul>
      </div>
      <div class="tb-slide03">
-      <div class="c" id="myTab_Content0">
+      <div class="c" id="myTab6_Content0">
        <ul class="hotPicUlList">
         @foreach($con6[3] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{$val->num}}</i> </a> </li>
         @endforeach
        </ul>
       </div>
-      <div class="c" id="myTab_Content1" style="display:none;">
+      <div class="c" id="myTab6_Content1" style="display:none;">
        <ul class="hotPicUlList">
         @foreach($con6[4] as $val)
         <li> <a href="/list/{{$val->id}}/show" target="_blank"><i class="iName">{{$val->title}}</i> <i class="iGood">{{date('Y-m-d',$val->created_at)}}</i> </a> </li>
