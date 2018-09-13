@@ -28,12 +28,23 @@
         a {
             cursor: pointer;
         }
+        .logoo{
+            width: 160px;
+            float:left;
+        }
+        .logoo img{
+            height: 38px;
+            margin-top:13px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body id="Jbody">
 <div class="head">
     <div class="main">
-        <a style="cursor:pointer;" class="logo" href="/"></a>
+         <a style="cursor:pointer;" class="logoo" href="/">
+            <img src="/static/home/index/images/logo2.png" class="logo2">
+        </a>
         <a style="cursor:pointer;" href="/" class="name fl">日记</a>
         <p class="h-crumb">
             <em class="arr"></em>
@@ -64,6 +75,7 @@
             </span>
         @endforeach
             <a href="/jokeList">笑话大全</a>
+            <a href="/getXingzuo/白羊座">星座运势</a>
         </div>
     </div>
 </div>

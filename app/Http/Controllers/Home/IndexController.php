@@ -128,6 +128,7 @@ class IndexController extends Controller
                     ->get();
         // 前台公告列表
         $notice = DB::table('notice')
+                    ->select('id','title','created_at')
                     ->orderBy('id','desc')
                     ->limit(3)
                     ->get();

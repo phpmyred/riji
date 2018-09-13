@@ -14,12 +14,17 @@ class IndexController
         $cates_count    = DB::table('cates')->where('pid','!=',0)->orderBy('id')->count();//分类总数
         $content_count  = DB::table('content')->orderBy('id')->count();//日记条数
         $links_count    = DB::table('links')->orderBy('id')->count();//友情链接数
+        $qiandao_count    = DB::table('qiandao')->where('status','1')->count();//签到数
+        $data_count    = DB::table('content')->where('status','1')->count();//投稿数
+
         return view('admin.index.index',[
             'menu_index'    => 'active',
             'users_count'   => $users_count,
             'cates_count'   => $cates_count,
             'content_count' => $content_count,
-            'links_count'   => $links_count
+            'links_count'   => $links_count,
+            'qiandao_count' => $qiandao_count,
+            'data_count'    => $data_count
         ]);
     }
 

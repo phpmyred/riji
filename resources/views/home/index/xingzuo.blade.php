@@ -68,13 +68,24 @@
         .wrapper{
             width:auto;
         }
+        .logoo{
+            width: 160px;
+            float:left;
+        }
+        .logoo img{
+            height: 38px;
+            margin-top:13px;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
 <div class="head">
     <div class="main">
-        <a class="logo" href="/"></a>
-        <a href="/" class="name fl">日记大全</a>
+        <a style="cursor:pointer;" class="logoo" href="/">
+            <img src="/static/home/index/images/logo2.png" class="logo2">
+        </a>
+        <a style="cursor:pointer;" href="/getXingzuo/白羊座" class="name fl">星座运势</a>
     </div>
 </div>
 <div class="nav2">
@@ -84,6 +95,8 @@
         @foreach($cates as $k=>$v)
             <a href="/list/{{$v->id}}" style="cursor:pointer;" title="小学生日记">{{$v->name}}</a>
         @endforeach
+            <a href="/jokeList">笑话大全</a>
+            <a href="/getXingzuo/白羊座">星座运势</a>
         </div>
     </div>
 </div>
