@@ -41,7 +41,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-lg-2" for="exampleInputFile">图片链接</label>
-                                <input class="control-label col-lg-4" type="file" name="pic" id="file0">
+                                <input class="control-label col-lg-4" type="file" name="pic" id="file0" style="text-align: left">
                                 <img class="control-label" style="height: 60px" src="" id="img0" alt="">
                             </div>
                             <div class="form-group ">
