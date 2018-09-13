@@ -31,9 +31,9 @@ class Content extends FormRequest
 
     public function messages(){
         return [
-            'title.required'    => '标题不能为空',
-            'title.max'         => '标题不能超过30个字符',
-            'content.required'  => '内容不能为空'
+            'title.required'    => '标题不能为空...',
+            'title.max'         => '标题不能超过30个字符...',
+            'content.required'  => '内容不能为空...'
         ];
     }
 }

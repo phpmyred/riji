@@ -11,7 +11,14 @@ class RijiController extends Controller
 {
     //日记投稿页面
     public function index() {
-    	return view('home.Person.riji');
+        $data = DB::table('cates')
+            ->select('id','name')
+            ->where('pid','!=',0)
+            ->where('pid','!=',44)
+            ->orderBy('id','asc')
+            ->get();
+
+    	return view('home.Person.riji',['data'=>$data]);
     } 
 
     //日记添加处理

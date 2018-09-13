@@ -60,11 +60,11 @@
       </div> 
       <div class="clear"></div> 
       <div class="summary"> 
-       <p>{{$v->content}}</p> 
+       <!-- <p>{{$v->content}}</p>  -->
       </div> 
       <div class="artinfo">
        <span class="like">点击：{{$v->num}}</span> 获赞：{{$v->laud}} 
-       <span class="time">日期：{{date('Y-m-d H:i:s',$v->updated_at)}}</span>
+       <span class="time">发表日期：{{date('Y-m-d H:i:s',$v->updated_at)}}</span>
       </div>
      </li>
      @endforeach

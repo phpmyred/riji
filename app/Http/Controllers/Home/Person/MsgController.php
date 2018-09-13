@@ -53,7 +53,7 @@ class MsgController extends Controller
         
     	$data['sex']=='男' ? $data['sex']='m' : $data['sex']='w'; //转换为m、w格式
         $sele = DB::table('users_detail')->where('id','=',$id)->first();
-        $uface = $sele->uface;
+        $uface = '.'.$sele->uface;
         // dd($uface);
     	$res = DB::table('users_detail')->where('id','=',$id)->update($data);
         $res1 = DB::table('users')->where('id','=',$id)->update(['qq'=>$qq['qq']]);
@@ -61,10 +61,26 @@ class MsgController extends Controller
             //判断如果有图片上传才删除原来的图片
             if($req->hasFile('pic')){
                 //判断原图片不是默认图片才删除
-                if($uface != "/static/home/person/images/boy.jpg"){
+                if($uface != "./static/home/person/images/boy.jpg"){
                     unlink($uface);
                 }
             }
+            //用户表和用户详情表关联
+            $sess = DB::table('users as u')
+                ->join('users_detail as ud','u.id','=','ud.uid')
+                ->select('u.name','u.id','u.score','ud.nickname','ud.uface')
+                ->where('u.id','=',$id)
+                ->first();
+            //更新session数据
+            session([
+                'home_user' =>[
+                    'name'      =>  $sess->name,
+                    'id'        =>  $sess->id,
+                    'nickname'  =>  $sess->nickname,
+                    'uface'     =>  $sess->uface,
+                    'score'     =>  $sess->score
+                ]
+            ]);
     		return back()->with('success','信息修改成功');
     	}else{
     		return back()->with('error','信息修改失败');

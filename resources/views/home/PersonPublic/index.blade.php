@@ -40,8 +40,15 @@
 <script language="javascript" src="/static/home/person/js/wenzhang.js"></script>
 <!-- <script src="/static/admin/js/bootstrap.min.js"></script> -->
 <script src="/static/admin/js/modernizr.min.js"></script>
-  <script src="/static/home/index/js/jquery.leanModal.min.js" type="text/javascript"></script>
-
+<script src="/static/home/index/js/jquery.leanModal.min.js" type="text/javascript"></script>
+<!--百度编辑器配置文件-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.config.js"></script>
+<!--编辑器源码文件-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.all.js"> </script>
+<!--uparse-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/ueditor.parse.min.js"></script>
+<!--设置语言类型-->
+<script type="text/javascript" charset="utf-8" src="/static/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 
 </head>
