@@ -1,5 +1,5 @@
 @extends('admin.AdminPublic.index')
-@section('title','会员列表')
+@section('title','内容列表')
 @section('container')
     <!-- 右侧顶部搜索部分 开始 -->
     @include('admin.AdminPublic.header')
@@ -10,7 +10,7 @@
             <!--breadcrumbs start -->
             <ul class="breadcrumb panel">
                 <li><a href="/bk_index"><i class="fa fa-home"></i> 首页</a></li>
-                <li><a href="#">内容管理</a></li>
+                <li><a href="/bk_content/riji">内容管理</a></li>
                 <li class="active">内容列表</li>
             </ul>
             <!--breadcrumbs end -->

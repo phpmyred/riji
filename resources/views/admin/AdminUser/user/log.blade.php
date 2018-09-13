@@ -24,14 +24,8 @@
     <div class="col-sm-12">
      <section class="panel">
          <!-- 搜索  -->
-        <div class="panel-body col-sm-3">
+        <div class="panel-body col-sm-6">
             <h4>登录日志</h4>
-        </div>
-        <div class="panel-body col-sm-3">
-            <form action="/bk_adminuser/getLogFile" method="post">
-                {{csrf_field()}}
-                <button type="submit" class="btn btn-info" id="exportExcel">导出到Excel</button>
-            </form>
         </div>
         <div class="panel-body col-sm-6 text-right">
             <form class="form-inline" role="form" method="get" action="/bk_adminuser/log">
@@ -72,9 +66,12 @@
         <!-- 分页 -->
          <div class="row">
            <div class="col-lg-6" >
-                <div class="dataTables_info" id="editable-sample_info">
-                Mr red is Ang. 29st, 2018
-                </div>
+                <div class="panel-body col-sm-3">
+                  <form action="/bk_adminuser/getLogFile" method="post">
+                      {{csrf_field()}}
+                      <button type="submit" class="btn btn-info" id="exportExcel">导出到Excel</button>
+                  </form>
+              </div>
            </div>
            <div class="col-lg-6" style="text-align: right;" >
                  {{$data->appends($request)->render()}}

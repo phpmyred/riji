@@ -51,7 +51,7 @@ class IndexController extends Controller
                         ->select('id','title','num')
                         ->whereIn('cid',$con_id)
                         ->where('status','0')
-                        ->limit(22)
+                        ->limit(5)
                         ->orderBy('num','desc')
                         ->get();
             // 根据时间排序最新数据
@@ -59,7 +59,7 @@ class IndexController extends Controller
                         ->select('id','title','num','created_at')
                         ->whereIn('cid',$con_id)
                         ->where('status','0')
-                        ->limit(22)
+                        ->limit(5)
                         ->orderBy('created_at','desc')
                         ->get();
             // 获取两张图片的内容
@@ -134,6 +134,11 @@ class IndexController extends Controller
         // 前台下的主要内容
         $list = $this->pon(1);
         $list2 = $this->pon(2);
+        $list3 = $this->pon(3);
+        $list4 = $this->pon(4);
+        $list5 = $this->pon(5);
+        $list6 = $this->pon(6);
+        // dd($list2);
         // 站内前12个会员积分排行
         $user = DB::table('users as u')
                     ->join('users_detail as d','u.id','=','d.uid')
@@ -156,6 +161,10 @@ class IndexController extends Controller
             'notice'   => $notice,
             'con1'     => $list,
             'con2'     => $list2,
+            'con3'     => $list3,
+            'con4'     => $list4,
+            'con5'     => $list5,
+            'con6'     => $list6,
             'users'    => $user,
             'link'     => $link,
             'constellation' => json_decode( $constellation , true )

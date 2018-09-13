@@ -10,7 +10,7 @@
             <!--breadcrumbs start -->
             <ul class="breadcrumb panel">
                 <li><a href="/bk_index"><i class="fa fa-home"></i> 首页</a></li>
-                <li><a href="#">内容管理</a></li>
+                <li><a href="/bk_content/riji">内容管理</a></li>
                 <li class="active">日记审核不通过列表页面</li>
             </ul>
             <!--breadcrumbs end -->

@@ -25,7 +25,7 @@ class ContentController extends Controller
             ->where('a.status','0')
             ->where('a.uname','like','%'.$keywords.'%')
             ->orderBy('a.id','desc')
-            ->paginate(6);
+            ->paginate(8);
         return view('admin.content.riji',[
             'menu_content'      => 'active',
             'menu_content_riji' => 'active',
@@ -141,7 +141,7 @@ class ContentController extends Controller
             ->where('a.status','1')
             ->where('a.uname','like','%'.$keywords.'%')
             ->orderBy('a.id')
-            ->paginate(6);
+            ->paginate(8);
         return view('admin.content.riji_vali',[
             'menu_content'          => 'active',
             'menu_content_riji_vali'=> 'active',
@@ -182,7 +182,7 @@ class ContentController extends Controller
             ->where('a.uname','like','%'.$keywords.'%')
             ->where('a.status','2')
             ->orderBy('a.id')
-            ->paginate(3);
+            ->paginate(8);
         return view('admin.content.riji_unpasslist',[
             'menu_content'          => 'active',
             'menu_content_riji_unpasslist'=> 'active',
