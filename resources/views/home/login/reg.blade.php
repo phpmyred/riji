@@ -100,7 +100,6 @@
         </section>
     </div>
     <div class=" col-md-2 tupian">
-        <s id="step">0</s>
         <img src="/static/home/register/img/6.jpg" width="150px" class='yay'>
     </div>
     <script type="text/javascript">
@@ -242,6 +241,7 @@
                                 window.location.href='/';
                             },3000);
                         } else {
+                            $f_reg_save.removeAttr('disabled','true').css({'cursor':'pointer'});
                             $("#modal_reg").find('.reg_body').text(res.msg);
                             $("#modal_reg").removeClass('reg_hide');
                             setInterval(function(){

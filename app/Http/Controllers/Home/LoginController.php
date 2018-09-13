@@ -89,6 +89,28 @@ class LoginController extends Controller
     public function registerCheck(Request $req) {
         if ( $req->ajax() ) {
             $data   = $req->only(['name','pass','email','nickname']);
+            if ( DB::table('users')->where('email','=',$data['email'])->exists() ) {
+                return response()->json([
+                    'code'      => '111',
+                    'msg'       => '邮箱已存在',
+                    'time'      => time()
+                ]);
+            }
+            if ( DB::table('users')->where('name','=',$data['name'])->exists() ) {
+                return response()->json([
+                    'code'      => '111',
+                    'msg'       => '用户名已存在',
+                    'time'      => time()
+                ]);
+            }
+            if ( DB::table('users_detail')->where('nickname','=',$data['nickname'])->exists() ) {
+                return response()->json([
+                    'code'      => '111',
+                    'msg'       => '妮称已存在',
+                    'time'      => time()
+                ]);
+            }
+
             $token  = str_random(50);
             DB::beginTransaction();
             try {
