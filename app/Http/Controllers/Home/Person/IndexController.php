@@ -87,7 +87,22 @@ class IndexController extends Controller
             //签到详情表数据的插入
             DB::table('qiandao_detail')
                 ->insert(['uid'=>$id,'score'=>$num,'created_at'=>time()]);
-
+            //用户表和用户详情表关联
+            $sess = DB::table('users as u')
+                ->join('users_detail as ud','u.id','=','ud.uid')
+                ->select('u.name','u.id','u.score','ud.nickname','ud.uface')
+                ->where('u.id','=',$id)
+                ->first();
+            //更新session数据
+            session([
+                'home_user' =>[
+                    'name'      =>  $sess->name,
+                    'id'        =>  $sess->id,
+                    'nickname'  =>  $sess->nickname,
+                    'uface'     =>  $sess->uface,
+                    'score'     =>  $sess->score
+                ]
+            ]);
             return response()->json([ 
                 'code'  => 1,
                 'msg'   => '签到成功',

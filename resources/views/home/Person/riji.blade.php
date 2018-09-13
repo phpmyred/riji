@@ -11,18 +11,9 @@
           <div class="top1Left" style="width: 620px">
             <div id="selects" style="width: 220px;height: 30px;float: left;">
               <select name="cid" id="" class="selecting" style="width: 150px;height: 30px;border-radius: 4px;">
-                <option value="30" class="options">一年级日记</option>
-                <option value="31" class="options">二年级日记</option>
-                <option value="32" class="options">三年级日记</option>
-                <option value="33" class="options">四年级日记</option>
-                <option value="34" class="options">五年级日记</option>
-                <option value="35" class="options">六年级日记</option>
-                <option value="37" class="options">初一日记</option>
-                <option value="38" class="options">初二日记</option>
-                <option value="39" class="options">初三日记</option>
-                <option value="41" class="options">高一日记</option>
-                <option value="42" class="options">高二日记</option>
-                <option value="43" class="options">高三日记</option>
+                @foreach($data as $v)
+                <option value="{{$v->id}}" class="options">{{$v->name}}</option>
+                @endforeach
               </select>
             </div>
             <div class="selects" style="width: 190px;height: 30px;float: left;">
@@ -55,16 +46,12 @@
           </div>-->
           <div class="clear"></div>
         </div>
-        <div class="hy_tearea">
-          <textarea id="text_body" name="content" cols="92" rows="5" placeholder="请输入日记内容" onkeydown="countChar('text_body','counter');" onkeyup="countChar('text_body','counter');" onfocus="inputAutoClear(this)"></textarea>
-        </div>
-        <div class="hy_sm">字数：<span id="counter" style="color:#F00">0</span>字</div>
+        <script id="editor" type="text/plain"  name="content" style="width:700px;height:300px;position:relative;z-index: 10"></script> 
         <div class="button_area">
           <input name="dede_addonfields" value="" type="hidden">
           {{csrf_field()}}
           <input name="dede_fieldshash" value="e52d77bcf131d8cb793501dc3758c148" type="hidden">          
-          <button class="editPassword-submit" type="button" onclick="format('text_body')">排版</button>
-          <button class="editPassword-reset" type="submit" id="btnSubmit">提交</button>
+          <button class="editPassword-reset" type="submit" id="btnSubmit" style="margin-right: 50px">提交</button>
         </div>
         <div class="clear"></div>
       </form>
@@ -73,14 +60,38 @@
 </div>
 
 
-<div id="winpop" style="height: 0px; display: none;">
- <div class="title">《日记网》投稿须知<span class="close" onclick="tips_pop()">X</span></div>
+<div id="winpop" style="height: 0px; display: none; z-index: 100">
+ <div class="title">《木知网》投稿须知<span class="close" onclick="tips_pop()">X</span></div>
     <div class="con">
-    ① 要求字数100字以上，内容原创<br>
+    ① 要求内容原创<br>
     ② 请认真选择年级分类<br>
     ③ 投稿前请备份，未通过的投稿会被直接删除<br>
     ④ <font color="#FF7E69"> <strong>转载抄袭，可能会被扣除积分、限制投稿！</strong></font>
     </div>
 </div>
+<script type="text/javascript">
+    //实例化编辑器
+    var ue = UE.getEditor('editor',{toolbars:[
+            [
+                'undo', //撤销
+                'redo', //重做
+                'fontfamily', //字体
+                'fontsize', //字号
+                'forecolor', //字体颜色
+                'backcolor', //背景色
+                'indent', //首行缩进
+                'bold', //加粗
+                'italic', //斜体
+                'underline', //下划线
+                'strikethrough', //删除线
+                'horizontal', //分隔线
+                'link', //超链接
+                'searchreplace', //查询替换
+                'rowspacingtop', //段前距
+                'rowspacingbottom', //段后距
+                'lineheight', //行间距
+            ]
+        ]});
+</script>
 @endsection
 

@@ -31,11 +31,11 @@ class Pass extends FormRequest
 
     public function messages() {
         return [
-            'pass.required'=>'密码不能为空',
-            'pass.regex'=>'密码必须为6-18位的任意数字字母下划线',
-            'repass.required'=>'重复密码不能为空',
-            'repass.regex'=>'重复密码必须为8-16位的任意数字字母下划线',
-            'repass.same'=>'两次密码不一致'
+            'pass.required'=>'密码不能为空...',
+            'pass.regex'=>'密码必须为6-18位的任意数字字母下划线...',
+            'repass.required'=>'重复密码不能为空...',
+            'repass.regex'=>'重复密码必须为8-16位的任意数字字母下划线...',
+            'repass.same'=>'两次密码不一致...'
         ];
     }
 }
