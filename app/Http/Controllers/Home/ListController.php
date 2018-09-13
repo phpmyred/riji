@@ -145,6 +145,7 @@ class ListController extends Controller
         ]);
     }
 
+    //点赞/点踩
     public function digg(Request $req) {
         if ( empty( session('home_user') ) ) {
             return response()->json([
@@ -159,20 +160,20 @@ class ListController extends Controller
             $uid    = $req->input('uid');
             $id     = $req->input('id');//日记内容id
             $info   = DB::table('content')->where('id',$id)->first();
+            //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
+            $check = DB::table('feeling')->where([
+                'uid'   => $uid,
+                'cid'   => $id
+            ])->exists();
+            if ( $check ) {
+                return response()->json([
+                    'code'      => '111',
+                    'msg'       => '已评价过,不能重复评价',
+                    'time'      => time()
+                ]);
+            }
             //如果$type 为good 则表示 点赞  为bad则为点踩
             if ( $type == 'good' ) {
-                //记录点赞时的用户id和日记内容id 防止重复点赞（先验证用户记录是否已存在 feeling表中）
-                $check = DB::table('feeling')->where([
-                    'uid'   => $uid,
-                    'cid'   => $id
-                ])->exists();
-                if ( $check ) {
-                    return response()->json([
-                        'code'      => '111',
-                        'msg'       => '已评价过,不能重复评价',
-                        'time'      => time()
-                    ]);
-                }
 
                 DB::beginTransaction();
                 try {
@@ -205,18 +206,6 @@ class ListController extends Controller
                 }
 
             } else if( $type == 'bad' ) {   //点踩
-                //记录点赞时的用户id和日记内容id 防止重复点踩（先验证用户记录是否已存在 feeling表中）
-                $check = DB::table('feeling')->where([
-                    'uid'   => $uid,
-                    'cid'   => $id
-                ])->exists();
-                if ( $check ) {
-                    return response()->json([
-                        'code'      => '111',
-                        'msg'       => '已评价过,不能重复评价',
-                        'time'      => time()
-                    ]);
-                }
 
                 DB::beginTransaction();
                 try {
@@ -376,6 +365,18 @@ class ListController extends Controller
     }
 
     /**
+     * 关注用户按钮接口
+     * @param Request $req
+     * @param $uid
+     */
+    public function guanzhu( Request $req , $uid ) {
+        $from_uid   = $req->input('from_uid');  //点击关注的用户id
+        $to_uid     = $uid; //被关注的用户id
+
+        return $this->returnJson('测试数据','111');
+    }
+
+    /**
      * 请求接口返回内容
      * @param  string $url [调用星座接口的地址]
      * @param  string $params [星座]
@@ -417,7 +418,6 @@ class ListController extends Controller
         // var_dump($response);
         return $response;
     }
-
 
     // 获取聚合提供的笑话大全api数据的 ajax
     public function getJokeData(Request $req) {

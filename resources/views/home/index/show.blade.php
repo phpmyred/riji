@@ -63,7 +63,7 @@
                     <div class="grid">
                         <p class="wgt_photo">
                         @if($contents->is_admin === '0')
-                            <a rel="nofollow" href="/user/{{$contents->uid}}" target="_blank">
+                            <a rel="nofollow" href="/ps_space/{{$contents->uid}}" target="_blank">
                                 <img src="{{$contents->uface}}">
                             </a>
                         @else
@@ -76,8 +76,8 @@
                     <div class="wgt_right">
                         <div class="wgt_name clearfix">
                             @if( $contents->is_admin === '0' )
-                                <a class="user_name" rel="nofollow" href="/user/{{$contents->uid}}" target="_blank">{{$contents->uname}}</a>
-                                <a class="gzBtn" href="/user/{{$contents->uid}}/guanzhu" target="_blank">关注</a>
+                                <a class="user_name" rel="nofollow" href="/ps_space/{{$contents->uid}}" target="_blank">{{$contents->uname}}</a>
+                                <a class="gzBtn" id="guanzhu" href="javascript:void(0);">关注</a>
                             @else
                                 <a class="user_name" rel="nofollow" href="javascript:void(0);" target="_blank">{{$contents->uname}}</a>
                             @endif
@@ -494,6 +494,23 @@
             }
         });
     }
+</script>
+{{--点击关注按钮事件--}}
+<script>
+$(function(){
+    $("#guanzhu").click(function(){
+        //先检测当前用户是否登录
+        @if ( empty( session('home_user')['id'] ) )
+            alert('请先登录');
+            window.location.href='/';
+        @else
+            alert( '/user/{{$contents->uid}}/guanzhu' );
+            {{--$.ajax({--}}
+                {{--url: "/user/{{$contents->uid}}/guanzhu"--}}
+            {{--});--}}
+        @endif
+    });
+});
 </script>
 <script src="/static/home/show/js/dpl-tab_v2_3.js" type="text/javascript"></script>
 <script type="text/javascript">
