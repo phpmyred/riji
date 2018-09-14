@@ -151,6 +151,10 @@
     <div class="bqsm">Copyright &copy; 2004-2017 <a href="https://www.riji.cn/">日记网</a> All Rights Reserved <a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备16062942号-9</a></div>
 </div>
 <script src="/static/home/list_p/js/dpl-tab_v2.js" type="text/javascript"></script>
-
+<!-- 广告 -->
+<script src="/static/home/ads/js/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>
+<script>window.jQuery || document.write('<script src="/static/home/ads/js/jquery-1.11.0.min.js"><\/script>')</script>
+<script src="/static/home/ads/js/jqueryPhoto.js" type="text/javascript"></script>
+<!-- 广告结束 -->
 </body>
 </html>

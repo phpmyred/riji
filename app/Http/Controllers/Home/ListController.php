@@ -95,11 +95,19 @@ class ListController extends Controller
             $cate = json_encode( $cate );
             $redis->set( $key_show , $cate );
         }
-
-        //根据内容参数$id 获取内容数据 以及根据内容数据中的cid 获取 内容页面子导航链接
-        $info = DB::table('content')
-            ->where('id','=',$id)
-            ->first();
+        //将每一条详情内容缓存到redis中(有效时间为一周)
+        $key_show_detail = 'key_show_detail_'.$id;
+        if ( $redis->exists( $key_show_detail ) ) {
+            $info = $redis->get( $key_show_detail );
+        } else {
+            //根据内容参数$id 获取内容数据 以及根据内容数据中的cid 获取 内容页面子导航链接
+            $info = DB::table('content')
+                ->where('id','=',$id)
+                ->first();
+            $info = json_encode($info);
+            $redis->setex( $key_show_detail , 604800 , $info );
+        }
+        $info = json_decode($info);
 
         //获取本条内容用户所被关注的用户(array)
         $gz_fromuid = DB::table('guanzhu')->select('from_uid')->where('to_uid','=',$info->uid)->get()->toArray();
