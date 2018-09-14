@@ -770,9 +770,9 @@
     if ($('#room-user').html() == '老王') {
       r = Math.ceil(Math.random()*10000);
       pic = Math.ceil(Math.random()*100);
-      rurl = "http://127.0.0.1:8090?uname="+'游客'+r+'&pic=http://riji.org'+$('#room-pic').html()+pic+'.JPG';
+      rurl = "http://127.0.0.1:8090?uname="+'游客'+r+'&pic=http://www.riji.com'+$('#room-pic').html()+pic+'.JPG';
     } else {
-      rurl = "http://127.0.0.1:8090?uname="+$('#room-user').html()+'&pic=http://riji.org'+$('#room-pic').html();
+      rurl = "http://127.0.0.1:8090?uname="+$('#room-user').html()+'&pic=http://www.riji.com'+$('#room-pic').html();
     }
 
     $('#chatroom').attr('src',rurl);
