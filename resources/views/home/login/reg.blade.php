@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="csrf-token" id="csrftoken" content="{{csrf_token()}}">
-    <title>会员注册_日记网</title>
+    <title>会员注册_木知网</title>
     <meta name="keywords" content="会员注册" />
-    <meta name="description" content="日记网会员注册" />
+    <meta name="description" content="木知网会员注册" />
     <link href="/static/home/register/static/css/reg_1.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/home/register/bs/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/home/register/static/css/mycss1.css">

@@ -3,9 +3,9 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="csrf-token" id="csrftoken" content="{{ csrf_token() }}">
-    <title>修改密码_日记网</title>
+    <title>修改密码_木知网</title>
     <meta name="keywords" content="修改密码" />
-    <meta name="description" content="日记网会员修改密码" />
+    <meta name="description" content="木知网会员修改密码" />
     <link href="/static/home/register/static/css/reg_1.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" type="text/css" href="/static/home/register/bs/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/home/register/static/css/mycss1.css">

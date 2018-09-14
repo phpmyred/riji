@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>会员登录_印象日记网</title>
+    <title>会员登录_木知网</title>
     <meta name="keywords" content="会员登录" />
-    <meta name="description" content="印象日记网会员登录" />
+    <meta name="description" content="木知网会员登录" />
     <link href="/static/home/login/css/reg.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" src="/static/home/login/js/qqlogin.js"></script>
     <style type="text/css">

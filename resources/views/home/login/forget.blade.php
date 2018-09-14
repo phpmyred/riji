@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="csrf-token" id="csrftoken" content="{{ csrf_token() }}">
-    <title>忘记密码_日记网</title>
+    <title>忘记密码_木知网</title>
     <meta name="keywords" content="忘记密码" />
     <meta name="description" content="忘记密码" />
     <link href="/static/home/register/static/css/reg_1.css" rel="stylesheet" type="text/css" />

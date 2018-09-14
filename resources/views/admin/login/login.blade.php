@@ -27,8 +27,8 @@
 
     <form class="form-signin" action="bk_dologin" method="post">
         <div class="form-signin-heading text-center">
-            <h1 class="sign-title">后台管理系统登录</h1>
-            <img src="/static/admin/images/login-logo.png" alt=""/>
+            <h1 class="sign-title">木知网后台管理系统登录</h1>
+            <img src="/static/admin/images/muzhia.png" alt="" width="160px"/>
         </div>
         @if(session('admin_login_error'))
             <div class="alert alert-danger alert-dismissible" role="alert">
