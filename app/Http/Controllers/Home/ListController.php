@@ -40,13 +40,17 @@ class ListController extends Controller
             $list = DB::table('cates as c')
                 ->join('content as con','c.id','=','con.cid')
                 ->where('c.id',$id)
-                ->paginate(5);
+                ->paginate(10);
+
+            //列表页广告
+            $ads_data = DB::table('advertising')->select('pic','name','url')->get();
+
             return view('home.index.list',[
                 'cates'     => json_decode( $cate ),
                 'list'      => $list,
                 'cate_info' => $cate_info,
                 'readTop10' => $readTop10,
-
+                'ads_data'  => $ads_data
             ]);
         } else {    //进入顶级分类对应的子类列表
             //根据顶级类的id获取子类列表(一级分类) 和  子类的列表(内容)
@@ -57,7 +61,7 @@ class ListController extends Controller
             }
 
             //列表页广告
-            $data = DB::table('advertising')->select('pic','name','url')->get();
+            $ads_data = DB::table('advertising')->select('pic','name','url')->get();
             
 
             return view('home.index.list_p',[
@@ -66,7 +70,7 @@ class ListController extends Controller
                 'lists'     => $lists,
                 'readTop10' => $readTop10,
                 'classCates'=> $classCates,
-                'data'      => $data
+                'ads_data'      => $ads_data
             ]);
         }
 

@@ -89,8 +89,8 @@
     <div class="r-box">
         <div id="JscrollBox" class="">
             <div class="mb30" style="width:300px; height:265px; background-color:white;">
+                {{--广告开始--}}
                 <div class="htmleaf-container">
-                    {{--广告开始--}}
                     <div class="mod18" style="width: 300px">
                         <span id="prev" class="btn prev"></span>
                         <span id="next" class="btn next"></span>
@@ -98,22 +98,22 @@
                         <span id="nextTop" class="btn next"></span>
                         <div id="picBox" class="picBox" style="width: 300px;">
                             <ul class="cf">
-                                @foreach($data as $v)
+                                @foreach($ads_data as $v)
                                 <li> <a href="{{$v->url}}"><img src="{{$v->pic}}" alt="" style="width:300px; height:265px;"></a> <span>{{$v->name}}</span> </li>
                                 @endforeach
                             </ul>
                         </div>
                         <div id="listBox" class="listBox">
                             <ul class="cf">
-                                @foreach($data as $v)
+                                @foreach($ads_data as $v)
                                 <li class="on"><i class="arr2"></i><img style="width: 56px;height: 44px" src="{{$v->pic}}" alt=""></li>
                                 @endforeach
                             </ul>
                         </div>
                         <div class="clear"></div>
                     </div>
-                    {{--广告结束--}}
                 </div>
+                {{--广告结束--}}
             </div>
             <div class="relation shadow border tjzt mb30">
                 <div class="list3_th"><span class="mark">阅读排行</span></div>
@@ -148,8 +148,9 @@
 <div class="footer">
     <script src="/static/home/list_p/js/link.js" type="text/javascript"></script>
     <div style="clear:both;"></div>
-    <div class="bqsm">Copyright &copy; 2004-2017 <a href="https://www.riji.cn/">日记网</a> All Rights Reserved <a href="http://www.miitbeian.gov.cn/" target="_blank">苏ICP备16062942号-9</a></div>
+    <div class="bqsm">Copyright &copy; 2018</div>
 </div>
+
 <script src="/static/home/list_p/js/dpl-tab_v2.js" type="text/javascript"></script>
 <!-- 广告 -->
 <script src="/static/home/ads/js/jquery/1.11.0/jquery.min.js" type="text/javascript"></script>

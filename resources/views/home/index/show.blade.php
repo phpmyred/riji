@@ -5,9 +5,9 @@
     <meta name="id" content="{{session('home_user')['id']}}">
     <meta http-equiv="Cache-Control" content="no-transform " />
 
-    <title>{{$contents->title}}_日记网</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
+    <title>{{$contents->title}}_木知网</title>
+    <meta name="keywords" content="{{$contents->title}}" />
+    <meta name="description" content="{{$contents->title}}" />
     
      <!-- 广告 -->
     <link rel="stylesheet" type="text/css" href="/static/home/ads/css/normalize.css" />
