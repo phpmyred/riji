@@ -102,7 +102,7 @@
                             </ul>
                         </div>
                         <div id="listBox" class="listBox">
-                            <ul class="cf">
+                            <ul class="cf" style="overflow: hidden">
                                 @foreach($data as $v)
                                 <li class="on"><i class="arr2"></i><img style="width: 56px;height: 44px" src="{{$v->pic}}" alt=""></li>
                                 @endforeach
