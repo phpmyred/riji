@@ -29,8 +29,12 @@ class SpaceController extends Controller
     		->join('guanzhu as gz','ud.uid','=','to_uid')
     		->where('uid','=',$id)
     		->count();
+        $fss = DB::table('users_detail as ud')
+            ->join('guanzhu as gz','ud.uid','=','from_uid')
+            ->where('uid','=',$id)
+            ->count();
 		//获取我关注人数
-    	$msg[0]->from_uid = count($msg); 
+    	// $msg[0]->from_uid = count($msg); dd($fss);
         //查询是否已关注
         $gz = DB::table('guanzhu')->where('to_uid','=',$id)->first();
       
@@ -47,7 +51,8 @@ class SpaceController extends Controller
             'msg'     => $msg[0],
             'fs'      => $fs,
             'content' => $content,
-            'gz'      => $gz
+            'gz'      => $gz,
+            'fss'     => $fss
 		]);
     }
 

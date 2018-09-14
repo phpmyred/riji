@@ -47,7 +47,7 @@
          @endif
          <button class="per_btn sx_btn"><a href="/ps_letter/send/{{$msg->uid}}" target="_blank">私信</a></button> 
        @endif
-       关注：{{$msg->from_uid}} 人&nbsp;&nbsp;&nbsp;&nbsp;粉丝：{{$fs}} 人 
+       关注：{{$fss}} 人&nbsp;&nbsp;&nbsp;&nbsp;粉丝：{{$fs}} 人 
       </div> 
      </div> 
      <div class="clear"></div> 
