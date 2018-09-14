@@ -1,12 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!doctype html>
+<html lang="en">
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Cache-Control" content="no-transform " />
-  <title>日记大全_小学生日记大全网</title>
+  <title>木知网_小学生日记大全网</title>
+
   <meta name="keywords" content="小学生日记,小学生日记大全" />
   <meta name="description" content="小学生日记大全网，提供小学生一年级、二年级、三年级、四年级、五年级、六年级日记，以及日记50字,100字,200字,300字,400字,500字，等小学生日记。" />
-  <link rel="alternate" media="only screen and(max-width: 640px)" href="https://m.riji.cn/" />
   <link href="/static/home/index/css/index.css" rel="stylesheet" type="text/css" />
   <link href="/static/home/index/css/newfix.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" type="text/css" href="/static/home/index/css/iconfont.css">
@@ -239,7 +239,7 @@
            <ul>
             <li><a href="/ps_riji" target="_blank">发表文章</a></li>
             <li><a href="/ps_article" target="_blank">我的投稿</a></li>
-            <li><a href="#" target="_blank">积分兑换</a></li>
+            <li><a href="javascript:void(0);">积分兑换</a></li>
             <li><a href="/ps_msg" target="_blank">头像管理</a></li>
             <li><a href="/ps_space/{{session('home_user')['id']}}" target="_blank">我的主页</a></li>
             <li><a href="/logout">退出登录</a></li>

@@ -4,9 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="Cache-Control" content="no-transform " />
     <meta name="csrf_token" content="{{csrf_token()}}">
-    <title>笑话大全</title>
-    <meta name="keywords" content="笑话大全" />
-    <meta name="description" content="笑话大全"/>
+    <title>笑话大全_木知网</title>
+    <meta name="keywords" content="笑话大全_木知网" />
+    <meta name="description" content="笑话大全_木知网"/>
     <link href="/static/home/list/css/index.css" rel="stylesheet" type="text/css">
     <script src="/static/home/list/js/jquery-3.1.1.js" type="text/javascript"></script>
     <script src="/static/home/list/js/uaredirect.js" type="text/javascript"></script>

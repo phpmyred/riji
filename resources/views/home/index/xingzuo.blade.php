@@ -5,10 +5,9 @@
     <meta name="id" content="{{session('home_user')['id']}}">
     <meta http-equiv="Cache-Control" content="no-transform " />
 
-    <title>_日记网</title>
-    <meta name="keywords" content="我的手肿了" />
-    <meta name="description" content="我的手肿了:今天，我和爸爸妈妈在来福士吃完晚饭——“麻将”以后，逛起了商场。 突然，我的手臂上似乎被蚊子叮了一口，肿了一小块，痒痒的。我立刻拿起无比滴在痒的位置涂抹。过了一会儿" />
-    <link rel="alternate" media="only screen and(max-width: 640px)"  href="https://m.riji.cn/html/55230.html" >
+    <title>星座_木知网</title>
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
     <link rel="stylesheet" type="text/css" href="/static/home/show/css/index_3.css">
     <link rel="stylesheet" type="text/css" href="/static/home/show/css/comment_3.css">
     <style type="text/css">
