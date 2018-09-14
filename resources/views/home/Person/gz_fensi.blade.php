@@ -9,9 +9,9 @@
     <ul class="gz_list">  
       @foreach($data as $v)
       <li>
-        <img src="{{$v->uface}}" width="60" height="60">
+        <a href="/ps_space/{{$v->uid}}"><img src="{{$v->uface}}" width="60" height="60"></a>
         <div class="gz_info">
-          <a href="https://www.riji.cn/user/13791/" target="_blank">{{$v->nickname}}</a>
+          <a href="/ps_space/{{$v->uid}}" target="_blank">{{$v->nickname}}</a>
           <span>
             性别：@if($v->sex == 'm')
                   男

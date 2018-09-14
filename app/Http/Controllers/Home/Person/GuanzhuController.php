@@ -14,7 +14,7 @@ class GuanzhuController extends Controller
         $from_id = $all['home_user']['id'];
 		$data = DB::table('users_detail as ud')
 			->join('guanzhu as gz','ud.uid','=','gz.to_uid')
-			->select('ud.nickname','ud.sex','ud.fame','ud.uface','gz.from_uid','gz.to_uid')
+			->select('ud.nickname','ud.sex','ud.fame','ud.uface','ud.uid','gz.from_uid','gz.to_uid')
 			->where('gz.from_uid','=',$from_id)
 			->paginate(10);
 		// dd($data);
@@ -27,7 +27,7 @@ class GuanzhuController extends Controller
         $from_id = $all['home_user']['id'];
 		$data = DB::table('users_detail as ud')
 			->join('guanzhu as gz','ud.uid','=','gz.from_uid')
-			->select('ud.nickname','ud.sex','ud.fame','ud.uface','gz.to_uid','gz.from_uid')
+			->select('ud.nickname','ud.sex','ud.fame','ud.uface','ud.uid','gz.to_uid','gz.from_uid')
 			->where('gz.to_uid','=',$from_id)
 			->paginate(10);
 			

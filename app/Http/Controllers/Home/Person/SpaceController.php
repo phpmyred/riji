@@ -36,7 +36,7 @@ class SpaceController extends Controller
 		//获取我关注人数
     	// $msg[0]->from_uid = count($msg); dd($fss);
         //查询是否已关注
-        $gz = DB::table('guanzhu')->where('to_uid','=',$id)->first();
+        $gz = DB::table('guanzhu')->where('to_uid','=',$id)->where('from_uid','=',$login_id)->first();
       
     	
         //获取该用户发表过的日记
